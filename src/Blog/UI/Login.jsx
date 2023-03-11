@@ -31,10 +31,10 @@ export default function Login(props) {
           setTimeout(() => {
             navigate("/blog");
           }, 1000);
-          props.props(isLoggedIn,username);
+          props.props(isLoggedIn, username);
         } else {
           isLoggedIn = false;
-          props.props(isLoggedIn,username);
+          props.props(isLoggedIn, username);
           toast.error("something went wrong");
         }
       })

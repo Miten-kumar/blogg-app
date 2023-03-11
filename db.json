@@ -27,28 +27,16 @@
       "password": "908908767"
     },
     {
-      "name": "Soham",
-      "email": "bhavik123@gmail.comqq",
-      "password": "qq",
+      "name": "Miten",
+      "email": "bhavik123@gmail.com",
+      "password": "zzzzzzzzzzzzz",
       "id": 5
     },
     {
-      "name": "Soham",
-      "email": "bhavik123@gmail.com",
-      "password": "qq",
+      "name": "Miten",
+      "email": "nimu@123gmail.com",
+      "password": "aaaaaaaaaaaaa",
       "id": 6
-    },
-    {
-      "name": "qq",
-      "email": "qqq",
-      "password": "qq",
-      "id": 7
-    },
-    {
-      "name": "Soham",
-      "email": "bhavik123@gmail.com",
-      "password": "qq",
-      "id": 8
     }
   ],
   "User": [
@@ -87,6 +75,12 @@
       "email": "aaaaaaaaaa@fsd",
       "password": "aa",
       "id": 6
+    },
+    {
+      "username": "miten",
+      "email": "miten@dfg",
+      "password": "qqq",
+      "id": 7
     }
   ],
   "posts": [
