@@ -11,7 +11,7 @@ import {
   MDBModalFooter,
   MDBBtn,
   MDBInput,
-  MDBNavbarItem,
+  
 } from "mdb-react-ui-kit";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +35,7 @@ export default function AddBlog() {
       body: JSON.stringify(empdata),
     })
     .then((res) => {
-      alert("Saved successfully.");
+      // alert("Saved successfully.");
       // window.location.reload()
       
       toast.success('Successfully Add Your Blog.');
@@ -48,9 +48,9 @@ export default function AddBlog() {
 
   return (
     <>
-      <MDBNavbarItem>
-        <MDBBtn
-          className="mx-1"
+     <ToastContainer />
+       <MDBBtn
+          className="mx-1 mt-4 "
           color="danger"
           href="#"
           active
@@ -58,7 +58,7 @@ export default function AddBlog() {
         >
           ADD Blog<sup>+</sup>
         </MDBBtn>
-        <form onSubmit={handlesubmit}><ToastContainer />
+        <form onSubmit={handlesubmit}>
           <MDBModal show={basicModal} setShow={setModal} tabIndex="-1">
             <MDBModalDialog>
               <MDBModalContent>
@@ -106,7 +106,7 @@ export default function AddBlog() {
             </MDBModalDialog>
           </MDBModal>
         </form>
-      </MDBNavbarItem>
+      
     </>
   );
 }

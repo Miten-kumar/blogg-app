@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 // import {  useNavigate } from "react-router-dom";
+import AddBlog from './AddBlog';
 
 const EmpListing = () => {
     const [empdata, empdatachange] = useState(null);
@@ -16,12 +17,9 @@ useEffect(() => {
 return (
     <div className="container my-5 border ">
         <div className="card">
-            <div className="card-title">
-                <h2>BLOG</h2>
-            </div>
+     <AddBlog />
             <div className="card-body">
-                <div className="divbtn">
-                </div>
+ 
                 <table className="table table-bordered ">
                     <thead className="bg-dark text-white">
                         <tr>
@@ -32,7 +30,7 @@ return (
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="table-primary">
                         {empdata &&
                             empdata.map(item => (
                                 <tr key={item.id}>
