@@ -51,7 +51,7 @@ export default function AddBlog() {
      <ToastContainer />
        <MDBBtn
           className="mx-1 mt-4 "
-          color="danger"
+          color="info"
           href="#"
           active
           onClick={toggleshow}

@@ -6,12 +6,13 @@ export default function App(props) {
   return (
     <MDBDropdown>
       <MDBPopover
-        className="mx-2"
-        color="danger"
+        className="mx-2 rounded-circle"
+        rounded
+        color="info "
         btnChildren={props.props}
         placement="right"
       >
-        <MDBBtn onClick={props.logout} color="transparent">
+        <MDBBtn onClick={props.logout} className="rounded-circle" color="danger">
           Logout
         </MDBBtn>
       </MDBPopover>

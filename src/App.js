@@ -4,8 +4,9 @@ import Navbar from "./Blog/UI/Navbar.jsx";
 import DisplayData from "./Blog/UI/DisplayData";
 import Register from "./Blog/UI/Ragister.jsx";
 import Login from "./Blog/UI/Login.jsx";
-
+import Alluser from "./Blog/UI/Alluser"
 import { useNavigate } from "react-router-dom";
+import Admin from './Blog/UI/AdminHome';
 
 function App() {
   const [isLogged, setisLogged] = useState(null);
@@ -34,6 +35,9 @@ function App() {
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login props={status} />} />
+        <Route path="/admin"  element={<Admin />}>
+          <Route path="alluser"  element={<Alluser />}/>
+        </Route>
       </Routes>
 
       <Outlet />
