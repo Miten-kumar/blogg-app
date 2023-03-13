@@ -29,42 +29,28 @@
       "email": "ssssssssss",
       "password": "",
       "id": 5
+    },
+    {
+      "name": "aaaaaaaaaaaaa",
+      "email": "aaaaaaaaaaaaaaaa",
+      "password": "aaaaaaaaaaa",
+      "id": 6
     }
   ],
   "User": [
     {
-      "id": 1,
-      "username": "admin",
-      "email": "admin@admin",
-      "password": "admin",
-      "role": "admin"
-    },
-    {
       "username": "soham",
-      "email": "admin@sssssssss",
       "password": "aaa",
+      "email": "soham@dasd",
       "role": "user",
+      "id": 1
+    },
+    {
+      "username": "miten",
+      "password": "aaa",
+      "email": "soham@asdaaf",
+      "role": "admin",
       "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
-      "username": "miten",
-      "email": "mitenpate1234@gmail.com",
-      "password": "asd",
-      "role": "user",
-      "id": 5
-    },
-    {
-      "username": "miten",
-      "email": "mitenpate1234@gmail.com",
-      "password": "asd",
-      "role": "user",
-      "id": 6
     }
   ],
   "posts": [
