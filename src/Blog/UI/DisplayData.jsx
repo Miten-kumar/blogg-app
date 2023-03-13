@@ -33,10 +33,10 @@ const EmpListing = (props) => {
     fetch("http://localhost:8000/employee")
       .then((res) => {
         return res.json();
+
       })
       .then((resp) => {
         empdatachange(resp);
-        console.warn(setname(resp[0].name));
       })
       .catch((err) => {
         console.log(err.message);
@@ -52,6 +52,11 @@ const EmpListing = (props) => {
   };
   return (
     <div className="container my-3 border ">
+    <>
+<input value={name}></input>
+<input value={email}></input>
+<input value={password}></input>
+    </>
      
       <div className="card">
         {/* ADD BUTTON................... */}
