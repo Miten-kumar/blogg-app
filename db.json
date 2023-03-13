@@ -4,37 +4,19 @@
       "name": "",
       "email": "",
       "password": "",
-      "id": 1
-    },
-    {
-      "name": "",
-      "email": "dddddddddddddddddddd",
-      "password": "",
       "id": 2
     },
     {
-      "name": "saaaaaaa",
-      "email": "sss",
-      "password": "ss",
+      "name": "",
+      "email": "",
+      "password": "",
       "id": 3
     },
     {
-      "name": "sss",
-      "email": "ssssss",
-      "password": "sssss",
-      "id": 4
-    },
-    {
-      "name": "sssqqq",
-      "email": "ssssssqqqq",
-      "password": "sssssqq",
+      "name": "",
+      "email": "",
+      "password": "",
       "id": 5
-    },
-    {
-      "name": "sssqqqqqqqq",
-      "email": "ssssssqqqqqqqqqq",
-      "password": "sssssqqqqqqq",
-      "id": 6
     }
   ],
   "User": [

@@ -1,29 +1,31 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 // import {  useNavigate } from "react-router-dom";
 import AddBlog from "./AddBlog";
 import { Button } from "@mui/material";
-import { toast } from "react-toastify";
 
-const EmpListing = (props) => {
+import Edit from './Edit';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+const DisplayData = (props) => {
   // console.log(props.props.isLoggedIn);
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
   const[name,setname]=useState("")
   const[email,setemail]=useState("")
   const[password,setpassword]=useState(" ")
+const[Delete,removeDelete]=useState(true)
 
-  const Remove = useCallback((id) => {
-    fetch("http://localhost:8000/employee/" + id, {
-      method: "DELETE",
+  const Remove = (id) => {
+    // event.preventDefault();
+    axios.delete(`http://localhost:8000/employee/${id}`)
+    .then(res => {
+      toast.error("DELETED!!!")
+    console.log(res);
+    console.log(res.data);
+    removeDelete(!Delete)
     })
-      .then((res) => {
-        toast.error("Data Removed");
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
-
+   } 
+   
   const Load = (function1) => {
     console.log(function1);
     setData1(() => function1);
@@ -41,7 +43,7 @@ const EmpListing = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [Data1]);
+  }, [Data1,Delete]);
 
   const UpdateData = (id) => {
     console.warn(empdata[id-1]);
@@ -82,9 +84,7 @@ const EmpListing = (props) => {
                     <td>{item.email}</td>
                     <td>{item.password}</td>
                     <td>
-                      <Button className="btn btn-success" onClick={()=>{UpdateData(item.id)}}>
-                        Edit
-                      </Button>
+                     <Edit props={()=>UpdateData}/>
                       <Button
                         onClick={() => {
                           Remove(item.id);
@@ -105,4 +105,4 @@ const EmpListing = (props) => {
   );
 };
 
-export default EmpListing;
+export default DisplayData;
