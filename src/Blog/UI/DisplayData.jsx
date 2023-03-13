@@ -1,31 +1,27 @@
 import { useEffect, useState } from "react";
-// import {  useNavigate } from "react-router-dom";
-import AddBlog from "./AddBlog";
-import { Button } from "@mui/material";
 
-import Edit from './Edit';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import AddBlog from "./AddBlog";
+import Edit from "./Edit";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { MDBBtn } from "mdb-react-ui-kit";
 const DisplayData = (props) => {
-  // console.log(props.props.isLoggedIn);
+  
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
-  const[name,setname]=useState("")
-  const[email,setemail]=useState("")
-  const[password,setpassword]=useState(" ")
-const[Delete,removeDelete]=useState(true)
+  
+  const [Delete, removeDelete] = useState(true);
 
   const Remove = (id) => {
-    // event.preventDefault();
-    axios.delete(`http://localhost:8000/employee/${id}`)
-    .then(res => {
-      toast.error("DELETED!!!")
-    console.log(res);
-    console.log(res.data);
-    removeDelete(!Delete)
-    })
-   } 
-   
+  
+    axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
+      toast.error("Deleted!!!");
+      console.log(res);
+      console.log(res.data);
+      removeDelete(!Delete);
+    });
+  };
+
   const Load = (function1) => {
     console.log(function1);
     setData1(() => function1);
@@ -35,41 +31,37 @@ const[Delete,removeDelete]=useState(true)
     fetch("http://localhost:8000/employee")
       .then((res) => {
         return res.json();
-
       })
       .then((resp) => {
         empdatachange(resp);
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err.message); 
       });
-  }, [Data1,Delete]);
+  }, [Data1, Delete]);
 
   const UpdateData = (id) => {
-    console.warn(empdata[id-1]);
-    let item=empdata[id-1]
-    setname(item.name)
-    setemail(item.email)
-    setpassword(item.password)
+    console.log("sds");
+    console.warn(empdata[id - 1]);
+    // let item = empdata[id - 1];
+    // setname(item.name);
+    // setemail(item.email);
+    // setpassword(item.password);
   };
   return (
     <div className="container my-3 border ">
-    <>
-<input value={name}></input>
-<input value={email}></input>
-<input value={password}></input>
-    </>
-     
+    
+
       <div className="card">
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true ? <AddBlog load={Load} /> : <></>}
- 
+
         <div className="card-body">
           <table className="table table-bordered ">
             <thead className="bg-dark text-white">
               <tr>
                 <td>ID</td>
-                <td > Name</td>
+                <td> Name</td>
                 <td>category</td>
                 <td>massage</td>
                 <td>Actions</td>
@@ -84,16 +76,16 @@ const[Delete,removeDelete]=useState(true)
                     <td>{item.email}</td>
                     <td>{item.password}</td>
                     <td>
-                     <Edit props={()=>UpdateData}/>
-                      <Button
+                      <Edit props={item} />
+                      <MDBBtn
                         onClick={() => {
                           Remove(item.id);
                         }}
-                        className="btn btn-danger"
+                        className="btn btn-danger mx-1"
                       >
                         DELETE
-                      </Button>
-                      <Button className="btn btn-primary">Details</Button>
+                      </MDBBtn>
+                      <MDBBtn className="btn btn-info mx-1">DETAILS</MDBBtn>
                     </td>
                   </tr>
                 ))}
