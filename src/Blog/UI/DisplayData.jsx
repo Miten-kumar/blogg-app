@@ -8,6 +8,9 @@ const EmpListing = (props) => {
   // console.log(props.props.isLoggedIn);
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
+  const[name,setname]=useState("")
+  const[email,setemail]=useState("")
+  const[password,setpassword]=useState(" ")
 
   const Remove = useCallback((id) => {
     fetch("http://localhost:8000/employee/" + id, {
@@ -33,27 +36,33 @@ const EmpListing = (props) => {
       })
       .then((resp) => {
         empdatachange(resp);
+        console.warn(setname(resp[0].name));
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, [Data1]);
 
-  const UpdateData = () => {
-    
+  const UpdateData = (id) => {
+    console.warn(empdata[id-1]);
+    let item=empdata[id-1]
+    setname(item.name)
+    setemail(item.email)
+    setpassword(item.password)
   };
   return (
     <div className="container my-3 border ">
+     
       <div className="card">
-        {/* aDD BUTTON................... */}
+        {/* ADD BUTTON................... */}
         {props.props.isLogged === true ? <AddBlog load={Load} /> : <></>}
-
+ 
         <div className="card-body">
           <table className="table table-bordered ">
             <thead className="bg-dark text-white">
               <tr>
                 <td>ID</td>
-                <td>Name</td>
+                <td > Name</td>
                 <td>category</td>
                 <td>massage</td>
                 <td>Actions</td>
@@ -68,7 +77,7 @@ const EmpListing = (props) => {
                     <td>{item.email}</td>
                     <td>{item.password}</td>
                     <td>
-                      <Button className="btn btn-success" onClick={UpdateData}>
+                      <Button className="btn btn-success" onClick={()=>{UpdateData(item.id)}}>
                         Edit
                       </Button>
                       <Button

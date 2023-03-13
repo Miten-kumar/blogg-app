@@ -96,11 +96,8 @@ export default function AddBlog(props) {
                     onChange={(e) => passwordchange(e.target.value)}
                   />
                 </MDBModalBody>
-
                 <MDBModalFooter>
-                  {/* <MDBBtn color="secondary" onClick={toggleshow}>
-                    Close
-                  </MDBBtn> */}
+                
                   <MDBBtn onClick={toggleshow} type="submit">Save</MDBBtn>
                 </MDBModalFooter>
               </MDBModalContent>

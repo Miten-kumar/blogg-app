@@ -7,7 +7,7 @@ import Login from "./Blog/UI/Login.jsx";
 import Alluser from "./Blog/UI/Alluser"
 import { useNavigate } from "react-router-dom";
 import Admin from './Blog/UI/AdminHome';
-import EmpEdit from "./Blog/UI/EmpEdit.jsx";
+
 function App() {
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState("");
@@ -42,7 +42,7 @@ function App() {
           element={<DisplayData props={{ isLogged, username }} />}
         />
         </Route>
-        <Route path='/employee/edit/:empid' element={<EmpEdit />}></Route>
+     
       </Routes>
 
       <Outlet />
