@@ -16,7 +16,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AddBlog() {
+export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
   const [name, namechange] = useState("");
@@ -25,7 +25,7 @@ export default function AddBlog() {
   
 
   const handlesubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log("wefwde");
     const empdata = { name, email, password };
     
@@ -39,11 +39,14 @@ export default function AddBlog() {
       // window.location.reload()
       
       toast.success('Successfully Add Your Blog.');
+
     })
       .catch((err) => {
         console.log(err.message);
         toast.error("Failed :" + err.message);
       });
+
+      props.load(handlesubmit)
   };
 
   return (
@@ -52,8 +55,6 @@ export default function AddBlog() {
        <MDBBtn
           className="mx-1 mt-4 "
           color="info"
-          href="#"
-          active
           onClick={toggleshow}
         >
           ADD Blog<sup>+</sup>
@@ -97,9 +98,9 @@ export default function AddBlog() {
                 </MDBModalBody>
 
                 <MDBModalFooter>
-                  <MDBBtn color="secondary" onClick={toggleshow}>
+                  {/* <MDBBtn color="secondary" onClick={toggleshow}>
                     Close
-                  </MDBBtn>
+                  </MDBBtn> */}
                   <MDBBtn onClick={toggleshow} type="submit">Save</MDBBtn>
                 </MDBModalFooter>
               </MDBModalContent>

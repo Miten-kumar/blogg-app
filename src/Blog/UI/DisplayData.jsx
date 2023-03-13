@@ -1,10 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 // import {  useNavigate } from "react-router-dom";
 import AddBlog from "./AddBlog";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 const EmpListing = (props) => {
-  console.log(props.props.isLoggedIn);
+  // console.log(props.props.isLoggedIn);
   const [empdata, empdatachange] = useState(null);
+  const [Data1, setData1] = useState({});
+
+  const Remove = useCallback((id) => {
+    fetch("http://localhost:8000/employee/" + id, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        toast.error("Data Removed");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  const Load = (function1) => {
+    console.log(function1);
+    setData1(() => function1);
+  };
 
   useEffect(() => {
     fetch("http://localhost:8000/employee")
@@ -17,12 +37,16 @@ const EmpListing = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [Data1]);
+
+  const UpdateData = () => {
+    
+  };
   return (
-    <div className="container my-5 border ">
+    <div className="container my-3 border ">
       <div className="card">
         {/* aDD BUTTON................... */}
-        {props.props.isLogged === true ? <AddBlog /> : <></>}
+        {props.props.isLogged === true ? <AddBlog load={Load} /> : <></>}
 
         <div className="card-body">
           <table className="table table-bordered ">
@@ -32,6 +56,7 @@ const EmpListing = (props) => {
                 <td>Name</td>
                 <td>category</td>
                 <td>massage</td>
+                <td>Actions</td>
               </tr>
             </thead>
             <tbody className="table-primary">
@@ -42,10 +67,20 @@ const EmpListing = (props) => {
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
-                    {/* <td><a onClick={() => { LoadEdit(item.id) }}  className="btn btn-success">Edit</a>
-                                        <a onClick={() => { Removefunction(item.id) }}  className="btn btn-danger">Remove</a>
-                                        <a onClick={() => { LoadDetail(item.id) }}  className="btn btn-primary">Details</a>
-                                    </td> */}
+                    <td>
+                      <Button className="btn btn-success" onClick={UpdateData}>
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          Remove(item.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        DELETE
+                      </Button>
+                      <Button className="btn btn-primary">Details</Button>
+                    </td>
                   </tr>
                 ))}
             </tbody>

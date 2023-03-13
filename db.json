@@ -1,86 +1,58 @@
 {
   "employee": [
     {
-      "name": "miten",
-      "email": "mitenkumar1234@gmail.com.com",
-      "password": "98899090",
-      "active": true,
+      "name": "",
+      "email": "",
+      "password": "",
       "id": 1
     },
     {
-      "name": "Ricky Ponting",
-      "email": "rp@in.com",
-      "password": "98899090",
-      "active": true,
+      "name": "",
+      "email": "",
+      "password": "",
       "id": 2
     },
     {
-      "id": 3,
-      "name": "Robert",
-      "email": "robert@in.com",
-      "password": "908908767"
-    },
-    {
-      "id": 4,
-      "name": "Kane Williamson",
-      "email": "kw@in.com",
-      "password": "908908767"
-    },
-    {
-      "name": "Miten",
-      "email": "bhavik123@gmail.com",
-      "password": "zzzzzzzzzzzzz",
-      "id": 5
-    },
-    {
-      "name": "Miten",
-      "email": "nimu@123gmail.com",
-      "password": "aaaaaaaaaaaaa",
-      "id": 6
+      "name": "",
+      "email": "",
+      "password": "",
+      "id": 3
     }
   ],
   "User": [
     {
-      "username": "soham",
-      "email": "soham@123gmail.com",
-      "password": "soham",
-      "id": 1
+      "id": 1,
+      "username": "admin",
+      "email": "admin@admin",
+      "password": "admin",
+      "role": "admin"
     },
     {
-      "username": "mitenkumar",
-      "email": "mitenpate1234@gmail.com",
-      "password": "qq",
+      "username": "soham",
+      "email": "admin@sssssssss",
+      "password": "aaa",
+      "role": "user",
       "id": 2
     },
     {
-      "username": "miten",
-      "email": "miten@gmail.com",
-      "password": "qqqqqq",
       "id": 3
     },
     {
-      "username": "miten",
-      "email": "miten@gmail.com",
-      "password": "qqq",
       "id": 4
     },
     {
       "username": "miten",
-      "email": "miten@gmail.com",
-      "password": "111",
+      "email": "mitenpate1234@gmail.com",
+      "password": "asd",
+      "role": "user",
       "id": 5
     },
     {
       "username": "miten",
-      "email": "aaaaaaaaaa@fsd",
-      "password": "aa",
+      "email": "mitenpate1234@gmail.com",
+      "password": "asd",
+      "role": "user",
       "id": 6
-    },
-    {
-      "username": "miten",
-      "email": "miten@dfg",
-      "password": "qqq",
-      "id": 7
     }
   ],
   "posts": [

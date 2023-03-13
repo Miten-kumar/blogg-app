@@ -15,34 +15,47 @@ export default function Login(props) {
   const ProceedLogin = (e) => {
     e.preventDefault();
     console.log("proceed");
-    fetch("http://localhost:8000/User/")
+    fetch("http://localhost:8000/User")
       .then((res) => {
         return res.json();
       })
       .then((resp) => {
-        console.log(resp);
-
+        console.log(resp[1]);
         if (
+          resp.find((user) => user.role === 'admin')&&(
           resp.find((user) => user.username === username) &&
-          resp.find((user) => user.password === password)
+          resp.find((user) => user.password === password) )
         ) {
+          isLoggedIn = true;
+          toast.success(username + " you loged in");
+          setTimeout(() => {
+            navigate("/admin");
+          }, 1000);
+          props.props(isLoggedIn, username);
+        } 
+        else if(resp.find((user) => user.username === username) &&
+        resp.find((user) => user.password === password)){
           isLoggedIn = true;
           toast.success(username + " you loged in");
           setTimeout(() => {
             navigate("/blog");
           }, 1000);
           props.props(isLoggedIn, username);
-        } else {
+        }
+        else {
           isLoggedIn = false;
           props.props(isLoggedIn, username);
           toast.error("something went wrong");
         }
+        
       })
       .catch((err) => {
         toast.error("Login Failed due to :" + err.message);
         console.log(err.message);
       });
   };
+        
+     
 
   return (
     <div

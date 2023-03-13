@@ -22,7 +22,7 @@ const navigate = useNavigate()
     e.preventDefault();
 
     console.log("wefwde");
-    const empdata = { username, email, password };
+    const empdata = { username, email, password , role : 'user'};
     console.log(empdata);
     fetch("http://localhost:8000/User", {
       method: "POST",
