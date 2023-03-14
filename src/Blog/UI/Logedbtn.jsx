@@ -2,7 +2,7 @@ import React from "react";
 import { MDBDropdown, MDBPopover, MDBBtn } from "mdb-react-ui-kit";
 
 export default function App(props) {
-  console.log(props.logout);
+  // console.log(props.logout);
   return (
     <MDBDropdown>
       <MDBPopover

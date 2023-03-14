@@ -19,8 +19,8 @@ import LogedBtn from "./Logedbtn";
 export default function Navbar(props) {
   const Name = props.props.username.charAt(0);
   const firstLetter = Name.toUpperCase();
-  console.log(firstLetter);
-  console.log(props.props);
+  // console.log(firstLetter);
+  // console.log(props.props);
   console.log();
   const func =()=>{
     return <>{props.props.logoutSubmitHandler()}</>

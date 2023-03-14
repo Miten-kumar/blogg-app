@@ -31,7 +31,7 @@ export default function App(props) {
   props.data(reloade);
     let id = props.props.id;
     let item = { name, email, password, id };
-    // console.log(item);
+    console.log(item);
     axios.put("http://localhost:8000/employee/" + id, {
       name: name,
       email:email,

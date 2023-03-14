@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login(props) {
   const navigate = useNavigate();
@@ -14,48 +15,54 @@ export default function Login(props) {
 
   const ProceedLogin = (e) => {
     e.preventDefault();
-    console.log("proceed");
-    fetch("http://localhost:8000/User")
-      .then((res) => {
-        return res.json();
-      })
+    // console.log("proceed");
+    axios
+      .get("http://localhost:8000/User")
       .then((resp) => {
-        console.log(resp[1]);
         if (
-          resp.find((user) => user.role === 'admin')&&(
-          resp.find((user) => user.username === username) &&
-          resp.find((user) => user.password === password) )
+          resp["data"].find((user) => user.username === username &&
+           user.password === password)
         ) {
+          let role =
+          resp["data"].find((user) => user.username === username &&
+          user.password === password).role;
+          console.log(role);
+          let id =
+          resp["data"].find((user) => user.username === username &&
+          user.password === password).id;
+          console.log(id);
           isLoggedIn = true;
+          props.statusMethod(role, id);
+
           toast.success(username + " you loged in");
           setTimeout(() => {
             navigate("/admin");
           }, 1000);
           props.props(isLoggedIn, username);
-        } 
-        else if(resp.find((user) => user.username === username) &&
-        resp.find((user) => user.password === password)){
-          isLoggedIn = true;
-          toast.success(username + " you loged in");
-          setTimeout(() => {
-            navigate("/blog");
-          }, 1000);
-          props.props(isLoggedIn, username);
-        }
-        else {
+        // } else if (
+        //   resp["data"].find((user) => user.username === username) &&
+        //   resp["data"].find((user) => user.password === password)
+        // ) {
+        //   isLoggedIn = true;
+        //   toast.success(username + " you loged in");
+        //   setTimeout(() => {
+        //     navigate("/admin");
+        //   }, 1000);
+        //   props.props(isLoggedIn, username);
+        } else {
           isLoggedIn = false;
+          let role = null;
+          let id = null;
           props.props(isLoggedIn, username);
+          props.statusMethod(role, id);
           toast.error("something went wrong");
         }
-        
       })
       .catch((err) => {
         toast.error("Login Failed due to :" + err.message);
         console.log(err.message);
       });
   };
-        
-     
 
   return (
     <div

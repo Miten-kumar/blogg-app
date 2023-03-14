@@ -1,12 +1,6 @@
 {
   "employee": [
     {
-      "name": "aa",
-      "email": "aaaa",
-      "password": "aaaa",
-      "id": 2
-    },
-    {
       "name": "q",
       "email": "qq",
       "password": "qqqqqqqq",
@@ -25,7 +19,7 @@
       "id": 5
     },
     {
-      "name": "aaaaaaaaaa",
+      "name": "aaaa",
       "email": "aaa",
       "password": "aaaa",
       "id": 6
@@ -48,7 +42,7 @@
       "username": "soham",
       "password": "aaa",
       "email": "soham@dasd",
-      "role": "user",
+      "role": "admin",
       "id": 1
     },
     {
@@ -57,6 +51,13 @@
       "email": "soham@asdaaf",
       "role": "admin",
       "id": 2
+    },
+    {
+      "username": "adi",
+      "password": "aaa",
+      "email": "soham@dfssf",
+      "role": "admin",
+      "id": 3
     }
   ],
   "posts": [

@@ -12,17 +12,27 @@ import Protected from "./Blog/UI/Protekted.js";
 function App() {
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState("");
+  // const [ref, setref] = useState(null);
+  const [Role1, setRole] = useState('');
+  const [userId, setuserId] = useState('');
+  const statusMethod = ( role ,id) => {
+    setRole(role);
+    // // console.log(role);
+    setuserId(id)
+    // console.log(id);
+  };
+
   const status = (data, user) => {
     setisLogged(data);
     setUsername(user);
-    console.log(username);
+    // console.log(username);
     // console.log(data);
   };
   const history = useNavigate();
   const logoutSubmitHandler = () => {
     history("/login");
     setisLogged(false);
-    console.log("Runned");
+    // console.log("Runned");
   };
   return (
     <>
@@ -34,8 +44,8 @@ function App() {
           path="/blog"
           element={<DisplayData props={{ isLogged, username }} />}
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login props={status} />} />
+        <Route path="/register"  element={<Register />} />
+        <Route path="/login" element={<Login props={status}  statusMethod={statusMethod}  />} />
         <Route path="/admin"  element={<Protected  isLogged={isLogged} ><Admin /></Protected>}>
           <Route path="alluser"  element={<Alluser />}/>
           <Route
