@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import  axios  from "axios";
 import {
   MDBInput,
   MDBBtn,
@@ -24,6 +25,22 @@ export default function App(props) {
     setpassword(props.props.password);
     setBasicModal(!basicModal);
   };
+  const UpdateUser = () => {
+    
+    let id = props.props.id;
+    let item = { name, email, password, id };
+    console.log(item);
+    axios.put("http://localhost:8000/employee/" + id, {
+        username: name,
+        email:email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  }
+
+
 
   return (
     <>
@@ -58,7 +75,7 @@ export default function App(props) {
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                   type="category"
-                />{" "}
+                />
                 <MDBTextArea
                   label="Message"
                   id="textAreaExample"
@@ -73,7 +90,7 @@ export default function App(props) {
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Close
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
+              <MDBBtn onClick={UpdateUser}>Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

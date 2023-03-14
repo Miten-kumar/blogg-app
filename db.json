@@ -19,22 +19,15 @@
       "id": 3
     },
     {
-      "name": "",
-      "email": "",
-      "password": "",
+      "username": "aaa",
+      "email": "qqq",
+      "password": "qq",
       "id": 4
     },
     {
-      "name": "sssssssssssssss",
       "email": "ssssssssss",
-      "password": "",
+      "password": "22222qq",
       "id": 5
-    },
-    {
-      "name": "aaaaaaaaaaaaa",
-      "email": "aaaaaaaaaaaaaaaa",
-      "password": "aaaaaaaaaaa",
-      "id": 6
     }
   ],
   "User": [
@@ -42,14 +35,14 @@
       "username": "soham",
       "password": "aaa",
       "email": "soham@dasd",
-      "role": "user",
+      "role": "admin",
       "id": 1
     },
     {
       "username": "miten",
       "password": "aaa",
       "email": "soham@asdaaf",
-      "role": "admin",
+      "role": "user",
       "id": 2
     }
   ],

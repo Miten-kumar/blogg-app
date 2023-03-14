@@ -40,14 +40,11 @@ const DisplayData = (props) => {
       });
   }, [Data1, Delete]);
 
-  const UpdateData = (id) => {
-    console.log("sds");
-    console.warn(empdata[id - 1]);
-    // let item = empdata[id - 1];
-    // setname(item.name);
-    // setemail(item.email);
-    // setpassword(item.password);
-  };
+  // const UpdateData = (id) => {
+  //   console.log("sds");
+  //   console.warn(empdata[id - 1]);
+    
+  // };
   return (
     <div className="container my-3 border ">
     
