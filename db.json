@@ -1,40 +1,16 @@
 {
   "employee": [
     {
-      "name": "q",
-      "email": "qq",
-      "password": "qqqqqqqq",
-      "id": 3
-    },
-    {
-      "name": "qqqqqqqq",
-      "email": "qqq",
-      "password": "qqqq",
-      "id": 4
-    },
-    {
-      "name": "qqqqqaa",
+      "name": "qqqqqaaaa",
       "email": "ssssssssss",
       "password": "2a",
-      "id": 5
-    },
-    {
-      "name": "aaaa",
-      "email": "aaa",
-      "password": "aaaa",
-      "id": 6
+      "id": 1
     },
     {
       "name": "aaaa",
       "email": "aaa",
       "password": "aaa",
-      "id": 7
-    },
-    {
-      "name": "miten",
-      "email": "qq",
-      "password": "qqqqaa",
-      "id": 8
+      "id": 2
     }
   ],
   "User": [
@@ -42,7 +18,7 @@
       "username": "soham",
       "password": "aaa",
       "email": "soham@dasd",
-      "role": "admin",
+      "role": "user",
       "id": 1
     },
     {
@@ -56,8 +32,22 @@
       "username": "adi",
       "password": "aaa",
       "email": "soham@dfssf",
-      "role": "admin",
+      "role": "user",
       "id": 3
+    },
+    {
+      "username": "mitenkumar",
+      "password": "asd",
+      "email": "mitenpate1234@gmail.com",
+      "role": "admin",
+      "id": 4
+    },
+    {
+      "username": "Miten",
+      "email": "mitenkumar@fsadf",
+      "password": "aaa",
+      "role": "user",
+      "id": 5
     }
   ],
   "posts": [

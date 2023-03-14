@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-
 import AddBlog from "./AddBlog";
 import Edit from "./Edit";
-import Details from "./ViewMore";
+import ViewDetails from "./ViewMore";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MDBBtn } from "mdb-react-ui-kit";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
+  console.log(props.props.Role);
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
@@ -53,7 +54,7 @@ const DisplayData = (props) => {
                 <td> Name</td>
                 <td>category</td>
                 <td>massage</td>
-                <td>Actions</td>
+                {props.props.Role === "admin" ? <td>Actions</td> : null}
               </tr>
             </thead>
             <tbody className="table-primary">
@@ -64,19 +65,20 @@ const DisplayData = (props) => {
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
-                    <td>
-                      <Edit props={item} data={update} />
-                      <MDBBtn
-                        className="btn btn-danger mx-1"
-                        onClick={() => {
-                          Remove(item.id);
-                        }}
-                      >
-                        DELETE
-                      </MDBBtn>
-                      <Details   props={item}  />
-                   
-                    </td>
+                    {props.props.Role === "admin" ? (
+                      <td>
+                        <Edit props={item} data={update} />
+                        <MDBBtn
+                          className="btn btn-danger mx-1"
+                          onClick={() => {
+                            Remove(item.id);
+                          }}
+                        >
+                          <DeleteForeverOutlinedIcon />
+                        </MDBBtn>
+                        <ViewDetails props={item} />
+                      </td>
+                    ) : null}
                   </tr>
                 ))}
             </tbody>

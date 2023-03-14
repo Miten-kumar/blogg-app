@@ -4,22 +4,21 @@ import Navbar from "./Blog/UI/Navbar.jsx";
 import DisplayData from "./Blog/UI/DisplayData";
 import Register from "./Blog/UI/Ragister.jsx";
 import Login from "./Blog/UI/Login.jsx";
-import Alluser from "./Blog/UI/Alluser"
+import Alluser from "./Blog/UI/Alluser";
 import { useNavigate } from "react-router-dom";
-import Admin from './Blog/UI/AdminHome';
+import Admin from "./Blog/UI/AdminHome";
 import Protected from "./Blog/UI/Protekted.js";
-
+import MyBlog from "./Blog/UI/MyBlog"
 function App() {
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState("");
   // const [ref, setref] = useState(null);
-  const [Role1, setRole] = useState('');
-  const [userId, setuserId] = useState('');
-  const statusMethod = ( role ,id) => {
+  const [Role, setRole] = useState("");
+  const [userId, setuserId] = useState("");
+  const statusMethod = (role, id) => {
     setRole(role);
-    // // console.log(role);
-    setuserId(id)
-    // console.log(id);
+    console.log(role);
+    setuserId(id);
   };
 
   const status = (data, user) => {
@@ -36,7 +35,7 @@ function App() {
   };
   return (
     <>
-      <Navbar props={{ isLogged, username, logoutSubmitHandler }} />
+      <Navbar props={{ isLogged, username, logoutSubmitHandler, Role }} />
 
       <Routes>
         <Route path="/" exact element={<div>This is Home Component</div>} />
@@ -44,16 +43,29 @@ function App() {
           path="/blog"
           element={<DisplayData props={{ isLogged, username }} />}
         />
-        <Route path="/register"  element={<Register />} />
-        <Route path="/login" element={<Login props={status}  statusMethod={statusMethod}  />} />
-        <Route path="/admin"  element={<Protected  isLogged={isLogged} ><Admin /></Protected>}>
-          <Route path="alluser"  element={<Alluser />}/>
-          <Route
-          path="blog"
-          element={<DisplayData props={{ isLogged, username }} />}
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={<Login props={status} statusMethod={statusMethod} />}
         />
+        <Route
+          path="/admin"
+          element={
+            <Protected isLogged={isLogged}>
+              <Admin />
+            </Protected>
+          }
+        >
+          <Route path="alluser" element={<Alluser />} />
+          <Route
+            path="blog"
+            element={<DisplayData props={{ isLogged, username, Role }} />}
+          />
+          <Route
+            path="myblog"
+            element={<MyBlog/>}
+          />
         </Route>
-     
       </Routes>
 
       <Outlet />

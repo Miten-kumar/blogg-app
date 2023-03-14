@@ -22,9 +22,9 @@ export default function Navbar(props) {
   // console.log(firstLetter);
   // console.log(props.props);
   console.log();
-  const func =()=>{
-    return <>{props.props.logoutSubmitHandler()}</>
-  } 
+  const func = () => {
+    return <>{props.props.logoutSubmitHandler()}</>;
+  };
   const [showNav, setShowNav] = useState(false);
   return (
     <>
@@ -57,11 +57,13 @@ export default function Navbar(props) {
             </NavLink>
             <MDBNavbarNav className="p-3 ">
               <MDBNavbarItem className="mx-2 mt-2">
-                <NavLink to="/blog">Blogs</NavLink>
+                {props.props.Role === "admin" ? (
+                  <NavLink to="/admin" fontSize="20px" style={{"font-family": 'FontAwesome'}} >Desh bord</NavLink>
+                ) :  <NavLink to="/blog"  style={{"font-family": 'FontAwesome'}}>Blogs</NavLink>}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
               {props.props.isLogged === true ? (
-                <LogedBtn props={firstLetter} logout={func}/>
+                <LogedBtn props={firstLetter} logout={func} />
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">

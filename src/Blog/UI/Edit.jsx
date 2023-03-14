@@ -12,6 +12,7 @@ import {
   MDBModalFooter,
   MDBTextArea,
 } from "mdb-react-ui-kit";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
@@ -48,7 +49,7 @@ export default function App(props) {
   return (
     <>
       <MDBBtn onClick={toggleShow} className="mx-2">
-        EDIT
+      <ModeEditOutlineOutlinedIcon/>
       </MDBBtn>
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>

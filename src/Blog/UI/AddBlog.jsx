@@ -65,11 +65,7 @@ export default function AddBlog(props) {
               <MDBModalContent>
                 <MDBModalHeader>
                   <MDBModalTitle>Modal title</MDBModalTitle>
-                  <MDBBtn
-                    className="btn-close"
-                    color="none"
-                    onClick={toggleshow}
-                  ></MDBBtn>
+                 
                 </MDBModalHeader>
                 <MDBModalBody>
                   <MDBInput

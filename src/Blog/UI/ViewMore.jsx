@@ -12,7 +12,7 @@ import {
   MDBModalFooter,
   MDBTextArea,
 } from "mdb-react-ui-kit";
-
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
   const [name, setname] = useState("");
@@ -33,7 +33,7 @@ export default function App(props) {
   return (
     <>
       <MDBBtn onClick={toggleShow} className="mx-2 btn btn-info">
-        VIEW MORE
+        <VisibilityOutlinedIcon/>
       </MDBBtn>
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>

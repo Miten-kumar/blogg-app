@@ -20,35 +20,42 @@ export default function Login(props) {
       .get("http://localhost:8000/User")
       .then((resp) => {
         if (
-          resp["data"].find((user) => user.username === username &&
-           user.password === password)
+          resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ) &&
+          resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ).role === "admin"
         ) {
-          let role =
-          resp["data"].find((user) => user.username === username &&
-          user.password === password).role;
-          console.log(role);
-          let id =
-          resp["data"].find((user) => user.username === username &&
-          user.password === password).id;
-          console.log(id);
+          let role = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ).role;
+
+          // console.log(role);
+
+          let id = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ).id;
+          // console.log(id);
           isLoggedIn = true;
           props.statusMethod(role, id);
 
-          toast.success(username + " you loged in");
+          toast.success(username + " As a ADMIN  loged in");
           setTimeout(() => {
-            navigate("/admin");
+            navigate("/admin/blog");
           }, 1000);
           props.props(isLoggedIn, username);
-        // } else if (
-        //   resp["data"].find((user) => user.username === username) &&
-        //   resp["data"].find((user) => user.password === password)
-        // ) {
-        //   isLoggedIn = true;
-        //   toast.success(username + " you loged in");
-        //   setTimeout(() => {
-        //     navigate("/admin");
-        //   }, 1000);
-        //   props.props(isLoggedIn, username);
+        } else if (
+          resp["data"].find(
+            (user) => user.username === username && user.password === password
+          )
+        ) {
+          isLoggedIn = true;
+          toast.success(username + " you loged in");
+          setTimeout(() => {
+            navigate("/blog");
+          }, 1000);
+          props.props(isLoggedIn, username);
         } else {
           isLoggedIn = false;
           let role = null;
