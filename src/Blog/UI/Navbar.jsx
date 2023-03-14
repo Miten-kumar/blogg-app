@@ -59,7 +59,7 @@ export default function Navbar(props) {
               <MDBNavbarItem className="mx-2 mt-2">
                 {props.props.Role === "admin" ? (
                   <NavLink to="/admin" fontSize="20px" style={{"font-family": 'FontAwesome'}} >Desh bord</NavLink>
-                ) :  <NavLink to="/blog"  style={{"font-family": 'FontAwesome'}}>Blogs</NavLink>}
+                ) :  <NavLink to="/blog"  style={{"font-family": 'inherit'}}>Blogs</NavLink>}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
               {props.props.isLogged === true ? (
@@ -67,10 +67,10 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register">Register</NavLink>
+                    <NavLink to="/register" style={{"font-family": 'inherit'}}>Register</NavLink>
                   </MDBNavbarItem>
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login" style={{"font-family": 'inherit'}}>Login</NavLink>
                   </MDBNavbarItem>
                 </div>
               )}

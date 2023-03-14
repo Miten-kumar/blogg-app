@@ -17,17 +17,20 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddBlog(props) {
+  console.log(props);
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
   const [name, namechange] = useState("");
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   
+  
 
   const handlesubmit = (e) => {
+   
     e.preventDefault();
     console.log("wefwde");
-    const empdata = { name, email, password };
+    const empdata = { name, email, password, userId:props.props };
     
     fetch("http://localhost:8000/employee", {
       method: "POST",
@@ -91,6 +94,7 @@ export default function AddBlog(props) {
                     value={password}
                     onChange={(e) => passwordchange(e.target.value)}
                   />
+                 
                 </MDBModalBody>
                 <MDBModalFooter>
                 

@@ -41,7 +41,7 @@ function App() {
         <Route path="/" exact element={<div>This is Home Component</div>} />
         <Route
           path="/blog"
-          element={<DisplayData props={{ isLogged, username }} />}
+          element={<DisplayData props={{ isLogged, username,userId }} />}
         />
         <Route path="/register" element={<Register />} />
         <Route
@@ -59,7 +59,7 @@ function App() {
           <Route path="alluser" element={<Alluser />} />
           <Route
             path="blog"
-            element={<DisplayData props={{ isLogged, username, Role }} />}
+            element={<DisplayData props={{ isLogged, username, Role ,userId }} />}
           />
           <Route
             path="myblog"
