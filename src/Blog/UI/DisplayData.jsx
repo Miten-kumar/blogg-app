@@ -12,6 +12,7 @@ const DisplayData = (props) => {
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
+  const [relode, setrelode] = useState(true);
   const Remove = (id) => {
     axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
       toast.error("Deleted!!!");
@@ -31,15 +32,17 @@ const DisplayData = (props) => {
   useEffect(() => {
     fetch("http://localhost:8000/employee")
       .then((res) => {
-        return res.json();
+        return res.json()
+        ;
       })
       .then((resp) => {
-        empdatachange(resp);
+        empdatachange(resp)
+        setrelode(!relode);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [Data1, Delete, ref]);
+  }, [Data1, Delete, ref,relode]);
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -48,9 +51,9 @@ const DisplayData = (props) => {
 
         <div className="card-body">
           <table className="table table-bordered ">
-            <thead className="bg-dark text-white">
+            <thead className="table table-hover table-primary text-center">
               <tr>
-                <td>ID</td>
+                <td>No.</td>
                 <td> Name</td>
                 <td>category</td>
                 <td>massage</td>

@@ -1,32 +1,136 @@
 {
   "employee": [
     {
-      "name": "",
+      "name": "aaaaaaaaaaaa",
       "email": "",
       "password": "",
-      "id": 3,
-      "userId": 1
+      "userId": 2,
+      "id": 1
     },
     {
       "name": "aaaaaaaaaaaa",
       "email": "",
       "password": "",
+      "userId": 2,
+      "id": 2
+    },
+    {
+      "name": "aaaaaaaaaaaa",
+      "email": "",
+      "password": "",
+      "userId": 2,
+      "id": 3
+    },
+    {
+      "name": "Miten",
+      "email": "nimu@123gmail.com",
+      "password": "11111111111111",
       "userId": 2,
       "id": 4
     },
     {
-      "name": "aaaaaaaaaaaa",
-      "email": "",
-      "password": "",
+      "name": "Miten",
+      "email": "nimu@123gmail.com",
+      "password": "11111111111111",
       "userId": 2,
       "id": 5
     },
     {
-      "name": "aaaaaaaaaaaa",
-      "email": "",
-      "password": "",
+      "name": "Miten",
+      "email": "nimu@123gmail.com",
+      "password": "11111111111111",
       "userId": 2,
       "id": 6
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "qqq",
+      "userId": 2,
+      "id": 7
+    },
+    {
+      "name": "",
+      "email": "aaa",
+      "password": "qqq",
+      "userId": 2,
+      "id": 8
+    },
+    {
+      "name": "aaaaaaaaaaaa",
+      "email": "aaaaaaaaaaaaa",
+      "password": "aaaaaaaaaaa",
+      "userId": 2,
+      "id": 9
+    },
+    {
+      "name": "aaaaaaaaaaaa",
+      "email": "aaaaaaaaaaaaaaaaaaa",
+      "password": "aaaaaaaaaaa",
+      "userId": 2,
+      "id": 10
+    },
+    {
+      "name": "aaaaaaaaa",
+      "email": "",
+      "password": "aaaaaaaaaaa",
+      "userId": 2,
+      "id": 13
+    },
+    {
+      "name": "qqqq",
+      "email": "qqq",
+      "password": "qqq",
+      "userId": 4,
+      "id": 14
+    },
+    {
+      "name": "qqqq",
+      "email": "qqq",
+      "password": "qqqqqqq",
+      "userId": 4,
+      "id": 15
+    },
+    {
+      "name": "qqqqqqqqqq",
+      "email": "chater",
+      "password": "cheater",
+      "userId": null,
+      "id": 16
+    },
+    {
+      "name": "cheater",
+      "email": "chater",
+      "password": "cheater",
+      "userId": null,
+      "id": 17
+    },
+    {
+      "name": "aaa",
+      "email": "",
+      "password": "",
+      "userId": "",
+      "id": 18
+    },
+    {
+      "name": "aaa",
+      "email": "aaa",
+      "password": "",
+      "userId": "",
+      "id": 19
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "aaa",
+      "userId": "",
+      "id": 20
+    },
+    {
+      "name": "",
+      "email": "bhavik123@gmail.com",
+      "password": "",
+      "id": 21
     }
   ],
   "User": [
@@ -64,6 +168,20 @@
       "password": "aaa",
       "role": "user",
       "id": 5
+    },
+    {
+      "username": "adi",
+      "email": "miten@asd",
+      "password": "aaa",
+      "role": "user",
+      "id": 6
+    },
+    {
+      "username": "cheater",
+      "email": "cheaterpate1234@gmail.com",
+      "password": "aaa",
+      "role": "user",
+      "id": 7
     }
   ],
   "posts": [
