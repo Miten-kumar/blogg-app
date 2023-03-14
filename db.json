@@ -1,33 +1,46 @@
 {
   "employee": [
     {
-      "name": "",
-      "email": "",
-      "password": "",
-      "id": 1
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
+      "name": "aa",
+      "email": "aaaa",
+      "password": "aaaa",
       "id": 2
     },
     {
-      "name": "",
-      "email": "",
-      "password": "",
+      "name": "q",
+      "email": "qq",
+      "password": "qqqqqqqq",
       "id": 3
     },
     {
-      "username": "aaa",
+      "name": "qqqqqqqq",
       "email": "qqq",
-      "password": "qq",
+      "password": "qqqq",
       "id": 4
     },
     {
+      "name": "qqqqqaa",
       "email": "ssssssssss",
-      "password": "22222qq",
+      "password": "2a",
       "id": 5
+    },
+    {
+      "name": "aaaaaaaaaa",
+      "email": "aaa",
+      "password": "aaaa",
+      "id": 6
+    },
+    {
+      "name": "aaaa",
+      "email": "aaa",
+      "password": "aaa",
+      "id": 7
+    },
+    {
+      "name": "miten",
+      "email": "qq",
+      "password": "qqqqaa",
+      "id": 8
     }
   ],
   "User": [
@@ -35,14 +48,14 @@
       "username": "soham",
       "password": "aaa",
       "email": "soham@dasd",
-      "role": "admin",
+      "role": "user",
       "id": 1
     },
     {
       "username": "miten",
       "password": "aaa",
       "email": "soham@asdaaf",
-      "role": "user",
+      "role": "admin",
       "id": 2
     }
   ],

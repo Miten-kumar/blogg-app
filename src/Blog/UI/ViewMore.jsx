@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import  axios  from "axios";
+
 import {
   MDBInput,
   MDBBtn,
@@ -18,37 +18,22 @@ export default function App(props) {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState(" ");
-  const[reloade,setreload]=useState(true)
+
   const toggleShow = () => {
-    console.log(props.props);
-    
+
     setname(props.props.name);
     setemail(props.props.email);
     setpassword(props.props.password);
     setBasicModal(!basicModal);
   };
-  const UpdateUser = () => {
-  props.data(reloade);
-    let id = props.props.id;
-    let item = { name, email, password, id };
-    // console.log(item);
-    axios.put("http://localhost:8000/employee/" + id, {
-      name: name,
-      email:email,
-      password: password,
-    })
-    .then((response) => {
-      // console.log(response);
-      setreload(!reloade)
-    });
-  }
+
   
  
 
   return (
     <>
-      <MDBBtn onClick={toggleShow} className="mx-2">
-        EDIT
+      <MDBBtn onClick={toggleShow} className="mx-2 btn btn-info">
+        VIEW MORE
       </MDBBtn>
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>
@@ -93,7 +78,7 @@ export default function App(props) {
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Close
               </MDBBtn>
-              <MDBBtn onClick={()=>{UpdateUser();toggleShow()}} >Save changes</MDBBtn>
+              <MDBBtn onClick={toggleShow}>Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

@@ -2,31 +2,31 @@ import { useEffect, useState } from "react";
 
 import AddBlog from "./AddBlog";
 import Edit from "./Edit";
+import Details from "./ViewMore";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MDBBtn } from "mdb-react-ui-kit";
 const DisplayData = (props) => {
-  
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
-  
+  const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
-
   const Remove = (id) => {
-  
     axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
       toast.error("Deleted!!!");
       console.log(res);
-      console.log(res.data);
+      // console.log(res.data);
       removeDelete(!Delete);
     });
   };
-
+  const update = (function2) => {
+    setref(!function2);
+    toast.success("ADDED!!!");
+  };
   const Load = (function1) => {
-    console.log(function1);
+    // console.log(function1);
     setData1(() => function1);
   };
-
   useEffect(() => {
     fetch("http://localhost:8000/employee")
       .then((res) => {
@@ -36,19 +36,11 @@ const DisplayData = (props) => {
         empdatachange(resp);
       })
       .catch((err) => {
-        console.log(err.message); 
+        console.log(err.message);
       });
-  }, [Data1, Delete]);
-
-  // const UpdateData = (id) => {
-  //   console.log("sds");
-  //   console.warn(empdata[id - 1]);
-    
-  // };
+  }, [Data1, Delete, ref]);
   return (
     <div className="container my-3 border ">
-    
-
       <div className="card">
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true ? <AddBlog load={Load} /> : <></>}
@@ -73,16 +65,17 @@ const DisplayData = (props) => {
                     <td>{item.email}</td>
                     <td>{item.password}</td>
                     <td>
-                      <Edit props={item} />
+                      <Edit props={item} data={update} />
                       <MDBBtn
+                        className="btn btn-danger mx-1"
                         onClick={() => {
                           Remove(item.id);
                         }}
-                        className="btn btn-danger mx-1"
                       >
                         DELETE
                       </MDBBtn>
-                      <MDBBtn className="btn btn-info mx-1">DETAILS</MDBBtn>
+                      <Details   props={item}  />
+                   
                     </td>
                   </tr>
                 ))}
