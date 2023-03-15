@@ -36,6 +36,8 @@ function App() {
   const logoutSubmitHandler = () => {
     history("/login");
     setisLogged(false);
+    setRole("user");
+    setuserId(userId);
     // console.log("Runned");
   };
   return (
@@ -46,7 +48,7 @@ function App() {
         <Route path="/" exact element={<div>This is Home Component</div>} />
         <Route
           path="/blog"
-          element={<DisplayData props={{ isLogged, username }} />}
+          element={<DisplayData props={{ isLogged, username,userId ,Role}} />}
         />
         <Route path="/register" element={<Register />} />
         <Route

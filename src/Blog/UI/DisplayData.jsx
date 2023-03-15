@@ -7,11 +7,12 @@ import { toast } from "react-toastify";
 import { MDBBtn } from "mdb-react-ui-kit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
-  console.log(props.props.Role);
-  const [empdata, empdatachange] = useState(null);
+  console.log(props );
+  const [empdata, empdatachange] = useState([]);
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
+  const [relode, setrelode] = useState(true);
   const Remove = (id) => {
     axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
       toast.error("Deleted!!!");
@@ -31,26 +32,28 @@ const DisplayData = (props) => {
   useEffect(() => {
     fetch("http://localhost:8000/employee")
       .then((res) => {
-        return res.json();
+        return res.json()
+        ;
       })
       .then((resp) => {
-        empdatachange(resp);
+        empdatachange(resp)
+        setrelode(!relode);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [Data1, Delete, ref]);
+  }, [Data1, Delete, ref,relode]);
   return (
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true ? <AddBlog load={Load} /> : <></>}
+        {props.props.isLogged === true ? <AddBlog load={Load}  props={props.props.userId}/> : <></>}
 
         <div className="card-body">
           <table className="table table-bordered ">
-            <thead className="bg-dark text-white">
+            <thead className="table table-hover table-primary text-center">
               <tr>
-                <td>ID</td>
+                <td>No.</td>
                 <td> Name</td>
                 <td>category</td>
                 <td>massage</td>
@@ -59,12 +62,13 @@ const DisplayData = (props) => {
             </thead>
             <tbody className="table-primary">
               {empdata &&
-                empdata.map((item) => (
+                empdata.filter((blog)=>blog.userId === props.props.userId).map((item) => (
                   <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
+
                     {props.props.Role === "admin" ? (
                       <td>
                         <Edit props={item} data={update} />
@@ -79,8 +83,10 @@ const DisplayData = (props) => {
                         <ViewDetails props={item} />
                       </td>
                     ) : null}
+
                   </tr>
                 ))}
+
             </tbody>
           </table>
         </div>

@@ -78,10 +78,10 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register">Register</NavLink>
+                    <NavLink to="/register" style={{"font-family": 'inherit'}}>Register</NavLink>
                   </MDBNavbarItem>
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login" style={{"font-family": 'inherit'}}>Login</NavLink>
                   </MDBNavbarItem>
                 </div>
               )}
