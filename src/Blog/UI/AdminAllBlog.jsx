@@ -5,6 +5,7 @@ import ViewDetails from "./ViewMore";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MDBBtn } from "mdb-react-ui-kit";
+
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
   console.log(props);
@@ -47,6 +48,7 @@ const DisplayData = (props) => {
   }, [relode,Delete,ref,Data1]);
   return (
     <div className="container my-3 border ">
+   
       <div className="card">
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true ? (
@@ -59,7 +61,7 @@ const DisplayData = (props) => {
           <table className="table table-bordered ">
             <thead className="table table-hover table-primary text-center">
               <tr>
-                <td>No.</td>
+                <td>ID</td>
                 <td> Name</td>
                 <td>category</td>
                 <td>massage</td>

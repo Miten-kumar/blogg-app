@@ -90,6 +90,20 @@
       "password": "asdas",
       "userId": 1,
       "id": 72
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 1,
+      "id": 73
+    },
+    {
+      "name": "miten",
+      "email": "sdffgh@fhkjgjh",
+      "password": "aa",
+      "userId": 14,
+      "id": 74
     }
   ],
   "User": [
@@ -183,6 +197,13 @@
       "password": "aaa",
       "role": "user",
       "id": 13
+    },
+    {
+      "username": "soham",
+      "email": "miten@wsf",
+      "password": "soham",
+      "role": "user",
+      "id": 14
     }
   ],
   "posts": [

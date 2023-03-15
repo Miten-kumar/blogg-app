@@ -1,7 +1,9 @@
 import React from "react";
 import { MDBDropdown, MDBPopover, MDBBtn } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
-
+import InfoIcon from '@mui/icons-material/Info';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { Tooltip } from "@mui/material";
 export default function  App(props) {
   const Navigate= useNavigate()
   const Details = () => {
@@ -11,6 +13,7 @@ export default function  App(props) {
   // console.log(props.logout);
   return (
     <MDBDropdown>
+    <Tooltip title="More info" arrow>
       <MDBPopover
         className="mx-2 "
         rounded
@@ -19,12 +22,19 @@ export default function  App(props) {
         btnChildren={props.props}
         placement="right"
       >
-        <MDBBtn onClick={props.logout} className="rounded" color="danger">
-          Logout
+      <Tooltip title="LOGOUT" arrow>
+        <MDBBtn onClick={props.logout} className="rounded p-2" color="danger">
+        <ExitToAppIcon/>
         </MDBBtn>
-      
-        <MDBBtn onClick={Details} className="rounded mx-2" color="info">Details</MDBBtn>
-      </MDBPopover>
+        </Tooltip>
+        <Tooltip title="INFO" arrow>
+        <MDBBtn onClick={Details} className="p-2 mx-2" color="info">
+          
+        <InfoIcon/> 
+        </MDBBtn>
+        
+        </Tooltip>
+      </MDBPopover></Tooltip>
     </MDBDropdown>
   );
 }

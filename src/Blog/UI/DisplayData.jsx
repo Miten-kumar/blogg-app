@@ -126,6 +126,7 @@ const DisplayData = (props) => {
         )}
       </div>
     </div>
+    
   );
 };
 
