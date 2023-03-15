@@ -18,6 +18,7 @@ import LogedBtn from "./Logedbtn";
 
 export default function Navbar(props) {
   const Name = props.props.username.charAt(0);
+  console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();
   // console.log(firstLetter);
   // console.log(props.props);
@@ -58,8 +59,18 @@ export default function Navbar(props) {
             <MDBNavbarNav className="p-3 ">
               <MDBNavbarItem className="mx-2 mt-2">
                 {props.props.Role === "admin" ? (
-                  <NavLink to="/admin" fontSize="20px" style={{"font-family": 'FontAwesome'}} >Desh bord</NavLink>
-                ) :  <NavLink to="/blog"  style={{"font-family": 'FontAwesome'}}>Blogs</NavLink>}
+                  <NavLink
+                    to="/admin"
+                    fontSize="20px"
+                    style={{ "font-family": "FontAwesome" }}
+                  >
+                    Desh bord
+                  </NavLink>
+                ) : (
+                  <NavLink to="/blog" style={{ "font-family": "FontAwesome" }}>
+                    Blogs
+                  </NavLink>
+                )}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
               {props.props.isLogged === true ? (

@@ -8,10 +8,14 @@ import Alluser from "./Blog/UI/Alluser";
 import { useNavigate } from "react-router-dom";
 import Admin from "./Blog/UI/AdminHome";
 import Protected from "./Blog/UI/Protekted.js";
-import MyBlog from "./Blog/UI/MyBlog"
+import MyBlog from "./Blog/UI/MyBlog";
+import Users from "./Blog/UI/User.jsx";
 function App() {
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState("");
+  const [password, setpassword] = useState("");
+  
+
   // const [ref, setref] = useState(null);
   const [Role, setRole] = useState("");
   const [userId, setuserId] = useState("");
@@ -21,9 +25,10 @@ function App() {
     setuserId(id);
   };
 
-  const status = (data, user) => {
+  const status = (data, user,password) => {
     setisLogged(data);
     setUsername(user);
+    setpassword(password)
     // console.log(username);
     // console.log(data);
   };
@@ -48,6 +53,10 @@ function App() {
           path="/login"
           element={<Login props={status} statusMethod={statusMethod} />}
         />
+         <Route
+          path="/details"
+          element={<Users props={username} password={password} />}
+        />
         <Route
           path="/admin"
           element={
@@ -57,13 +66,16 @@ function App() {
           }
         >
           <Route path="alluser" element={<Alluser />} />
+        
           <Route
             path="blog"
-            element={<DisplayData props={{ isLogged, username, Role }} />}
+            element={
+              <DisplayData props={{ isLogged, username, Role, userId }} />
+            }
           />
           <Route
             path="myblog"
-            element={<MyBlog/>}
+            element={<MyBlog props={{ isLogged, username, Role, userId }} />}
           />
         </Route>
       </Routes>

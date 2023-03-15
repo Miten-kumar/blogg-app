@@ -12,7 +12,6 @@ export default function Login(props) {
   const [username, usernameupdate] = useState("");
   const [password, passwordupdate] = useState("");
   let isLoggedIn = null;
-
   const ProceedLogin = (e) => {
     e.preventDefault();
     // console.log("proceed");
@@ -44,7 +43,7 @@ export default function Login(props) {
           setTimeout(() => {
             navigate("/admin/blog");
           }, 1000);
-          props.props(isLoggedIn, username);
+          props.props(isLoggedIn, username,password);
         } else if (
           resp["data"].find(
             (user) => user.username === username && user.password === password
@@ -55,12 +54,12 @@ export default function Login(props) {
           setTimeout(() => {
             navigate("/blog");
           }, 1000);
-          props.props(isLoggedIn, username);
+          props.props(isLoggedIn, username,password);
         } else {
           isLoggedIn = false;
           let role = null;
           let id = null;
-          props.props(isLoggedIn, username);
+          props.props(isLoggedIn, username,password);
           props.statusMethod(role, id);
           toast.error("something went wrong");
         }
