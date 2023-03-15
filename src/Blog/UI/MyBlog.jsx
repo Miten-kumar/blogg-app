@@ -52,7 +52,7 @@ const Myblog = (props) => {
 
         <div className="card-body">
           <table className="table table-bordered ">
-            <thead className="bg-dark text-white">
+            <thead className="table table-hover table-primary text-center">
               <tr>
                 <td>ID</td>
                 <td> Name</td>

@@ -19,7 +19,7 @@ function App() {
   const [userId, setuserId] = useState();
   const statusMethod = (role, id) => {
     setRole(role);
-    console.log(role);
+    console.log(id);
     setuserId(id);
   };
 
@@ -35,12 +35,13 @@ function App() {
     history("/login");
     setisLogged(false);
     setRole("user");
-    
+    setuserId(null);
+
     // console.log("Runned");
   };
   return (
     <>
-      <Navbar props={{ isLogged, username, logoutSubmitHandler, Role }} />
+      <Navbar props={{ isLogged, username, logoutSubmitHandler, Role}} />
 
       <Routes>
         <Route path="/" exact element={<div>This is Home Component</div>} />

@@ -43,7 +43,7 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode, Delete]);
+  }, [relode, Delete,ref]);
   return (
     <div className="container my-3 border ">
       <div className="card">

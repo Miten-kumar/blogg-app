@@ -35,7 +35,7 @@ export default function Login(props) {
           let id = resp["data"].find(
             (user) => user.username === username && user.password === password
           ).id;
-          // console.log(id);
+          console.log(id);
           isLoggedIn = true;
           props.statusMethod(role, id);
 
@@ -50,6 +50,13 @@ export default function Login(props) {
           )
         ) {
           isLoggedIn = true;
+          let id = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ).id;
+          let role = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          ).role;
+          props.statusMethod(role, id);
           toast.success(username + " you loged in");
           setTimeout(() => {
             navigate("/blog");
