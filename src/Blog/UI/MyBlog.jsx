@@ -45,7 +45,7 @@ const Myblog = (props) => {
       <div className="card">
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true ? (
-          <AddBlog load={Load} Myid={props.props.userId} />
+          <AddBlog load={Load} props={props.props.userId} />
         ) : (
           <></>
         )}

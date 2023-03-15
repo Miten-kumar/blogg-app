@@ -21,7 +21,7 @@ export default function Navbar(props) {
   console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();
   // console.log(firstLetter);
-  // console.log(props.props);
+  console.log(props.props.Role);
   console.log();
   const func = () => {
     return <>{props.props.logoutSubmitHandler()}</>;
@@ -62,12 +62,12 @@ export default function Navbar(props) {
                   <NavLink
                     to="/admin"
                     fontSize="20px"
-                    style={{ "font-family": "FontAwesome" }}
+                    style={{ "fontFamily": "FontAwesome" }}
                   >
                     Desh bord
                   </NavLink>
                 ) : (
-                  <NavLink to="/blog" style={{ "font-family": "FontAwesome" }}>
+                  <NavLink to="/blog" style={{ "fontFamily": "FontAwesome" }}>
                     Blogs
                   </NavLink>
                 )}
@@ -78,10 +78,10 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register" style={{"font-family": 'inherit'}}>Register</NavLink>
+                    <NavLink to="/register" style={{"fontFamily": 'inherit'}}>Register</NavLink>
                   </MDBNavbarItem>
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/login" style={{"font-family": 'inherit'}}>Login</NavLink>
+                    <NavLink to="/login" style={{"fontFamily": 'inherit'}}>Login</NavLink>
                   </MDBNavbarItem>
                 </div>
               )}

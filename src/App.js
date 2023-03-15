@@ -10,15 +10,13 @@ import Admin from "./Blog/UI/AdminHome";
 import Protected from "./Blog/UI/Protekted.js";
 import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
+import AdminAllBlogs from "./Blog/UI/AdminAllBlog"
 function App() {
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
-  
-
-  // const [ref, setref] = useState(null);
   const [Role, setRole] = useState("");
-  const [userId, setuserId] = useState("");
+  const [userId, setuserId] = useState();
   const statusMethod = (role, id) => {
     setRole(role);
     console.log(role);
@@ -37,7 +35,7 @@ function App() {
     history("/login");
     setisLogged(false);
     setRole("user");
-    setuserId(userId);
+    setuserId(0);
     // console.log("Runned");
   };
   return (
@@ -48,7 +46,7 @@ function App() {
         <Route path="/" exact element={<div>This is Home Component</div>} />
         <Route
           path="/blog"
-          element={<DisplayData props={{ isLogged, username,userId ,Role}} />}
+          element={<DisplayData props={{ isLogged, username,userId ,password,Role}} />}
         />
         <Route path="/register" element={<Register />} />
         <Route
@@ -72,7 +70,7 @@ function App() {
           <Route
             path="blog"
             element={
-              <DisplayData props={{ isLogged, username, Role, userId }} />
+              <AdminAllBlogs props={{ isLogged, username, Role, userId }} />
             }
           />
           <Route

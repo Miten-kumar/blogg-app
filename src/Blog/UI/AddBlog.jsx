@@ -22,13 +22,15 @@ export default function AddBlog(props) {
   const [name, namechange] = useState("");
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
+  const [reload, setReload] = useState(true);
   
-
+  
   const handlesubmit = (e) => {
    
     e.preventDefault();
     console.log("wefwde");
-    const empdata = { name, email, password };
+    setReload(!reload)
+    const empdata = { name, email, password, userId:props.props };
     
     fetch("http://localhost:8000/employee", {
       method: "POST",
@@ -40,14 +42,14 @@ export default function AddBlog(props) {
         // window.location.reload()
 
         toast.success("Successfully Add Your Blog.");
+
       })
       .catch((err) => {
         console.log(err.message);
         toast.error("Failed :" + err.message);
       });
-
-    props.load(handlesubmit);
-  };
+    };
+props.load(reload)
 
   return (
     <>
