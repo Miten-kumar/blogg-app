@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddBlog(props) {
-  console.log(props);
+  console.log(props.props);
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
   const [name, namechange] = useState("");

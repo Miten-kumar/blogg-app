@@ -8,7 +8,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
-  // console.log(props);
+  console.log(props.props.userId);
   const [empdata, empdatachange] = useState([]);
 
   const [ref, setref] = useState(true);
@@ -28,7 +28,7 @@ const DisplayData = (props) => {
   };
   const Load = (function1) => {
     // console.log(function1);
-    console.log(function1);
+    // console.log(function1);
     setrelode(function1);
   };
 

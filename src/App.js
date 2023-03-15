@@ -35,7 +35,7 @@ function App() {
     history("/login");
     setisLogged(false);
     setRole("user");
-    setuserId(0);
+    
     // console.log("Runned");
   };
   return (

@@ -1,47 +1,18 @@
 {
   "employee": [
     {
-      "name": "",
-      "email": "",
-      "password": "",
+      "name": "hey i m admiaasa",
+      "email": "aasas",
+      "password": "saaaas",
       "userId": 3,
       "id": 21
     },
-
     {
       "name": "zz11a",
       "email": "zz",
       "password": "zzzaaaa",
       "userId": 2,
       "id": 42
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 0,
-      "id": 43
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 0,
-      "id": 44
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 0,
-      "id": 45
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 0,
-      "id": 46
     },
     {
       "name": "",
@@ -70,6 +41,27 @@
       "password": "asasdsds1111111111",
       "userId": 0,
       "id": 50
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 2,
+      "id": 54
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 2,
+      "id": 55
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 2,
+      "id": 57
     }
   ],
   "User": [
@@ -156,6 +148,13 @@
       "password": "miten",
       "role": "user",
       "id": 12
+    },
+    {
+      "username": "dsfg",
+      "email": "soham@wqw",
+      "password": "aaa",
+      "role": "user",
+      "id": 13
     }
   ],
   "posts": [
