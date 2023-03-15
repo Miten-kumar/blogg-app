@@ -22,6 +22,7 @@ export default function App(props) {
   const[reloade,setreload]=useState(true)
   const toggleShow = () => {
     console.log(props.props);
+    console.log(props.Myid);
     
     setname(props.props.name);
     setemail(props.props.email);
@@ -31,12 +32,13 @@ export default function App(props) {
   const UpdateUser = () => {
   props.data(reloade);
     let id = props.props.id;
-    let item = { name, email, password, id };
+    let item = { name, email, password, id ,userId:props.Myid};
     console.log(item);
     axios.put("http://localhost:8000/employee/" + id, {
       name: name,
       email:email,
       password: password,
+      userId:props.Myid
     })
     .then((response) => {
       // console.log(response);

@@ -4,131 +4,72 @@
       "name": "",
       "email": "",
       "password": "",
-      "userId": 4,
-      "id": 8
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 4,
-      "id": 9
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 3,
-      "id": 18
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 3,
-      "id": 19
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 3,
-      "id": 20
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
       "userId": 3,
       "id": 21
     },
+
     {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 4,
-      "id": 25
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
+      "name": "zz11a",
+      "email": "zz",
+      "password": "zzzaaaa",
       "userId": 2,
-      "id": 29
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 30
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 32
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 33
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "id": 34
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 35
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 36
+      "id": 42
     },
     {
       "name": "",
       "email": "",
       "password": "",
       "userId": 0,
-      "id": 37
+      "id": 43
     },
     {
       "name": "",
       "email": "",
       "password": "",
       "userId": 0,
-      "id": 38
+      "id": 44
     },
     {
       "name": "",
       "email": "",
       "password": "",
       "userId": 0,
-      "id": 39
+      "id": 45
     },
     {
       "name": "",
       "email": "",
       "password": "",
-      "id": 40
+      "userId": 0,
+      "id": 46
     },
     {
       "name": "",
       "email": "",
+      "password": "aaa",
+      "userId": 2,
+      "id": 47
+    },
+    {
+      "name": "",
+      "email": "aaaa",
       "password": "",
-      "id": 41
+      "userId": 2,
+      "id": 48
+    },
+    {
+      "name": "saddsaddsa",
+      "email": "dadsa",
+      "password": "asasdsds",
+      "userId": 0,
+      "id": 49
+    },
+    {
+      "name": "saddsaddsa",
+      "email": "dadsa",
+      "password": "asasdsds1111111111",
+      "userId": 0,
+      "id": 50
     }
   ],
   "User": [
@@ -194,6 +135,27 @@
       "password": "aaa",
       "role": "user",
       "id": 9
+    },
+    {
+      "username": "zenil",
+      "email": "miten@qqq",
+      "password": "mitem",
+      "role": "user",
+      "id": 10
+    },
+    {
+      "username": "dv",
+      "email": "miten@qqq",
+      "password": "aaaa",
+      "role": "user",
+      "id": 11
+    },
+    {
+      "username": "akhilesh",
+      "email": "soham@qqq",
+      "password": "miten",
+      "role": "user",
+      "id": 12
     }
   ],
   "posts": [

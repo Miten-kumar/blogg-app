@@ -73,7 +73,7 @@ const Myblog = (props) => {
                       <td>{item.password}</td>
                       {props.props.Role === "admin" ? (
                         <td>
-                          <Edit props={item} data={update} />
+                          <Edit props={item} data={update} Myid={props.props.userId}/>
                           <MDBBtn
                             className="btn btn-danger mx-1"
                             onClick={() => {

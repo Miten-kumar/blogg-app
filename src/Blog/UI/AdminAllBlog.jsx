@@ -28,6 +28,7 @@ const DisplayData = (props) => {
   const Load = (function1) => {
     // console.log(function1);
     console.log(function1);
+    setData1(() => function1);
     setrelode(function1);
   };
 
@@ -38,11 +39,12 @@ const DisplayData = (props) => {
       })
       .then((resp) => {
         empdatachange(resp);
+      
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode]);
+  }, [relode,Delete,ref,Data1]);
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -74,7 +76,7 @@ const DisplayData = (props) => {
                     <td>{item.password}</td>
 
                     <td>
-                      <Edit props={item} data={update} />
+                      <Edit props={item} data={update} Myid={props.props.userId}/>
                       <MDBBtn
                         className="btn btn-danger mx-1"
                         onClick={() => {

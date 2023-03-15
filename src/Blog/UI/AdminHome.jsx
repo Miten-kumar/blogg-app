@@ -37,7 +37,7 @@ export default function MultiActionAreaCard() {
                 <CardActions>
                   <NavLink to="/admin/blog">
                     <Button size="small" color="primary">
-                     <DescriptionOutlinedIcon className="mx-2"/>Blogs
+                     <DescriptionOutlinedIcon className="mx-2"/>AllBlogs
                     </Button>
                   </NavLink>
                 </CardActions>
