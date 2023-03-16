@@ -13,7 +13,6 @@ export default function  App(props) {
   // console.log(props.logout);
   return (
     <MDBDropdown>
-    <Tooltip title="More info" arrow>
       <MDBPopover
         className="mx-2 "
         rounded
@@ -34,7 +33,7 @@ export default function  App(props) {
         </MDBBtn>
         
         </Tooltip>
-      </MDBPopover></Tooltip>
+      </MDBPopover>
     </MDBDropdown>
   );
 }

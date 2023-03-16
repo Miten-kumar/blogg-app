@@ -23,13 +23,12 @@ function App() {
     console.log(id);
     setuserId(id);
   };
-// console.log((localStorage.getItem('Token')).username);
+
   const status = (data, user,password) => {
     setisLogged(data);
     setUsername(user);
     setpassword(password)
-    // console.log(username);
-    // console.log(data);
+   
   };
   const history = useNavigate();
   const logoutSubmitHandler = () => {
@@ -38,10 +37,12 @@ function App() {
     setRole("user");
     setuserId(null);
 localStorage.clear()
-    // console.log("Runned");
+
   };
   return (
     <>
+   
+
       <Navbar props={{ isLogged, username, logoutSubmitHandler, Role,isLoged}} />
 
       <Routes>
@@ -83,6 +84,7 @@ localStorage.clear()
       </Routes>
 
       <Outlet />
+    
     </>
   );
 }

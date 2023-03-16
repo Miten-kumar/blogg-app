@@ -46,7 +46,7 @@ const navigate = useNavigate()
     <div className="container w-50 mt-5  bg-light" style={{boxShadow:"2px 2px 20px black"}}>
       <form onSubmit={handlesubmit}>
         <div className="text-center mb-3">
-          <p>Sign un with</p>
+          <p>Sign up </p>
 
           <div
             className="d-flex justify-content-between mx-auto"

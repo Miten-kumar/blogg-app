@@ -43,7 +43,7 @@ const Users = () => {
   }, [reloade]);
 
   return (
-    <div className="container p-0 mt-2">
+    <div className="container my-3 border p-4" >
       <table className="table table-hover table-primary text-center">
         <thead>
           <tr>

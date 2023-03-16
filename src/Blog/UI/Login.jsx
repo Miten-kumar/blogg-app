@@ -93,7 +93,7 @@ export default function Login(props) {
     >
       <form onSubmit={ProceedLogin}>
         <div className="text-center  mb-3 ">
-          <p>Sign in with:</p>
+          <p>Sign in </p>
 
           <div
             className="d-flex justify-content-between mx-auto"

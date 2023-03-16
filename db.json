@@ -29,27 +29,6 @@
       "id": 48
     },
     {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 54
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 55
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 57
-    },
-    {
       "name": "miten",
       "email": "sdffgh@fhkjgjh",
       "password": "",
@@ -111,13 +90,6 @@
       "password": "",
       "userId": 1,
       "id": 75
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 76
     }
   ],
   "User": [
