@@ -17,12 +17,13 @@ import { FcHome } from "react-icons/fc";
 import LogedBtn from "./Logedbtn";
 
 export default function Navbar(props) {
-  const Name = props.props.username.charAt(0);
+  console.log(props);
+  const Name = props.props.username.charAt(0) ;
   // console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();
   // console.log(firstLetter);
   // console.log(props.props.Role);
-  console.log();
+  // console.log(props.props.isLoged);
   const func = () => {
     return <>{props.props.logoutSubmitHandler()}</>;
   };
@@ -73,7 +74,7 @@ export default function Navbar(props) {
                 )}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
-              {props.props.isLogged === true ? (
+              {props.props.isLogged===true || props.props.isLoged=== true ? (
                 <LogedBtn props={firstLetter} logout={func} />
               ) : (
                 <div className="d-flex ">

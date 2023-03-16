@@ -104,6 +104,20 @@
       "password": "aa",
       "userId": 14,
       "id": 74
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 1,
+      "id": 75
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 2,
+      "id": 76
     }
   ],
   "User": [
@@ -125,7 +139,7 @@
       "username": "adi",
       "password": "aaa",
       "email": "soham@dfssf",
-      "role": "admin",
+      "role": "user",
       "id": 3
     },
     {

@@ -8,6 +8,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const Myblog = (props) => {
   console.log(props.props.userId);
+  console.log(props.props.isLoged );
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
@@ -44,7 +45,7 @@ const Myblog = (props) => {
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true ? (
+        {props.props.isLogged === true || props.props.isLoged  ? (
           <AddBlog load={Load} props={props.props.userId} />
         ) : (
           <></>

@@ -12,17 +12,18 @@ import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog"
 function App() {
+  const isLoged = JSON.parse(localStorage.getItem('isLoggedIn'))
   const [isLogged, setisLogged] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setpassword] = useState("");
-  const [Role, setRole] = useState("");
-  const [userId, setuserId] = useState();
+  const [username, setUsername] = useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).username : '');
+  const [password, setpassword] = useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).password : '');
+  const [Role, setRole] =useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).role : '');
+  const [userId, setuserId] =useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).id : '');
   const statusMethod = (role, id) => {
     setRole(role);
     console.log(id);
     setuserId(id);
   };
-
+// console.log((localStorage.getItem('Token')).username);
   const status = (data, user,password) => {
     setisLogged(data);
     setUsername(user);
@@ -36,18 +37,18 @@ function App() {
     setisLogged(false);
     setRole("user");
     setuserId(null);
-
+localStorage.clear()
     // console.log("Runned");
   };
   return (
     <>
-      <Navbar props={{ isLogged, username, logoutSubmitHandler, Role}} />
+      <Navbar props={{ isLogged, username, logoutSubmitHandler, Role,isLoged}} />
 
       <Routes>
-        <Route path="/" exact element={<div>This is Home Component</div>} />
+        <Route path="/"  element={<div>This is Home Component</div>} />
         <Route
           path="/blog"
-          element={<DisplayData props={{ isLogged, username,userId ,password,Role}} />}
+          element={<DisplayData props={{ isLogged, username,userId ,password,Role,isLoged}} />}
         />
         <Route path="/register" element={<Register />} />
         <Route
@@ -61,7 +62,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <Protected isLogged={isLogged}>
+            <Protected isLogged={{isLogged,isLoged}}>
               <Admin />
             </Protected>
           }
@@ -71,12 +72,12 @@ function App() {
           <Route
             path="blog"
             element={
-              <AdminAllBlogs props={{ isLogged, username, Role, userId }} />
+              <AdminAllBlogs props={{ isLogged, username, Role, userId,isLoged }} />
             }
           />
           <Route
             path="myblog"
-            element={<MyBlog props={{ isLogged, username, Role, userId }} />}
+            element={<MyBlog props={{ isLogged, username, Role, userId ,isLoged}} />}
           />
         </Route>
       </Routes>

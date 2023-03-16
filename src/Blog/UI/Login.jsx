@@ -26,11 +26,14 @@ export default function Login(props) {
             (user) => user.username === username && user.password === password
           ).role === "admin"
         ) {
+          const validate = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          );
           let role = resp["data"].find(
             (user) => user.username === username && user.password === password
           ).role;
-
-          // console.log(role);
+          localStorage.setItem("Token", JSON.stringify(validate));
+          localStorage.setItem("isLoggedIn", true);
 
           let id = resp["data"].find(
             (user) => user.username === username && user.password === password
@@ -43,30 +46,36 @@ export default function Login(props) {
           setTimeout(() => {
             navigate("/admin/blog");
           }, 1000);
-          props.props(isLoggedIn, username,password);
+          props.props(isLoggedIn, username, password);
         } else if (
           resp["data"].find(
             (user) => user.username === username && user.password === password
           )
         ) {
           isLoggedIn = true;
+          const validate = resp["data"].find(
+            (user) => user.username === username && user.password === password
+          );
+          localStorage.setItem("Token", JSON.stringify(validate));
+          localStorage.setItem("isLoggedIn", true);
           let id = resp["data"].find(
             (user) => user.username === username && user.password === password
           ).id;
           let role = resp["data"].find(
             (user) => user.username === username && user.password === password
           ).role;
+
           props.statusMethod(role, id);
           toast.success(username + " you loged in");
           setTimeout(() => {
             navigate("/blog");
           }, 1000);
-          props.props(isLoggedIn, username,password);
+          props.props(isLoggedIn, username, password);
         } else {
           isLoggedIn = false;
           let role = null;
           let id = null;
-          props.props(isLoggedIn, username,password);
+          props.props(isLoggedIn, username, password);
           props.statusMethod(role, id);
           toast.error("something went wrong");
         }

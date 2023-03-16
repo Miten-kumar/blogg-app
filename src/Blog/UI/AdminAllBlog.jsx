@@ -40,18 +40,16 @@ const DisplayData = (props) => {
       })
       .then((resp) => {
         empdatachange(resp);
-      
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode,Delete,ref,Data1]);
+  }, [relode, Delete, ref, Data1]);
   return (
     <div className="container my-3 border ">
-   
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true ? (
+        {props.props.isLogged === true || props.props.isLoged === true ? (
           <AddBlog load={Load} props={props.props.userId} />
         ) : (
           <></>
@@ -78,7 +76,11 @@ const DisplayData = (props) => {
                     <td>{item.password}</td>
 
                     <td>
-                      <Edit props={item} data={update} Myid={props.props.userId}/>
+                      <Edit
+                        props={item}
+                        data={update}
+                        Myid={props.props.userId}
+                      />
                       <MDBBtn
                         className="btn btn-danger mx-1"
                         onClick={() => {

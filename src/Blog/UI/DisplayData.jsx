@@ -9,6 +9,8 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
   console.log(props.props.userId);
+  console.log(props.props.isLoged);
+
   const [empdata, empdatachange] = useState([]);
 
   const [ref, setref] = useState(true);
@@ -48,7 +50,7 @@ const DisplayData = (props) => {
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true ? (
+        {props.props.isLogged === true || props.props.isLoged === true ?(
           <>
             <AddBlog load={Load} props={props.props.userId} />
             <div className="card-body">
@@ -65,7 +67,7 @@ const DisplayData = (props) => {
                 <tbody className="table-primary">
                   {empdata &&
                     empdata
-                      .filter((blog) => blog.userId === props.props.userId)
+                      .filter((blog) => blog.userId === props.props.userId )
                       .map((item) => (
                         <tr key={item.id}>
                           <td>{item.id}</td>
