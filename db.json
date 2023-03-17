@@ -90,6 +90,20 @@
       "password": "",
       "userId": 1,
       "id": 75
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 1,
+      "id": 76
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 18,
+      "id": 77
     }
   ],
   "User": [
@@ -190,6 +204,41 @@
       "password": "soham",
       "role": "user",
       "id": 14
+    },
+    {
+      "username": "soham",
+      "email": "miten2SAD@sdfsfg",
+      "password": "aaa",
+      "role": "user",
+      "id": 15
+    },
+    {
+      "username": "soham",
+      "email": "miten@qqq",
+      "password": "qqqq",
+      "role": "user",
+      "id": 16
+    },
+    {
+      "username": "soham",
+      "email": "miten@qqq",
+      "password": "wwww",
+      "role": "user",
+      "id": 17
+    },
+    {
+      "username": "soham",
+      "email": "miten@qq",
+      "password": "aaaqqq",
+      "role": "user",
+      "id": 18
+    },
+    {
+      "username": "soham",
+      "email": "miten@wwwww",
+      "password": "aaa",
+      "role": "user",
+      "id": 19
     }
   ],
   "posts": [
