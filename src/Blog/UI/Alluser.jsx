@@ -70,13 +70,23 @@ const Users = () => {
                 <th scope="col">{elem.email}</th>
                 <th scope="col">{elem.role}</th>
                 <th scope="col">
-                  <MDBDropdown >
-                    <MDBDropdownToggle  color="danger">
+                  <MDBDropdown>
+                    <MDBDropdownToggle color="danger">
                       ChangeRole
                     </MDBDropdownToggle>
-                    <MDBDropdownMenu >
-                      <MDBDropdownItem   link  onClick={() => ChangeRole(elem, elem.id)}>User</MDBDropdownItem>
-                      <MDBDropdownItem link onClick={() => ChangeRole(elem, elem.id)}>admin</MDBDropdownItem>
+                    <MDBDropdownMenu>
+                      <MDBDropdownItem
+                        link
+                        onClick={() => ChangeRole(elem, elem.id)}
+                      >
+                        User
+                      </MDBDropdownItem>
+                      <MDBDropdownItem
+                        link
+                        onClick={() => ChangeRole(elem, elem.id)}
+                      >
+                        admin
+                      </MDBDropdownItem>
                     </MDBDropdownMenu>
                   </MDBDropdown>
                 </th>

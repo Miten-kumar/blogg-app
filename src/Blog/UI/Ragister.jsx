@@ -1,7 +1,7 @@
 import { MDBBtn, MDBCheckbox, MDBIcon, MDBInput } from "mdb-react-ui-kit";
 import React from "react";
 import { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +32,11 @@ export default function Register() {
   const handlesubmit = (e) => {
     e.preventDefault();
     dispatch(addData(Data));
-    navigate("/login");
+    // navigate("/login");
+    toast.success("Successfully signed up. Please login.");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
     console.log("wefwde");
     // const empdata = { username, email, password , role : 'user'};
     // console.log(empdata);

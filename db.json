@@ -219,27 +219,7 @@
       "role": "user",
       "id": 16
     },
-    {
-      "username": "soham",
-      "email": "miten@qqq",
-      "password": "wwww",
-      "role": "user",
-      "id": 17
-    },
-    {
-      "username": "soham",
-      "email": "miten@qq",
-      "password": "aaaqqq",
-      "role": "user",
-      "id": 18
-    },
-    {
-      "username": "soham",
-      "email": "miten@wwwww",
-      "password": "aaa",
-      "role": "user",
-      "id": 19
-    }
+   
   ],
   "posts": [
     {
