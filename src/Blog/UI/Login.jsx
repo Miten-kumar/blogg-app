@@ -16,7 +16,7 @@ export default function Login(props) {
     e.preventDefault();
     // console.log("proceed");
     axios
-      .get("http://localhost:8000/User")
+      .get("http://localhost:5000/get")
       .then((resp) => {
         if (
           resp["data"].find(

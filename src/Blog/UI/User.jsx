@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Users = (props) => {
   const [state, setState] = useState([]);
-  const reloade = useState(true);
+  const [reloade,setrelode] = useState(true);
 
   console.log(props.password);
 

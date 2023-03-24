@@ -13,16 +13,15 @@ export default function Register() {
   const [password, passwordchange] = useState("");
   const dispatch = useDispatch();
   const status = useSelector((state) => state.users);
-  // console.log(status);
 
   const navigate = useNavigate();
 
-  const Data = {
-    username: username,
-    email: email,
-    password: password,
-    role: "user",
-  };
+  // const Data = {
+  //   username: username,
+  //   email: email,
+  //   password: password,
+  //   role: "user",
+  // };
   useEffect(() => {
     namechange("");
     emailchange("");
@@ -31,33 +30,35 @@ export default function Register() {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    dispatch(addData(Data));
-    // navigate("/login");
-    toast.success("Successfully signed up. Please login.");
-    setTimeout(() => {
-      navigate("/login");
-    }, 1500);
-    console.log("wefwde");
-    // const empdata = { username, email, password , role : 'user'};
-    // console.log(empdata);
-    //   fetch("http://localhost:8000/User", {
-    //     method: "POST",
-    //     headers: { "content-type": "application/json" },
-    //     body: JSON.stringify(empdata),
-    //   })
-    //     .then((res) => {
-    //       toast.success("Successfully signed up. Please login.");
-    //       setTimeout(() => {
-    //         navigate("/login")
+    // dispatch(addData(Data));
+    // toast.success("Successfully signed up. Please login.");
+    // setTimeout(() => {
+    //   navigate("/login");
+    // }, 1500);
 
-    //       }, 1000);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.message);
-    //       toast.error("Failed :" + err.message);
-    //     });
-    // };
+    console.log("wefwde");
+    const empdata = { username, email, password , role : 'user'};
+    console.log(empdata);
+      fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(empdata),
+      })
+        .then((res) => {
+          toast.success("Successfully signed up. Please login.");
+          setTimeout(() => {
+            navigate("/login")
+
+          }, 1000);
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast.error("Failed :" + err.message);
+        });
+    
   };
+
+  
   return (
     <div
       className="container w-50 mt-5  bg-light"

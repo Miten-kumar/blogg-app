@@ -13,7 +13,7 @@ const Users = () => {
   const ChangeRole = (props, id) => {
     if (props.role === "admin") {
       axios
-        .put("http://localhost:8000/User/" + id, {
+        .put("http://localhost:5000/update/" + id, {
           username: props.username,
           password: props.password,
           email: props.email,
@@ -26,7 +26,7 @@ const Users = () => {
         });
     } else {
       axios
-        .put("http://localhost:8000/User/" + id, {
+        .put("http://localhost:5000/update/" + id, {
           username: props.username,
           password: props.password,
           email: props.email,
@@ -41,7 +41,7 @@ const Users = () => {
     }
   };
   useEffect(() => {
-    axios.get("http://localhost:8000/User").then((response) => {
+    axios.get("http://localhost:5000/get").then((response) => {
       // console.log(response['data']);
       setState([...response["data"]]);
     });
