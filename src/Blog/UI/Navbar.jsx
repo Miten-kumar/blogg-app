@@ -65,11 +65,11 @@ export default function Navbar(props) {
                     fontSize="20px"
                     style={{ "fontFamily": "FontAwesome" }}
                   >
-                    Desh bord
+                          DESH BORD
                   </NavLink>
                 ) : (
                   <NavLink to="/blog" style={{ "fontFamily": "FontAwesome" }}>
-                    Blogs
+                    BLOGS
                   </NavLink>
                 )}
               </MDBNavbarItem>
