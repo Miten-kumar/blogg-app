@@ -30,7 +30,7 @@ const Myblog = (props) => {
     setData1(() => function1);
   };
   useEffect(() => {
-    fetch("http://localhost:8000/employee")
+    fetch("http://localhost:5000/getblogs")
       .then((res) => {
         return res.json();
       })

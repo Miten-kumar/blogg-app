@@ -32,7 +32,7 @@ export default function AddBlog(props) {
     setReload(!reload)
     const empdata = { name, email, password, userId:props.props };
     
-    fetch("http://localhost:8000/employee", {
+    fetch("http://localhost:5000/addblogs", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(empdata),
