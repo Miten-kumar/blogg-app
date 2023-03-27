@@ -8,16 +8,16 @@ import { MDBBtn } from "mdb-react-ui-kit";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const DisplayData = (props) => {
-  console.log(props.props.userId);
-  console.log(props.props.isLoged);
+  // console.log(props.props.userId);
+  // console.log(props.props.isLoged);
 
   const [empdata, empdatachange] = useState([]);
 
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
   const [relode, setrelode] = useState(true);
-  const Remove = (id) => {
-    axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
+  const Remove = (_id) => {
+    axios.delete(`http://localhost:5000/delete/${_id}`).then((res) => {
       toast.error("Deleted!!!");
       console.log(res);
       // console.log(res.data);
@@ -45,12 +45,12 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode, Delete,ref]);
+  }, [relode, Delete, ref]);
   return (
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true || props.props.isLoged === true ?(
+        {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
             <AddBlog load={Load} props={props.props.userId} />
             <div className="card-body">
@@ -67,9 +67,9 @@ const DisplayData = (props) => {
                 <tbody className="table-primary">
                   {empdata &&
                     empdata
-                      .filter((blog) => blog.userId === props.props.userId )
+                      .filter((blog) => blog.userId === props.props.userId)
                       .map((item) => (
-                        <tr key={item.id}>
+                        <tr key={item._id}>
                           <td>{item.id}</td>
                           <td>{item.name}</td>
                           <td>{item.email}</td>
@@ -85,7 +85,7 @@ const DisplayData = (props) => {
                               <MDBBtn
                                 className="btn btn-danger mx-1"
                                 onClick={() => {
-                                  Remove(item.id);
+                                  Remove(item._id);
                                 }}
                               >
                                 <DeleteForeverOutlinedIcon />
@@ -114,7 +114,7 @@ const DisplayData = (props) => {
                 <tbody className="table-primary">
                   {empdata &&
                     empdata.map((item) => (
-                      <tr key={item.id}>
+                      <tr key={item._id}>
                         <td>{item.id}</td>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
@@ -128,7 +128,6 @@ const DisplayData = (props) => {
         )}
       </div>
     </div>
-    
   );
 };
 

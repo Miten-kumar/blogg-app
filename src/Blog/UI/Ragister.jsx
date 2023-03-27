@@ -37,28 +37,25 @@ export default function Register() {
     // }, 1500);
 
     console.log("wefwde");
-    const empdata = { username, email, password , role : 'user'};
+    const empdata = { username, email, password, role: "user" };
     console.log(empdata);
-      fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(empdata),
+    fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(empdata),
+    })
+      .then((res) => {
+        toast.success("Successfully signed up. Please login.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
-        .then((res) => {
-          toast.success("Successfully signed up. Please login.");
-          setTimeout(() => {
-            navigate("/login")
-
-          }, 1000);
-        })
-        .catch((err) => {
-          console.log(err.message);
-          toast.error("Failed :" + err.message);
-        });
-    
+      .catch((err) => {
+        console.log(err.message);
+        toast.error("Failed :" + err.message);
+      });
   };
 
-  
   return (
     <div
       className="container w-50 mt-5  bg-light"

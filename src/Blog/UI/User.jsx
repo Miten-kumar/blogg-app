@@ -3,12 +3,10 @@ import axios from "axios";
 
 const Users = (props) => {
   const [state, setState] = useState([]);
-  const [reloade,setrelode] = useState(true);
-
-  console.log(props.password);
+  const [reloade, setrelode] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/User").then((response) => {
+    axios.get("http://localhost:5000/get").then((response) => {
       //   console.log(response['data']);
       setState([...response["data"]]);
     });
@@ -34,7 +32,7 @@ const Users = (props) => {
             )
             .map((elem) => {
               return (
-                <tr key={elem.id} className="p-0">
+                <tr key={elem._id} className="p-0">
                   <th scope="col">{elem.id}</th>
                   <th scope="col">{elem.username}</th>
 

@@ -7,14 +7,14 @@ import { toast } from "react-toastify";
 import { MDBBtn } from "mdb-react-ui-kit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 const Myblog = (props) => {
-  console.log(props.props.userId);
-  console.log(props.props.isLoged );
+  // console.log(props.props.userId);
+  // console.log(props.props.isLoged);
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
-  const Remove = (id) => {
-    axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
+ const Remove = (_id) => {
+    axios.delete(`http://localhost:5000/delete/${_id}`).then((res) => {
       toast.error("Deleted!!!");
       console.log(res);
       // console.log(res.data);
@@ -45,7 +45,7 @@ const Myblog = (props) => {
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true || props.props.isLoged  ? (
+        {props.props.isLogged === true || props.props.isLoged ? (
           <AddBlog load={Load} props={props.props.userId} />
         ) : (
           <></>
@@ -67,18 +67,22 @@ const Myblog = (props) => {
                 empdata
                   .filter((blog) => blog.userId === props.props.userId)
                   .map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item._id}>
                       <td>{item.id}</td>
                       <td>{item.name}</td>
                       <td>{item.email}</td>
                       <td>{item.password}</td>
                       {props.props.Role === "admin" ? (
                         <td>
-                          <Edit props={item} data={update} Myid={props.props.userId}/>
+                          <Edit
+                            props={item}
+                            data={update}
+                            Myid={props.props.userId}
+                          />
                           <MDBBtn
                             className="btn btn-danger mx-1"
                             onClick={() => {
-                              Remove(item.id);
+                              Remove(item._id);
                             }}
                           >
                             <DeleteForeverOutlinedIcon />

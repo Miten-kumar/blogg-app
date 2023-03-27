@@ -7,7 +7,7 @@ import Login from "./Blog/UI/Login.jsx";
 import Alluser from "./Blog/UI/Alluser";
 import { useNavigate } from "react-router-dom";
 import Admin from "./Blog/UI/AdminHome";
-import Protected from "./Blog/UI/Protekted.js";
+import Protected from "./Blog/UI/Protected";
 import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog"
@@ -17,11 +17,11 @@ function App() {
   const [username, setUsername] = useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).username : '');
   const [password, setpassword] = useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).password : '');
   const [Role, setRole] =useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).role : '');
-  const [userId, setuserId] =useState(isLoged === true ? JSON.parse(localStorage.getItem('Token')).id : '');
-  const statusMethod = (role, id) => {
+  const [userId, setuserId] =useState(isLoged === true ? JSON.parse(localStorage.getItem('Token'))._id : '');
+  const statusMethod = (role, _id) => {
     setRole(role);
-    console.log(id);
-    setuserId(id);
+    // console.log(_id);
+    setuserId(_id);
   };
 
   const status = (data, user,password) => {

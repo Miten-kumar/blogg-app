@@ -35,12 +35,12 @@ export default function Login(props) {
           localStorage.setItem("Token", JSON.stringify(validate));
           localStorage.setItem("isLoggedIn", true);
 
-          let id = resp["data"].find(
+          let _id = resp["data"].find(
             (user) => user.username === username && user.password === password
-          ).id;
-          console.log(id);
+          )._id;
+          // console.log(_id);
           isLoggedIn = true;
-          props.statusMethod(role, id);
+          props.statusMethod(role, _id);
 
           toast.success(username + " As a ADMIN  loged in");
           setTimeout(() => {
@@ -58,14 +58,14 @@ export default function Login(props) {
           );
           localStorage.setItem("Token", JSON.stringify(validate));
           localStorage.setItem("isLoggedIn", true);
-          let id = resp["data"].find(
+          let _id = resp["data"].find(
             (user) => user.username === username && user.password === password
-          ).id;
+          )._id;
           let role = resp["data"].find(
             (user) => user.username === username && user.password === password
           ).role;
 
-          props.statusMethod(role, id);
+          props.statusMethod(role, _id);
           toast.success(username + " you loged in");
           setTimeout(() => {
             navigate("/blog");
@@ -74,9 +74,9 @@ export default function Login(props) {
         } else {
           isLoggedIn = false;
           let role = null;
-          let id = null;
+          let _id = null;
           props.props(isLoggedIn, username, password);
-          props.statusMethod(role, id);
+          props.statusMethod(role, _id);
           toast.error("something went wrong");
         }
       })
@@ -143,14 +143,14 @@ export default function Login(props) {
         <MDBInput
           wrapperClass="mb-4"
           label="UserName"
-          id="form1"
+          _id="form1"
           value={username}
           onChange={(e) => usernameupdate(e.target.value)}
         />
         <MDBInput
           wrapperClass="mb-4"
           label="Password"
-          id="form2"
+          _id="form2"
           type="password"
           value={password}
           onChange={(e) => passwordupdate(e.target.value)}
@@ -160,7 +160,7 @@ export default function Login(props) {
           <MDBCheckbox
             name="flexCheck"
             value=""
-            id="flexCheckDefault"
+            _id="flexCheckDefault"
             label="Remember me"
           />
           <a href="!#">Forgot password?</a>

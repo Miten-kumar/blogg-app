@@ -10,10 +10,10 @@ import {
 const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setreload] = useState(true);
-  const ChangeRole = (props, id) => {
+  const ChangeRole = (props, _id) => {
     if (props.role === "admin") {
       axios
-        .put("http://localhost:5000/update/" + id, {
+        .put("http://localhost:5000/update/" + _id, {
           username: props.username,
           password: props.password,
           email: props.email,
@@ -26,7 +26,7 @@ const Users = () => {
         });
     } else {
       axios
-        .put("http://localhost:5000/update/" + id, {
+        .put("http://localhost:5000/update/" + _id, {
           username: props.username,
           password: props.password,
           email: props.email,
@@ -62,8 +62,9 @@ const Users = () => {
         </thead>
         <tbody>
           {state.map((elem) => {
+            
             return (
-              <tr key={elem.id} className="p-0">
+              <tr key={elem._id} className="p-0">
                 <th scope="col">{elem.id}</th>
                 <th scope="col">{elem.username}</th>
 
@@ -77,13 +78,13 @@ const Users = () => {
                     <MDBDropdownMenu>
                       <MDBDropdownItem
                         link
-                        onClick={() => ChangeRole(elem, elem.id)}
+                        onClick={() => ChangeRole(elem, elem._id)}
                       >
                         User
                       </MDBDropdownItem>
                       <MDBDropdownItem
-                        link
-                        onClick={() => ChangeRole(elem, elem.id)}
+                        link  
+                        onClick={() => ChangeRole(elem, elem._id)}
                       >
                         admin
                       </MDBDropdownItem>
