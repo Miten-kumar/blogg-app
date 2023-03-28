@@ -50,7 +50,7 @@ export default function AddBlog(props) {
   return (
     <>
       <ToastContainer />
-      <MDBBtn className="mx-1 mt-4 " color="info" onClick={toggleshow}>
+      <MDBBtn className="mx-4 mt-4 w-25" color="info" onClick={toggleshow}>
         ADD Blog<sup>+</sup>
       </MDBBtn>
       <form onSubmit={handlesubmit}>
@@ -93,7 +93,7 @@ export default function AddBlog(props) {
             </MDBModalContent>
           </MDBModalDialog>
         </MDBModal>
-      </form>
+      </form> 
     </>
   );
 }

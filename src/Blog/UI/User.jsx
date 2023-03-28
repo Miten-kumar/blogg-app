@@ -30,10 +30,10 @@ const Users = (props) => {
               (ele) =>
                 ele.username === props.props && ele.password === props.password
             )
-            .map((elem) => {
+            .map((elem,index) => {
               return (
                 <tr key={elem._id} className="p-0">
-                  <th scope="col">{elem.id}</th>
+                  <th scope="col">{index+1}</th>
                   <th scope="col">{elem.username}</th>
 
                   <th scope="col">{elem.email}</th>

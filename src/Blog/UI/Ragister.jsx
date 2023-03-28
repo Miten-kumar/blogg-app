@@ -3,7 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "./Store/UserSlice";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ export default function Register() {
   const [username, namechange] = useState("");
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
+  const [Error, setError] = useState(false);
   const dispatch = useDispatch();
   const status = useSelector((state) => state.users);
 
@@ -35,6 +37,11 @@ export default function Register() {
     // setTimeout(() => {
     //   navigate("/login");
     // }, 1500);
+
+    if (!username || !email || !password) {
+      setError(true);
+      return false;
+    }
 
     console.log("wefwde");
     const empdata = { username, email, password, role: "user" };
@@ -118,7 +125,18 @@ export default function Register() {
           id="form3"
           type="text"
         />
-
+        {Error && !username && (
+          <Stack
+            sx={{ width: "100%" }}
+            style={{ "margin-top": "-21px", "margin-bottom": "8px" }}
+          >
+            {" "}
+            <Alert variant="outlined" severity="warning">
+              {" "}
+              Please filled Username !
+            </Alert>
+          </Stack>
+        )}
         <MDBInput
           wrapperClass="mb-4"
           label="Email"
@@ -127,6 +145,17 @@ export default function Register() {
           id="form4"
           type="email"
         />
+        {Error && !email && (
+          <Stack
+            sx={{ width: "100%" }}
+            style={{ "margin-top": "-21px", "margin-bottom": "8px" }}
+          >
+            {" "}
+            <Alert variant="outlined" severity="warning">
+              Please filled Email !
+            </Alert>
+          </Stack>
+        )}
         <MDBInput
           wrapperClass="mb-4"
           label="Password"
@@ -135,6 +164,17 @@ export default function Register() {
           onChange={(e) => passwordchange(e.target.value)}
           type="password"
         />
+        {Error && !password && (
+          <Stack
+            sx={{ width: "100%" }}
+            style={{ "margin-top": "-21px", "margin-bottom": "8px" }}
+          >
+            {" "}
+            <Alert variant="outlined" severity="warning">
+              Please filled Password !
+            </Alert>
+          </Stack>
+        )}
         <div className="d-flex justify-content-center mb-4">
           <MDBCheckbox
             name="flexCheck"

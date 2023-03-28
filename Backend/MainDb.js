@@ -43,4 +43,15 @@ app.delete("/delete/:_id", async (req, res) => {
   let data = await blog.deleteOne(req.params);
   res.send(data);
 });
+app.get("/search/:key", async (req, res) => {
+  let data = await blog.find({
+   $or: [
+      { name: { $regex: req.params.key } },
+      { password: { $regex: req.params.key } },
+      { email: { $regex: req.params.key } },
+    ],
+  });
+  res.send(data);
+});
+
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

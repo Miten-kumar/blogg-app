@@ -61,11 +61,11 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((elem) => {
+          {state.map((elem,index) => {
             
             return (
               <tr key={elem._id} className="p-0">
-                <th scope="col">{elem.id}</th>
+                <th scope="col">{index+1}</th>
                 <th scope="col">{elem.username}</th>
 
                 <th scope="col">{elem.email}</th>
