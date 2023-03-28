@@ -17,7 +17,7 @@ import { FcHome } from "react-icons/fc";
 import LogedBtn from "./Logedbtn";
 
 export default function Navbar(props) {
-  console.log(props);
+  // console.log(props);
   const Name = props.props.username.charAt(0) ;
   // console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();

@@ -26,7 +26,7 @@ export default function  App(props) {
         <ExitToAppIcon/>
         </MDBBtn>
         </Tooltip>
-        <Tooltip title="INFO" arrow>
+        <Tooltip title="PROFILE" arrow>
         <MDBBtn onClick={Details} className="p-2 mx-2" color="info">
           
         <InfoIcon/> 

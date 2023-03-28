@@ -206,7 +206,7 @@
       "id": 14
     },
     {
-      "username": "soham",
+      "username": "sohambhau",
       "email": "miten2SAD@sdfsfg",
       "password": "aaa",
       "role": "user",
@@ -219,22 +219,5 @@
       "role": "user",
       "id": 16
     }
-  ],
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
