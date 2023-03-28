@@ -1,41 +1,36 @@
 import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
-import Edit from "./Edit";
-import ViewDetails from "./ViewMore";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { MDBBtn } from "mdb-react-ui-kit";
+import { Form } from "react-bootstrap";
 
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { Input } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 const DisplayData = (props) => {
-  console.log(props.props.userId);
-  console.log(props.props.isLoged);
-
   const [empdata, empdatachange] = useState([]);
 
-  const [ref, setref] = useState(true);
-  const [Delete, removeDelete] = useState(true);
   const [relode, setrelode] = useState(true);
-  const Remove = (id) => {
-    axios.delete(`http://localhost:8000/employee/${id}`).then((res) => {
-      toast.error("Deleted!!!");
-      console.log(res);
-      // console.log(res.data);
-      removeDelete(!Delete);
-    });
-  };
-  const update = (function2) => {
-    setref(!function2);
-    toast.success("ADDED!!!");
-  };
+
   const Load = (function1) => {
-    // console.log(function1);
-    // console.log(function1);
     setrelode(function1);
   };
+  const searchHandle = async (e) => {
+    let key = e.target.value;
+    console.log(key);
+    if (key) {
+      let result = await fetch(`http://localhost:5000/search/${key}`);
+      result = await result.json();
 
+      if (result) {
+        empdatachange(result);
+      } else {
+        DisplayData()
+      }
+    }
+  };
   useEffect(() => {
-    fetch("http://localhost:8000/employee")
+    fetch("http://localhost:5000/getblogs")
       .then((res) => {
         return res.json();
       })
@@ -45,58 +40,60 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode, Delete,ref]);
+  }, [relode]);
   return (
     <div className="container my-3 border ">
       <div className="card">
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true || props.props.isLoged === true ?(
+        {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
-            <AddBlog load={Load} props={props.props.userId} />
+            <div className="d-flex">
+              <AddBlog load={Load} props={props.props.userId} />
+              <Form className="w-25 mt-4 ">
+                <Input
+                  type="search"
+                  startAdornment={<SearchOutlinedIcon />}
+                  placeholder="serach..."
+                  onChange={searchHandle}
+                  aria-label="Search"
+                ></Input>
+              </Form>
+            </div>
             <div className="card-body">
-              <table className="table table-bordered ">
-                <thead className="table table-hover table-primary text-center">
-                  <tr>
-                    <td>No.</td>
-                    <td> Name</td>
-                    <td>category</td>
-                    <td>massage</td>
-                    {props.props.Role === "admin" ? <td>Actions</td> : null}
-                  </tr>
-                </thead>
-                <tbody className="table-primary">
-                  {empdata &&
-                    empdata
-                      .filter((blog) => blog.userId === props.props.userId )
-                      .map((item) => (
-                        <tr key={item.id}>
-                          <td>{item.id}</td>
-                          <td>{item.name}</td>
-                          <td>{item.email}</td>
-                          <td>{item.password}</td>
-
-                          {props.props.Role === "admin" ? (
-                            <td>
-                              <Edit
-                                props={item}
-                                data={update}
-                                Myid={props.props.userId}
-                              />
-                              <MDBBtn
-                                className="btn btn-danger mx-1"
-                                onClick={() => {
-                                  Remove(item.id);
-                                }}
-                              >
-                                <DeleteForeverOutlinedIcon />
-                              </MDBBtn>
-                              <ViewDetails props={item} />
-                            </td>
-                          ) : null}
-                        </tr>
-                      ))}
-                </tbody>
-              </table>
+              {empdata.length > 0 ? (
+                <table className="table table-bordered ">
+                  <thead className="table table-hover table-primary text-center">
+                    <tr>
+                      <td>No.</td>
+                      <td> Name</td>
+                      <td>category</td>
+                      <td>massage</td>
+                    </tr>
+                  </thead>
+                  <tbody className="table-primary">
+                    {empdata &&
+                      empdata
+                        .filter((blog) => blog.userId === props.props.userId)
+                        .map((item, index) => (
+                          <tr key={item._id}>
+                            <td>{index + 1}</td>
+                            <td>{item.name}</td>
+                            <td>{item.email}</td>
+                            <td>{item.password}</td>
+                          </tr>
+                        ))}
+                  </tbody>
+                </table>
+              ) : (
+                <>
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      No Record Found — <strong>check it out!</strong>
+                    </Alert>
+                  </Stack>
+                </>
+              )}
             </div>
           </>
         ) : (
@@ -113,9 +110,9 @@ const DisplayData = (props) => {
                 </thead>
                 <tbody className="table-primary">
                   {empdata &&
-                    empdata.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.id}</td>
+                    empdata.map((item, index) => (
+                      <tr key={item._id}>
+                        <td>{index + 1}</td>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
                         <td>{item.password}</td>
@@ -128,7 +125,6 @@ const DisplayData = (props) => {
         )}
       </div>
     </div>
-    
   );
 };
 

@@ -23,16 +23,14 @@ export default function AddBlog(props) {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [reload, setReload] = useState(true);
-  
-  
+
   const handlesubmit = (e) => {
-   
     e.preventDefault();
-    console.log("wefwde");
-    setReload(!reload)
-    const empdata = { name, email, password, userId:props.props };
-    
-    fetch("http://localhost:8000/employee", {
+   
+    setReload(!reload);
+    const empdata = { name, email, password, userId: props.props };
+
+    fetch("http://localhost:5000/addblogs", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(empdata),
@@ -42,67 +40,60 @@ export default function AddBlog(props) {
         // window.location.reload()
 
         toast.success("Successfully Add Your Blog.");
-
       })
       .catch((err) => {
         console.log(err.message);
         toast.error("Failed :" + err.message);
       });
-    };
-props.load(reload)
-
+  };
+  props.load(reload);
   return (
     <>
-     <ToastContainer />
-       <MDBBtn
-          className="mx-1 mt-4 "
-          color="info"
-          onClick={toggleshow}
-        >
-          ADD Blog<sup>+</sup>
-        </MDBBtn>
-        <form onSubmit={handlesubmit}>
-          <MDBModal show={basicModal} setShow={setModal} tabIndex="-1">
-            <MDBModalDialog>
-              <MDBModalContent>
-                <MDBModalHeader>
-                  <MDBModalTitle>Modal title</MDBModalTitle>
-                 
-                </MDBModalHeader>
-                <MDBModalBody>
-                  <MDBInput
-                    wrapperClass="mb-4"
-                    label="Name"
-                    value={name}
-                    onChange={(e) => namechange(e.target.value)}
-                    id="Name"
-                    type="Name"
-                  />
-                  <MDBInput
-                    wrapperClass="mb-4"
-                    label="Category"
-                    id="email"
-                    value={email}
-                    onChange={(e) => emailchange(e.target.value)}
-                    type="category"
-                  />{" "}
-                  <MDBTextArea
-                    label="Message"
-                    id="textAreaExample"
-                    rows={4}
-                    value={password}
-                    onChange={(e) => passwordchange(e.target.value)}
-                  />
-                </MDBModalBody>
-                <MDBModalFooter>
-                
-                  <MDBBtn onClick={toggleshow} type="submit">Save</MDBBtn>
-                </MDBModalFooter>
-              </MDBModalContent>
-            </MDBModalDialog>
-          </MDBModal>
-        </form>
-      
+      <ToastContainer />
+      <MDBBtn className="mx-4 mt-4 w-25" color="info" onClick={toggleshow}>
+        ADD Blog<sup>+</sup>
+      </MDBBtn>
+      <form onSubmit={handlesubmit}>
+        <MDBModal show={basicModal} setShow={setModal} tabIndex="-1">
+          <MDBModalDialog>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Modal title</MDBModalTitle>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Name"
+                  value={name}
+                  onChange={(e) => namechange(e.target.value)}
+                  _id="Name"
+                  type="Name"
+                />
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Category"
+                  _id="email"
+                  value={email}
+                  onChange={(e) => emailchange(e.target.value)}
+                  type="category"
+                />
+                <MDBTextArea
+                  label="Message"
+                  _id="textAreaExample"
+                  rows={4}
+                  value={password}
+                  onChange={(e) => passwordchange(e.target.value)}
+                />
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn onClick={toggleshow} type="submit">
+                  Save
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </form> 
     </>
   );
 }

@@ -22,27 +22,6 @@
       "id": 48
     },
     {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 54
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 55
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "userId": 2,
-      "id": 57
-    },
-    {
       "name": "miten",
       "email": "sdffgh@fhkjgjh",
       "password": "",
@@ -109,8 +88,15 @@
       "name": "",
       "email": "",
       "password": "",
-      "userId": 2,
+      "userId": 1,
       "id": 76
+    },
+    {
+      "name": "",
+      "email": "",
+      "password": "",
+      "userId": 18,
+      "id": 77
     }
   ],
   "User": [
@@ -211,23 +197,20 @@
       "password": "soham",
       "role": "user",
       "id": 14
-    }
-  ],
-  "posts": [
+    },
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "username": "sohambhau",
+      "email": "miten2SAD@sdfsfg",
+      "password": "aaa",
+      "role": "user",
+      "id": 15
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "username": "soham",
+      "email": "miten@qqq",
+      "password": "qqqq",
+      "role": "user",
+      "id": 16
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
