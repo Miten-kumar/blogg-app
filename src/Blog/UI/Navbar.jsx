@@ -63,12 +63,12 @@ export default function Navbar(props) {
                   <NavLink
                     to="/admin"
                     fontSize="20px"
-                    style={{ "fontFamily": "FontAwesome" }}
+                    
                   >
                     Desh bord
                   </NavLink>
                 ) : (
-                  <NavLink to="/blog" style={{ "fontFamily": "FontAwesome" }}>
+                  <NavLink to="/blog">
                     Blogs
                   </NavLink>
                 )}
@@ -79,10 +79,10 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register" style={{"fontFamily": 'inherit'}}>Register</NavLink>
+                    <NavLink to="/register">Register</NavLink>
                   </MDBNavbarItem>
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/login" style={{"fontFamily": 'inherit'}}>Login</NavLink>
+                    <NavLink to="/login">Login</NavLink>
                   </MDBNavbarItem>
                 </div>
               )}

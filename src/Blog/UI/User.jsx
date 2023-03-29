@@ -8,6 +8,7 @@ const Users = (props) => {
   useEffect(() => {
     axios.get("http://localhost:5000/get").then((response) => {
       //   console.log(response['data']);
+    
       setState([...response["data"]]);
     });
   }, [reloade]);

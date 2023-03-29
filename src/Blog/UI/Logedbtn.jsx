@@ -17,7 +17,7 @@ export default function  App(props) {
         className="mx-2 "
         rounded
         color="info "
-        style={{"font-family": 'FontAwesome',"padding": "8px 18px 11px 19px"}} 
+        style={{"padding": "10px 15px 8px ","font-size":"18px"}}
         btnChildren={props.props}
         placement="right"
       >
