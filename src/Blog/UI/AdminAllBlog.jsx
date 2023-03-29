@@ -37,7 +37,7 @@ const DisplayData = (props) => {
 
   const searchHandle = async (e) => {
     let key = e.target.value;
-    console.log(key);
+    // console.log(key);
     if (key) {
       let result = await fetch(`http://localhost:5000/search/${key}`);
       result = await result.json();

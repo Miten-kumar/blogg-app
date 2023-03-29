@@ -12,80 +12,119 @@ export default function Login(props) {
   const [username, usernameupdate] = useState("");
   const [password, passwordupdate] = useState("");
   let isLoggedIn = null;
-  const ProceedLogin = (e) => {
+  const ProceedLogin = async (e) => {
     e.preventDefault();
-    // console.log("proceed");
-    axios
-      .get("http://localhost:5000/get")
-      .then((resp) => {
-        if (
-          resp["data"].find(
-            (user) => user.username === username && user.password === password
-          ) &&
-          resp["data"].find(
-            (user) => user.username === username && user.password === password
-          ).role === "admin"
-        ) {
-          const validate = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          );
-          let role = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          ).role;
-          localStorage.setItem("Token", JSON.stringify(validate));
-          localStorage.setItem("isLoggedIn", true);
+    const empdata = { username, password };
+    let result = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(empdata),
+    })
+    result = await result.json();
+    console.log(result.user);
+    if (result.user.role === "admin") {
+      isLoggedIn = true;
+      props.statusMethod(result.user.role, result.user._id);
+      props.props(isLoggedIn, result.user.username, result.user.password);
+      localStorage.setItem("Token", JSON.stringify(result.user));
+      localStorage.setItem("login-auth", JSON.stringify(result.auth));
+      localStorage.setItem("username", JSON.stringify(result.user.username));
+      localStorage.setItem("isLoggedIn", true);
+      toast.success(result.user.username + " You As  ADMIN");
+      setTimeout(() => {
+        navigate("/admin/blog");
+      }, 1000);
+    } else if (result.user.role === "user") {
+      isLoggedIn = true;
+      props.props(isLoggedIn, result.user.username, result.user.password);
+      props.statusMethod(result.user.role, result.user._id);
+      localStorage.setItem("Token", JSON.stringify(result.user));
+      localStorage.setItem("login-auth", JSON.stringify(result.auth));
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("username", JSON.stringify(result.user.username));
+      toast.success(result.user.username + " Loged in");
+      setTimeout(() => {
+        navigate("/blog");
+      }, 1000);
+    } else {
+      isLoggedIn = false;
+      result.user.role = null;
+      result.user._id = null;
+      props.statusMethod(result.user.role, result.user._id);
+      props.props(isLoggedIn, result.user.username, result.user.password);
+    }
+  }
+  // localStorage.setItem("sign-auth",JSON.stringify(result.auth))
 
-          let _id = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          )._id;
-          // console.log(_id);
-          isLoggedIn = true;
-          props.statusMethod(role, _id);
+  // axios
+  //   .get("http://localhost:5000/get")
+  //   .then((resp) => {
+  //     if (
+  //       resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       ) &&
+  //       resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       ).role === "admin"
+  //     ) {
+  //       const validate = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       );
+  //       let role = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       ).role;
+  //       localStorage.setItem("Token", JSON.stringify(validate));
+  //       localStorage.setItem("isLoggedIn", true);
 
-          toast.success(username + " As a ADMIN  loged in");
-          setTimeout(() => {
-            navigate("/admin/blog");
-          }, 1000);
-          props.props(isLoggedIn, username, password);
-        } else if (
-          resp["data"].find(
-            (user) => user.username === username && user.password === password
-          )
-        ) {
-          isLoggedIn = true;
-          const validate = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          );
-          localStorage.setItem("Token", JSON.stringify(validate));
-          localStorage.setItem("isLoggedIn", true);
-          let _id = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          )._id;
-          let role = resp["data"].find(
-            (user) => user.username === username && user.password === password
-          ).role;
+  //       let _id = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       )._id;
+  //       isLoggedIn = true;
+  //       props.statusMethod(role, _id);
 
-          props.statusMethod(role, _id);
-          toast.success(username + " you loged in");
-          setTimeout(() => {
-            navigate("/blog");
-          }, 1000);
-          props.props(isLoggedIn, username, password);
-        } else {
-          isLoggedIn = false;
-          let role = null;
-          let _id = null;
-          props.props(isLoggedIn, username, password);
-          props.statusMethod(role, _id);
-          toast.error("something went wrong");
-        }
-      })
-      .catch((err) => {
-        toast.error("Login Failed due to :" + err.message);
-        console.log(err.message);
-      });
-  };
+  // toast.success(username + " As a ADMIN  loged in");
+  //       setTimeout(() => {
+  //         navigate("/admin/blog");
+  //       }, 1000);
+  // props.props(isLoggedIn, username, password);
+  //     } else if (
+  //       resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       )
+  //     ) {
+  //       isLoggedIn = true;
+  //       const validate = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       );
+  //       localStorage.setItem("Token", JSON.stringify(validate));
+  //       localStorage.setItem("isLoggedIn", true);
+  //       let _id = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       )._id;
+  //       let role = resp["data"].find(
+  //         (user) => user.username === username && user.password === password
+  //       ).role;
 
+  //       props.statusMethod(role, _id);
+  //       toast.success(username + " you loged in");
+  //       setTimeout(() => {
+  //         navigate("/blog");
+  //       }, 1000);
+  //       props.props(isLoggedIn, username, password);
+  //     } else {
+  //       isLoggedIn = false;
+  //       let role = null;
+  //       let _id = null;
+  //       props.props(isLoggedIn, username, password);
+  //       props.statusMethod(role, _id);
+  //       toast.error("something went wrong");
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     toast.error("Login Failed due to :" + err.message);
+  //     console.log(err.message);
+  //   });
+  // }
   return (
     <div
       className="container mt-5 w-50 "

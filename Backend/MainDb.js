@@ -24,21 +24,31 @@ app.post("/register", async (req, res) => {
   });
 });
 
-// app.get("/get", async (req, res) => {
-  
-//   if (req.body.username && req.body.password) {
-//     let user = await User.findOne(req.body).select("-password");
-
-//     if (user) {
-//       jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
-//         if (err) {
-//           res.send({ result: "somthing went wrong" });
-//         }
-//         res.send({ user, auth: token });
-//       });
-//     }
-//   }
-// });
+app.post("/login", async (req, res) => {
+  if (req.body.username && req.body.password) {
+    let user = await User.findOne(req.body);
+    if (user) {
+      jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+        if (err) {
+          res.send({ result: "somthing went wrong" });
+        }
+        res.send({ user, auth: token });
+      });
+    } else {
+      res.send({ result: "no user" });
+    }
+  } else {
+    res.send({ result: "no user" });
+  }
+  // jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+  //   if (err) {
+  //     res.send({ result: "somthing went wrong" });
+  //   }
+  //   res.send({ user, auth: token });
+  // });
+  // }
+  // }
+});
 app.get("/get", async (req, res) => {
   let data = await User.find();
   res.send(data);

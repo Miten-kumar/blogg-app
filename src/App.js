@@ -24,7 +24,7 @@ function App() {
     isLoged === true ? JSON.parse(localStorage.getItem("Token"))._id : "");
   const statusMethod = (role, _id) => {
     setRole(role);
-    // console.log(_id);
+    console.log(role);
     setuserId(_id);
   };
 
