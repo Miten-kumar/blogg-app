@@ -81,7 +81,7 @@ const Myblog = (props) => {
             </div>
           </>
         ) : (
-          <></>
+          <> </>
         )}
 
         <div className="card-body">

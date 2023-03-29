@@ -30,7 +30,7 @@ export default function Register() {
     passwordchange("");
   }, [status.success]);
 
-  const handlesubmit = (e) => {
+  const handlesubmit = async (e) => {
     e.preventDefault();
     // dispatch(addData(Data));
     // toast.success("Successfully signed up. Please login.");
@@ -46,21 +46,15 @@ export default function Register() {
     console.log("wefwde");
     const empdata = { username, email, password, role: "user" };
     console.log(empdata);
-    fetch("http://localhost:5000/register", {
+    let result = await fetch("http://localhost:5000/register", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(empdata),
     })
-      .then((res) => {
-        toast.success("Successfully signed up. Please login.");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error("Failed :" + err.message);
-      });
+    result=await result.json()
+    localStorage.setItem("user",JSON.stringify(result.result.username))
+    localStorage.setItem("sign-auth",JSON.stringify(result.auth))
+      navigate("/login")
   };
 
   return (

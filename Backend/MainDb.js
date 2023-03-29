@@ -4,15 +4,41 @@ const User = require("./UserSchema.js");
 const blog = require("./BlogsSchema.js");
 const app = express();
 const cors = require("cors");
-app.use(express.json());
+const jwt = require("jsonwebtoken");
+const jwtkey = "user";
 
 const port = 5000;
+
+app.use(express.json());
+
 app.use(cors());
 app.post("/register", async (req, res) => {
   let user = new User(req.body);
   let result = await user.save();
-  res.send(result);
+  result = result.toObject();
+  jwt.sign({ result }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+    if (err) {
+      res.send({ result: "somthing went wrong" });
+    }
+    res.send({ result, auth: token });
+  });
 });
+
+// app.get("/get", async (req, res) => {
+  
+//   if (req.body.username && req.body.password) {
+//     let user = await User.findOne(req.body).select("-password");
+
+//     if (user) {
+//       jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+//         if (err) {
+//           res.send({ result: "somthing went wrong" });
+//         }
+//         res.send({ user, auth: token });
+//       });
+//     }
+//   }
+// });
 app.get("/get", async (req, res) => {
   let data = await User.find();
   res.send(data);
@@ -45,7 +71,7 @@ app.delete("/delete/:_id", async (req, res) => {
 });
 app.get("/search/:key", async (req, res) => {
   let data = await blog.find({
-   $or: [
+    $or: [
       { name: { $regex: req.params.key } },
       { password: { $regex: req.params.key } },
       { email: { $regex: req.params.key } },
