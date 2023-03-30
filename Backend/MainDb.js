@@ -40,8 +40,8 @@ app.post("/login", async (req, res) => {
 
     }
   } else {
-    res.send({ result: "no user" });
-    res.status(401).send({ result: "Please filled first- " });
+  
+    res.status(403).send({ result: "Please filled first- " });
 
   }
 });

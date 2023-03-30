@@ -24,8 +24,11 @@ export default function Login(props) {
       },
       body: JSON.stringify(empdata),
     });
+    console.log(result.status);
+    if (result.status === 401 || result.status === 403) {
+      toast.error("something went wrong");
+    }
     result = await result.json();
-    console.log(result);
     if (result.user.role === "admin") {
       isLoggedIn = true;
       props.statusMethod(result.user.role, result.user._id);

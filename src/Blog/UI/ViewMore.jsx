@@ -6,13 +6,13 @@ const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setrelode] = useState(true);
   const params = useParams();
-  const { name } = params;
-  console.log(params._id);
+  
+  // console.log(params._id);
   useEffect(() => {
     axios
       .get('http://localhost:5000/getblogs/'+ params._id)
       .then((response) => {
-        console.log(response["data"]);
+        // console.log(response["data"]);
         setState([response["data"]]);
       });
   }, [reloade]);

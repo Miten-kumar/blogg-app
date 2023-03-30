@@ -13,12 +13,22 @@ const Users = () => {
   const ChangeRole = (props, _id) => {
     if (props.role === "admin") {
       axios
-        .put("http://localhost:5000/update/" + _id, {
-          username: props.username,
-          password: props.password,
-          email: props.email,
-          role: "user",
-        })
+        .put(
+          "http://localhost:5000/update/" + _id,
+          {
+            username: props.username,
+            password: props.password,
+            email: props.email,
+            role: "user",
+          },
+          {
+            headers: {
+              authorization: `bearer ${JSON.parse(
+                localStorage.getItem("login-auth")
+              )}`,
+            },
+          }
+        )
         .then((response) => {
           console.log(response);
           console.log("Changed to User");
@@ -26,12 +36,22 @@ const Users = () => {
         });
     } else {
       axios
-        .put("http://localhost:5000/update/" + _id, {
-          username: props.username,
-          password: props.password,
-          email: props.email,
-          role: "admin",
-        })
+        .put(
+          "http://localhost:5000/update/" + _id,
+          {
+            username: props.username,
+            password: props.password,
+            email: props.email,
+            role: "admin",
+          },
+          {
+            headers: {
+              authorization: `bearer ${JSON.parse(
+                localStorage.getItem("login-auth")
+              )}`,
+            },
+          }
+        )
         .then((response) => {
           // console.log(response['data']);
           console.log(response);
@@ -41,6 +61,7 @@ const Users = () => {
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get("http://localhost:5000/get", {
         headers: {
@@ -52,8 +73,9 @@ const Users = () => {
       .then((response) => {
         // console.log(response['data']);
         setState([...response["data"]]);
+        
       });
-  }, [reloade]);
+  }, [reloade],[]);
 
   return (
     <div className="container my-3 border p-4">

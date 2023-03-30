@@ -5,7 +5,7 @@ import ViewDetails from "./ViewMore";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { MDBBtn } from "mdb-react-ui-kit";
+import { MDBBtn, MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import { Input } from "@mui/material";
@@ -13,6 +13,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import { NavLink } from "react-router-dom";
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [Data1, setData1] = useState({});
@@ -81,6 +82,7 @@ const DisplayData = (props) => {
         console.log(err.message);
       });
   }, [relode, Delete, ref, Data1]);
+
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -110,9 +112,8 @@ const DisplayData = (props) => {
               <thead className="table table-hover table-primary text-center">
                 <tr>
                   <td>No</td>
-                  <td> Name</td>
-                  <td>category</td>
-                  <td>massage</td>
+                  <td>Author</td>
+                  <td>Category</td>
                   <td>Actions</td>
                 </tr>
               </thead>
@@ -121,10 +122,11 @@ const DisplayData = (props) => {
                   empdata.map((item, index) => (
                     <tr key={item._id}>
                       <td>{index + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.email}</td>
-                      <td>{item.password}</td>
 
+                      <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                        <td>{item.name}</td>
+                      </MDBNavbarLink>
+                      <td>{item.email}</td>
                       <td>
                         <Edit
                           props={item}
@@ -139,7 +141,6 @@ const DisplayData = (props) => {
                         >
                           <DeleteForeverOutlinedIcon />
                         </MDBBtn>
-                        {/* <ViewDetails props={item} /> */}
                       </td>
                     </tr>
                   ))}

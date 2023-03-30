@@ -29,7 +29,7 @@ function App() {
   );
   const statusMethod = (role, _id) => {
     setRole(role);
-    console.log(role);
+    // console.log(role);
     setuserId(_id);
   };
 

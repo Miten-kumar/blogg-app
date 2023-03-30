@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import ViewDetails from "./ViewMore";
 import { Input } from "@mui/material";
 import axios from "axios";
-import { MDBBtn } from "mdb-react-ui-kit";
+import { MDBBtn, MDBNavbarItem, MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
@@ -44,13 +44,19 @@ const Myblog = (props) => {
     let key = e.target.value;
     console.log(key);
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`);
+      let result = await fetch(`http://localhost:5000/search/${key}`, {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      });
       result = await result.json();
 
       if (result) {
         empdatachange(result);
       } else {
-        Myblog();
+        
       }
     }
   };
@@ -67,10 +73,6 @@ const Myblog = (props) => {
       });
   }, [Data1, Delete, ref]);
 
-  const click = () => {
-    navigate("/viewmore");
-
-  };
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -100,9 +102,9 @@ const Myblog = (props) => {
               <thead className="table table-hover table-primary text-center">
                 <tr>
                   <td>No</td>
-                  <td> Name</td>
-                  <td>category</td>
-                  <td>massage</td>
+                  <td>Author </td>
+                  <td>Category</td>
+
                   <td>Actions</td>
                 </tr>
               </thead>
@@ -113,11 +115,12 @@ const Myblog = (props) => {
                     .map((item, index) => (
                       <tr key={item._id}>
                         <td>{index + 1}</td>
-                        <NavLink to={`/viewmore/${item._id}`}>
+
+                        <MDBNavbarLink href={`/viewmore/${item._id}`}>
                           <td>{item.name}</td>
-                        </NavLink>
+                        </MDBNavbarLink>
+
                         <td>{item.email}</td>
-                        <td>{item.password}</td>
 
                         <td>
                           <Edit
@@ -132,9 +135,6 @@ const Myblog = (props) => {
                             }}
                           >
                             <DeleteForeverOutlinedIcon />
-                          </MDBBtn>
-                          <MDBBtn onClick={click}  className="mx-2 btn btn-info">
-                            <VisibilityOutlinedIcon />
                           </MDBBtn>
                         </td>
                       </tr>
