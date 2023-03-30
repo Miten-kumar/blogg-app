@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function Login(props) {
   const navigate = useNavigate();
@@ -17,11 +16,16 @@ export default function Login(props) {
     const empdata = { username, password };
     let result = await fetch("http://localhost:5000/login", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${JSON.parse(
+          localStorage.getItem("login-auth")
+        )}`,
+      },
       body: JSON.stringify(empdata),
-    })
+    });
     result = await result.json();
-    console.log(result.user);
+    console.log(result);
     if (result.user.role === "admin") {
       isLoggedIn = true;
       props.statusMethod(result.user.role, result.user._id);
@@ -47,13 +51,14 @@ export default function Login(props) {
         navigate("/blog");
       }, 1000);
     } else {
+      toast.error("something went wrong");
       isLoggedIn = false;
       result.user.role = null;
       result.user._id = null;
       props.statusMethod(result.user.role, result.user._id);
       props.props(isLoggedIn, result.user.username, result.user.password);
     }
-  }
+  };
   // localStorage.setItem("sign-auth",JSON.stringify(result.auth))
 
   // axios

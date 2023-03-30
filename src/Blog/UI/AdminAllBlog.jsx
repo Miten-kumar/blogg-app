@@ -20,11 +20,19 @@ const DisplayData = (props) => {
   const [Delete, removeDelete] = useState(true);
   const [relode, setrelode] = useState(true);
   const Remove = (_id) => {
-    axios.delete(`http://localhost:5000/delete/${_id}`).then((res) => {
-      toast.error("Deleted!!!");
+    axios
+      .delete(`http://localhost:5000/delete/${_id}`, {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      })
+      .then((res) => {
+        toast.error("Deleted!!!");
 
-      removeDelete(!Delete);
-    });
+        removeDelete(!Delete);
+      });
   };
   const update = (function2) => {
     setref(!function2);
@@ -39,7 +47,13 @@ const DisplayData = (props) => {
     let key = e.target.value;
     // console.log(key);
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`);
+      let result = await fetch(`http://localhost:5000/search/${key}`, {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      });
       result = await result.json();
 
       if (result) {
@@ -50,7 +64,13 @@ const DisplayData = (props) => {
     }
   };
   useEffect(() => {
-    fetch("http://localhost:5000/getblogs")
+    fetch("http://localhost:5000/getblogs", {
+      headers: {
+        authorization: `bearer ${JSON.parse(
+          localStorage.getItem("login-auth")
+        )}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -127,7 +147,6 @@ const DisplayData = (props) => {
             </table>
           ) : (
             <>
-             
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">
                   <AlertTitle>Error</AlertTitle>

@@ -19,7 +19,11 @@ const DisplayData = (props) => {
     let key = e.target.value;
     console.log(key);
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`);
+      let result = await fetch(`http://localhost:5000/search/${key}`, {
+        headers: {
+          authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
+              }
+      });
       result = await result.json();
 
       if (result) {
@@ -89,7 +93,7 @@ const DisplayData = (props) => {
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
                       <AlertTitle>Error</AlertTitle>
-                      No Record Found — <strong>check it out!</strong>
+                      No Record Found — <strong>please add first!</strong>
                     </Alert>
                   </Stack>
                 </>
@@ -99,6 +103,7 @@ const DisplayData = (props) => {
         ) : (
           <>
             <div className="card-body">
+            
               <table className="table table-bordered ">
                 <thead className="table table-hover table-primary text-center">
                   <tr>

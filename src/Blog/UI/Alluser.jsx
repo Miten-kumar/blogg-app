@@ -43,7 +43,7 @@ const Users = () => {
   useEffect(() => {
     axios.get("http://localhost:5000/get", {
       headers: {
-        authorization:JSON.parse(localStorage.getItem("login-auth")) 
+        authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
             }
     }).then((response) => {
       // console.log(response['data']);

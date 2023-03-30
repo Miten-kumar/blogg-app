@@ -32,7 +32,7 @@ export default function App(props) {
   const UpdateUser = () => {
     props.data(reloade);
     let _id = props.props._id;
-    // console.log(_id);
+    console.log(_id);
     // console.log(props.Myid);
     let item = { name, email, password, _id, userId: props.Myid };
     console.log(item);
@@ -42,6 +42,10 @@ export default function App(props) {
         email: email,
         password: password,
         userId: props.Myid,
+      }, {
+        headers: {
+          authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
+              }
       })
       .then((response) => {
         // console.log(response);

@@ -48,7 +48,7 @@ export default function Register() {
     console.log(empdata);
     let result = await fetch("http://localhost:5000/register", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json" ,authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` },
       body: JSON.stringify(empdata),
     })
     result=await result.json()

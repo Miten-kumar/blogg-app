@@ -26,13 +26,19 @@ export default function AddBlog(props) {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-   
+
     setReload(!reload);
     const empdata = { name, email, password, userId: props.props };
 
     fetch("http://localhost:5000/addblogs", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${JSON.parse(
+          localStorage.getItem("login-auth")
+        )}`,
+      },
+
       body: JSON.stringify(empdata),
     })
       .then((res) => {
@@ -93,7 +99,7 @@ export default function AddBlog(props) {
             </MDBModalContent>
           </MDBModalDialog>
         </MDBModal>
-      </form> 
+      </form>
     </>
   );
 }

@@ -11,17 +11,22 @@ import Protected from "./Blog/UI/Protected";
 import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog";
+import ViewDetails from "./Blog/UI/ViewMore";
 function App() {
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState(
-    isLoged === true ? JSON.parse(localStorage.getItem("Token")).username : "");
+    isLoged === true ? JSON.parse(localStorage.getItem("Token")).username : ""
+  );
   const [password, setpassword] = useState(
-    isLoged === true ? JSON.parse(localStorage.getItem("Token")).password : "");
+    isLoged === true ? JSON.parse(localStorage.getItem("Token")).password : ""
+  );
   const [Role, setRole] = useState(
-    isLoged === true ? JSON.parse(localStorage.getItem("Token")).role : "");
+    isLoged === true ? JSON.parse(localStorage.getItem("Token")).role : ""
+  );
   const [userId, setuserId] = useState(
-    isLoged === true ? JSON.parse(localStorage.getItem("Token"))._id : "");
+    isLoged === true ? JSON.parse(localStorage.getItem("Token"))._id : ""
+  );
   const statusMethod = (role, _id) => {
     setRole(role);
     console.log(role);
@@ -66,6 +71,11 @@ function App() {
           path="/details"
           element={<Users props={username} password={password} />}
         />
+         <Route
+          path="/ViewDetails"
+          element={<ViewDetails  />}
+        />
+
         <Route
           path="/admin"
           element={
@@ -90,6 +100,7 @@ function App() {
               <MyBlog props={{ isLogged, username, Role, userId, isLoged }} />
             }
           />
+         
         </Route>
       </Routes>
 
