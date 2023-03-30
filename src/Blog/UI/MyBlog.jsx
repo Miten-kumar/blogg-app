@@ -8,10 +8,13 @@ import axios from "axios";
 import { MDBBtn } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 const Myblog = (props) => {
   // console.log(props.props.userId);
   // console.log(props.props.isLoged);
@@ -19,6 +22,8 @@ const Myblog = (props) => {
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
+  const navigate = useNavigate();
+
   const Remove = (_id) => {
     axios.delete(`http://localhost:5000/delete/${_id}`).then((res) => {
       toast.error("Deleted!!!");
@@ -61,6 +66,11 @@ const Myblog = (props) => {
         console.log(err.message);
       });
   }, [Data1, Delete, ref]);
+
+  const click = () => {
+    navigate("/viewmore");
+
+  };
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -103,7 +113,9 @@ const Myblog = (props) => {
                     .map((item, index) => (
                       <tr key={item._id}>
                         <td>{index + 1}</td>
-                        <td>{item.name}</td>
+                        <NavLink to={`/viewmore/${item._id}`}>
+                          <td>{item.name}</td>
+                        </NavLink>
                         <td>{item.email}</td>
                         <td>{item.password}</td>
 
@@ -121,7 +133,9 @@ const Myblog = (props) => {
                           >
                             <DeleteForeverOutlinedIcon />
                           </MDBBtn>
-                          <ViewDetails props={item} />
+                          <MDBBtn onClick={click}  className="mx-2 btn btn-info">
+                            <VisibilityOutlinedIcon />
+                          </MDBBtn>
                         </td>
                       </tr>
                     ))}

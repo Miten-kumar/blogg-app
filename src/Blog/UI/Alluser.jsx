@@ -41,14 +41,18 @@ const Users = () => {
     }
   };
   useEffect(() => {
-    axios.get("http://localhost:5000/get", {
-      headers: {
-        authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
-            }
-    }).then((response) => {
-      // console.log(response['data']);
-      setState([...response["data"]]);
-    });
+    axios
+      .get("http://localhost:5000/get", {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      })
+      .then((response) => {
+        // console.log(response['data']);
+        setState([...response["data"]]);
+      });
   }, [reloade]);
 
   return (
@@ -65,11 +69,10 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((elem,index) => {
-            
+          {state.map((elem, index) => {
             return (
               <tr key={elem._id} className="p-0">
-                <th scope="col">{index+1}</th>
+                <th scope="col">{index + 1}</th>
                 <th scope="col">{elem.username}</th>
 
                 <th scope="col">{elem.email}</th>
@@ -87,7 +90,7 @@ const Users = () => {
                         User
                       </MDBDropdownItem>
                       <MDBDropdownItem
-                        link  
+                        link
                         onClick={() => ChangeRole(elem, elem._id)}
                       >
                         admin

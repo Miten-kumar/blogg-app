@@ -71,11 +71,7 @@ function App() {
           path="/details"
           element={<Users props={username} password={password} />}
         />
-         <Route
-          path="/ViewDetails"
-          element={<ViewDetails  />}
-        />
-
+            <Route path="viewmore/:_id" element={<ViewDetails />} />
         <Route
           path="/admin"
           element={
@@ -99,8 +95,9 @@ function App() {
             element={
               <MyBlog props={{ isLogged, username, Role, userId, isLoged }} />
             }
-          />
-         
+          >
+            
+          </Route>
         </Route>
       </Routes>
 

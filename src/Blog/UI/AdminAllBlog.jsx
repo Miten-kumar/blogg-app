@@ -139,7 +139,7 @@ const DisplayData = (props) => {
                         >
                           <DeleteForeverOutlinedIcon />
                         </MDBBtn>
-                        <ViewDetails props={item} />
+                        {/* <ViewDetails props={item} /> */}
                       </td>
                     </tr>
                   ))}
