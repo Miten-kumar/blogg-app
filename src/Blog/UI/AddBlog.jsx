@@ -10,6 +10,7 @@ import {
   MDBModalFooter,
   MDBBtn,
   MDBInput,
+  MDBFile,
 } from "mdb-react-ui-kit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,14 +22,15 @@ export default function AddBlog(props) {
   const [name, namechange] = useState("");
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
+  const [image, setimage] = useState("");
   const [reload, setReload] = useState(true);
 
   const handlesubmit = (e) => {
     e.preventDefault();
+    console.log(image);
 
     setReload(!reload);
-    const empdata = { name, email, password, userId: props.props };
-
+    // const empdata = { name, email, password, userId: props.props, image };
     fetch("http://localhost:5000/addblogs", {
       method: "POST",
       headers: {
@@ -38,12 +40,15 @@ export default function AddBlog(props) {
         )}`,
       },
 
-      body: JSON.stringify(empdata),
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        userId: props.props,
+        base64: image,
+      }),
     })
       .then((res) => {
-        // alert("Saved successfully.");
-        // window.location.reload()
-
         toast.success("Successfully Add Your Blog.");
       })
       .catch((err) => {
@@ -52,6 +57,18 @@ export default function AddBlog(props) {
       });
   };
   props.load(reload);
+  const convertbase64 = (e) => {
+    console.log(e);
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result); //base64encoded string
+      setimage(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Enror: ".error);
+    };
+  };
   return (
     <>
       <ToastContainer />
@@ -84,10 +101,19 @@ export default function AddBlog(props) {
                 />
                 <MDBTextArea
                   label="Message"
-                  _id="textAreaExample"
+                  _id="password"
                   rows={4}
                   value={password}
                   onChange={(e) => passwordchange(e.target.value)}
+                />
+                <MDBFile
+                  id="image"
+                  name="image"
+                  className="mt-4"
+                  accept=".jpeg , .jpg , .png"
+                  onChange={(e) => {
+                    convertbase64(e);
+                  }}
                 />
               </MDBModalBody>
               <MDBModalFooter>

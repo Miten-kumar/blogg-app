@@ -7,11 +7,21 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const jwtkey = "user";
 const port = 5000;
+const multer = require("multer");
+var fs = require("fs");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
 app.use(express.json());
-const multer  = require('multer')
-
 app.use(cors());
-
 app.post("/register", async (req, res) => {
   let user = new User(req.body);
   let result = await user.save();
@@ -35,7 +45,6 @@ app.post("/login", async (req, res) => {
         res.send({ user, auth: token });
       });
     } else {
-      // res.send({ result: "check valide field" });
       res.status(401).send({ result: "Please provide valid details - " });
     }
   } else {
@@ -61,10 +70,28 @@ app.get("/getblogs/:_id", async (req, res) => {
   let data = await blog.findOne(req.params);
   res.send(data);
 });
-app.post("/addblogs",async (req, res) => {
-  let user = new blog(req.body);
-  let result = await user.save();
-  res.send(result,req.file);
+app.post("/addblogs", async (req, res) => {
+  const { name } = req.body;
+  const { email } = req.body;
+  const { password } = req.body;
+  const { userId } = req.body;
+  const { base64 } = req.body;
+  try {
+    blog.create({
+      name: name,
+      email: email,
+      password: password,
+      userId: userId,
+      image: base64,
+    });
+    res.send({ Status: "ok" });
+  } catch (error) {
+    res.send({ Status: "error", data: error });
+  }
+
+  // let user = new blog(req.body);
+  // let result = await user.save();
+  // res.send(result);
 });
 
 app.put("/updateblogs/:_id", verifyToken, async (req, res) => {

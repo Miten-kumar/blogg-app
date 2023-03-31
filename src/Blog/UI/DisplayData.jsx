@@ -7,12 +7,12 @@ import { Input } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { MDBNavbarLink } from 'mdb-react-ui-kit';
+import { MDBNavbarLink } from "mdb-react-ui-kit";
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
 
   const [relode, setrelode] = useState(true);
-
+  const [image, setimage] = useState([]);
   const Load = (function1) => {
     setrelode(function1);
   };
@@ -22,15 +22,17 @@ const DisplayData = (props) => {
     if (key) {
       let result = await fetch(`http://localhost:5000/search/${key}`, {
         headers: {
-          authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
-              }
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
       });
       result = await result.json();
 
       if (result) {
         empdatachange(result);
       } else {
-        DisplayData()
+        DisplayData();
       }
     }
   };
@@ -41,6 +43,7 @@ const DisplayData = (props) => {
       })
       .then((resp) => {
         empdatachange(resp);
+        console.log(resp);
       })
       .catch((err) => {
         console.log(err.message);
@@ -72,7 +75,7 @@ const DisplayData = (props) => {
                       <td>No.</td>
                       <td> Autohor</td>
                       <td>category</td>
-                
+                      <td>category</td>
                     </tr>
                   </thead>
                   <tbody className="table-primary">
@@ -83,11 +86,10 @@ const DisplayData = (props) => {
                           <tr key={item._id}>
                             <td>{index + 1}</td>
                             <MDBNavbarLink href={`/viewmore/${item._id}`}>
-                          <td>{item.name}</td>
-                        </MDBNavbarLink>
-
+                              <td>{item.name}</td>
+                            </MDBNavbarLink>
                             <td>{item.email}</td>
-                       
+                            <td>{item.image}</td>
                           </tr>
                         ))}
                   </tbody>
@@ -107,14 +109,12 @@ const DisplayData = (props) => {
         ) : (
           <>
             <div className="card-body">
-            
               <table className="table table-bordered ">
                 <thead className="table table-hover table-primary text-center">
                   <tr>
                     <td>No.</td>
                     <td> Name</td>
                     <td>category</td>
-                
                   </tr>
                 </thead>
                 <tbody className="table-primary">
@@ -126,7 +126,6 @@ const DisplayData = (props) => {
                           <td>{item.name}</td>
                         </MDBNavbarLink>
                         <td>{item.email}</td>
-                     
                       </tr>
                     ))}
                 </tbody>

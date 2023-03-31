@@ -2,22 +2,17 @@ import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
 import Edit from "./Edit";
 import { Form } from "react-bootstrap";
-import ViewDetails from "./ViewMore";
 import { Input } from "@mui/material";
 import axios from "axios";
-import { MDBBtn, MDBNavbarItem, MDBNavbarLink } from "mdb-react-ui-kit";
+import { MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { toast } from "react-toastify";
-import { NavLink } from "react-router-dom";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { useNavigate } from "react-router-dom";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const Myblog = (props) => {
   // console.log(props.props.userId);
   // console.log(props.props.isLoged);
@@ -25,7 +20,6 @@ const Myblog = (props) => {
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
-  const navigate = useNavigate();
 
   const Remove = (_id) => {
     axios
@@ -138,7 +132,6 @@ const Myblog = (props) => {
                             data={update}
                             Myid={props.props.userId}
                           />
-
                           <RiDeleteBinLine
                             onClick={() => {
                               Remove(item._id);
@@ -150,7 +143,8 @@ const Myblog = (props) => {
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="Delete !!"
                             data-tooltip-variant="error"
-                          /> <Tooltip id="my-tooltip" /> 
+                          />{" "}
+                          <Tooltip id="my-tooltip" />
                         </td>
                       </tr>
                     ))}

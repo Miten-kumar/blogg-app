@@ -22,10 +22,9 @@ const Users = () => {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col"> Name</th>
-
-            <th scope="col">Email</th>
-            <th scope="col">password</th>
+            <th scope="col"> Author</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +33,6 @@ const Users = () => {
               <tr key={elem._id} className="p-0">
                 <th scope="col">{index + 1}</th>
                 <th scope="col">{elem.name}</th>
-
                 <th scope="col">{elem.email}</th>
                 <th scope="col">{elem.password}</th>
               </tr>
