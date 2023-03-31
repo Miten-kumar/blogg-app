@@ -1,15 +1,17 @@
 import React from "react";
-import { MDBDropdown, MDBPopover, MDBBtn } from "mdb-react-ui-kit";
+import { MDBDropdown, MDBPopover } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
-import InfoIcon from '@mui/icons-material/Info';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Tooltip } from "@mui/material";
-export default function  App(props) {
-  const Navigate= useNavigate()
+
+import {BsInfoSquare} from "react-icons/bs"
+import { Tooltip } from 'react-tooltip'
+import {IoIosLogOut} from "react-icons/io"
+import 'react-tooltip/dist/react-tooltip.css'
+export default function App(props) {
+  const Navigate = useNavigate();
   const Details = () => {
-    Navigate('/details')
-  }
-  
+    Navigate("/details");
+  };
+
   // console.log(props.logout);
   return (
     <MDBDropdown>
@@ -17,22 +19,24 @@ export default function  App(props) {
         className="mx-2 "
         rounded
         color="info "
-        style={{"padding": "10px 15px 6px ","font-size":"18px"}}
+        style={{ padding: "10px 15px 6px ", "font-size": "18px" }}
         btnChildren={props.props}
         placement="right"
       >
-      <Tooltip title="LOGOUT" arrow>
-        <MDBBtn onClick={props.logout} className="rounded p-2" color="danger">
-        <ExitToAppIcon/>
-        </MDBBtn>
-        </Tooltip>
-        <Tooltip title="PROFILE" arrow>
-        <MDBBtn onClick={Details} className="p-2 mx-2" color="info">
-          
-        <InfoIcon/> 
-        </MDBBtn>
+            <IoIosLogOut data-tooltip-id="my-tooltip" data-tooltip-content="Loged off" data-tooltip-variant="warning" onClick={props.logout} cursor={"pointer"}
+            className="mx-2"
+            fontSize={"35px"}
+            color="#CB4335"/>
         
-        </Tooltip>
+        <Tooltip id="my-tooltip" /> 
+          <BsInfoSquare  data-tooltip-id="my-info" data-tooltip-content="More Details" data-tooltip-variant="info"
+            onClick={Details}
+            cursor={"pointer"}
+            className="mx-2"
+            fontSize={"30px"}
+            color="#45B39D"
+          />
+<Tooltip id="my-info" /> 
       </MDBPopover>
     </MDBDropdown>
   );

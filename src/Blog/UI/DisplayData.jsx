@@ -7,6 +7,7 @@ import { Input } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import { MDBNavbarLink } from 'mdb-react-ui-kit';
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
 
@@ -69,9 +70,9 @@ const DisplayData = (props) => {
                   <thead className="table table-hover table-primary text-center">
                     <tr>
                       <td>No.</td>
-                      <td> Name</td>
+                      <td> Autohor</td>
                       <td>category</td>
-                      <td>massage</td>
+                
                     </tr>
                   </thead>
                   <tbody className="table-primary">
@@ -81,9 +82,12 @@ const DisplayData = (props) => {
                         .map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
-                            <td>{item.name}</td>
+                            <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                          <td>{item.name}</td>
+                        </MDBNavbarLink>
+
                             <td>{item.email}</td>
-                            <td>{item.password}</td>
+                       
                           </tr>
                         ))}
                   </tbody>
@@ -110,7 +114,7 @@ const DisplayData = (props) => {
                     <td>No.</td>
                     <td> Name</td>
                     <td>category</td>
-                    <td>massage</td>
+                
                   </tr>
                 </thead>
                 <tbody className="table-primary">
@@ -118,9 +122,11 @@ const DisplayData = (props) => {
                     empdata.map((item, index) => (
                       <tr key={item._id}>
                         <td>{index + 1}</td>
-                        <td>{item.name}</td>
+                        <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                          <td>{item.name}</td>
+                        </MDBNavbarLink>
                         <td>{item.email}</td>
-                        <td>{item.password}</td>
+                     
                       </tr>
                     ))}
                 </tbody>

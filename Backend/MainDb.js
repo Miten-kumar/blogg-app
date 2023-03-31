@@ -6,12 +6,12 @@ const app = express();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const jwtkey = "user";
-
 const port = 5000;
-
 app.use(express.json());
+const multer  = require('multer')
 
 app.use(cors());
+
 app.post("/register", async (req, res) => {
   let user = new User(req.body);
   let result = await user.save();
@@ -37,12 +37,9 @@ app.post("/login", async (req, res) => {
     } else {
       // res.send({ result: "check valide field" });
       res.status(401).send({ result: "Please provide valid details - " });
-
     }
   } else {
-  
     res.status(403).send({ result: "Please filled first- " });
-
   }
 });
 app.get("/get", verifyToken, async (req, res) => {
@@ -64,10 +61,10 @@ app.get("/getblogs/:_id", async (req, res) => {
   let data = await blog.findOne(req.params);
   res.send(data);
 });
-app.post("/addblogs", verifyToken, async (req, res) => {
+app.post("/addblogs",async (req, res) => {
   let user = new blog(req.body);
   let result = await user.save();
-  res.send(result);
+  res.send(result,req.file);
 });
 
 app.put("/updateblogs/:_id", verifyToken, async (req, res) => {

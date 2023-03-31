@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
 import Edit from "./Edit";
-import ViewDetails from "./ViewMore";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { MDBBtn, MDBNavbarLink } from "mdb-react-ui-kit";
+import {  MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import { Input } from "@mui/material";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { NavLink } from "react-router-dom";
+
+import { RiDeleteBinLine } from "react-icons/ri";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [Data1, setData1] = useState({});
@@ -133,14 +134,18 @@ const DisplayData = (props) => {
                           data={update}
                           Myid={props.props.userId}
                         />
-                        <MDBBtn
-                          className="btn btn-danger mx-1"
-                          onClick={() => {
-                            Remove(item._id);
-                          }}
-                        >
-                          <DeleteForeverOutlinedIcon />
-                        </MDBBtn>
+                           <RiDeleteBinLine
+                            onClick={() => {
+                              Remove(item._id);
+                            }}
+                            cursor={"pointer"}
+                            
+                            fontSize={"25px"}
+                            color="#EC4A4A"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="Delete !!"
+                            data-tooltip-variant="error"
+                          /> <Tooltip id="my-tooltip" /> 
                       </td>
                     </tr>
                   ))}

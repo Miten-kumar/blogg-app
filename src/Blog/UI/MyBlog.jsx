@@ -15,6 +15,9 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 const Myblog = (props) => {
   // console.log(props.props.userId);
   // console.log(props.props.isLoged);
@@ -25,12 +28,20 @@ const Myblog = (props) => {
   const navigate = useNavigate();
 
   const Remove = (_id) => {
-    axios.delete(`http://localhost:5000/delete/${_id}`).then((res) => {
-      toast.error("Deleted!!!");
-      console.log(res);
-      // console.log(res.data);
-      removeDelete(!Delete);
-    });
+    axios
+      .delete(`http://localhost:5000/delete/${_id}`, {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      })
+      .then((res) => {
+        toast.error("Deleted!!!");
+        console.log(res);
+        // console.log(res.data);
+        removeDelete(!Delete);
+      });
   };
   const update = (function2) => {
     setref(!function2);
@@ -56,7 +67,6 @@ const Myblog = (props) => {
       if (result) {
         empdatachange(result);
       } else {
-        
       }
     }
   };
@@ -128,14 +138,19 @@ const Myblog = (props) => {
                             data={update}
                             Myid={props.props.userId}
                           />
-                          <MDBBtn
-                            className="btn btn-danger mx-1"
+
+                          <RiDeleteBinLine
                             onClick={() => {
                               Remove(item._id);
                             }}
-                          >
-                            <DeleteForeverOutlinedIcon />
-                          </MDBBtn>
+                            cursor={"pointer"}
+                            className="mx-1"
+                            fontSize={"25px"}
+                            color="#EC4A4A"
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="Delete !!"
+                            data-tooltip-variant="error"
+                          /> <Tooltip id="my-tooltip" /> 
                         </td>
                       </tr>
                     ))}

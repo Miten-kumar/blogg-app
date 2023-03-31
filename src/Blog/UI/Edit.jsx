@@ -12,7 +12,9 @@ import {
   MDBModalFooter,
   MDBTextArea,
 } from "mdb-react-ui-kit";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import { FaEdit } from "react-icons/fa";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
@@ -37,16 +39,22 @@ export default function App(props) {
     let item = { name, email, password, _id, userId: props.Myid };
     console.log(item);
     axios
-      .put("http://localhost:5000/updateblogs/" + _id, {
-        name: name,
-        email: email,
-        password: password,
-        userId: props.Myid,
-      }, {
-        headers: {
-          authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
-              }
-      })
+      .put(
+        "http://localhost:5000/updateblogs/" + _id,
+        {
+          name: name,
+          email: email,
+          password: password,
+          userId: props.Myid,
+        },
+        {
+          headers: {
+            authorization: `bearer ${JSON.parse(
+              localStorage.getItem("login-auth")
+            )}`,
+          },
+        }
+      )
       .then((response) => {
         // console.log(response);
         setreload(!reloade);
@@ -55,9 +63,17 @@ export default function App(props) {
 
   return (
     <>
-      <MDBBtn onClick={toggleShow} className="mx-2">
-        <ModeEditOutlineOutlinedIcon />
-      </MDBBtn>
+      <FaEdit
+        onClick={toggleShow}
+        className="mx-3"
+        fontSize={"25px"}
+        color="#45B39D"
+        cursor={"pointer"}
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content="Update/Edit"
+        data-tooltip-variant="info"
+      />
+     <Tooltip id="my-tooltip" /> 
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>
           <MDBModalContent>
