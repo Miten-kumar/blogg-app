@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import {Buffer } from "buffer"
+import LoadingBar from "react-top-loading-bar";
 
 const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setrelode] = useState(true);
+  const [progress, setProgress] = useState(70);
+
   const params = useParams();
 
   // console.log(params._id);
@@ -14,10 +18,18 @@ const Users = () => {
       .then((response) => {
         // console.log(response["data"]);
         setState([response["data"]]);
+        setProgress(100);
+
       });
   }, [reloade]);
   return (
     <div className="container p-0 mt-2">
+    <LoadingBar
+          color="#00BFFF"
+          height="3px"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
       <table className="table table-hover table-primary text-center">
         <thead>
           <tr>
@@ -30,7 +42,11 @@ const Users = () => {
         </thead>
         <tbody>
           {state.map((elem, index) => {
-            return (
+            console.log(elem.image)
+            const image64 = Buffer.from(elem.image, 'base64')
+
+
+            return (  
               <tr key={elem._id} className="p-0">
                 <th scope="col">{index + 1}</th>
                 <th scope="col">{elem.name}</th>
@@ -38,7 +54,7 @@ const Users = () => {
                 <th scope="col">{elem.password}</th>
                 <th scope="col">
                   <td>
-                    <img src={elem.image} alt="" width={"150px"} height={"150px"} />
+                    <img src={`data:image/jpg;base64,${image64.toString('base64')}`} alt="" width={"150px"} height={"150px"} />
                   </td>
                 </th>
               </tr>

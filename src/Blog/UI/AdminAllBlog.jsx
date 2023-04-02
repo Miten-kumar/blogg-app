@@ -4,23 +4,23 @@ import Edit from "./Edit";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import {  MDBNavbarLink } from "mdb-react-ui-kit";
+import { MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
 import { Input } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
-
+import LoadingBar from "react-top-loading-bar";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import HashLoader from "react-spinners/HashLoader";
+
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
   const [relode, setrelode] = useState(true);
+  const [progress, setProgress] = useState(70);
+
   const Remove = (_id) => {
     axios
       .delete(`http://localhost:5000/delete/${_id}`, {
@@ -40,7 +40,7 @@ const DisplayData = (props) => {
           draggable: true,
           progress: undefined,
           theme: "light",
-          });
+        });
 
         removeDelete(!Delete);
       });
@@ -83,6 +83,7 @@ const DisplayData = (props) => {
       },
     })
       .then((res) => {
+        setProgress(100);
         return res.json();
       })
       .then((resp) => {
@@ -96,6 +97,12 @@ const DisplayData = (props) => {
   return (
     <div className="container my-3 border ">
       <div className="card">
+        <LoadingBar
+          color="#35DEFF"
+          height="3px"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
@@ -143,18 +150,18 @@ const DisplayData = (props) => {
                           data={update}
                           Myid={props.props.userId}
                         />
-                           <RiDeleteBinLine
-                            onClick={() => {
-                              Remove(item._id);
-                            }}
-                            cursor={"pointer"}
-                            
-                            fontSize={"25px"}
-                            color="#EC4A4A"
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="Delete !!"
-                            data-tooltip-variant="error"
-                          /> <Tooltip id="my-tooltip" /> 
+                        <RiDeleteBinLine
+                          onClick={() => {
+                            Remove(item._id);
+                          }}
+                          cursor={"pointer"}
+                          fontSize={"25px"}
+                          color="#EC4A4A"
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content="Delete !!"
+                          data-tooltip-variant="error"
+                        />{" "}
+                        <Tooltip id="my-tooltip" />
                       </td>
                     </tr>
                   ))}
@@ -162,12 +169,15 @@ const DisplayData = (props) => {
             </table>
           ) : (
             <>
-              <Stack sx={{ width: "100%" }} spacing={2}>
-                <Alert severity="error">
-                  <AlertTitle>Error</AlertTitle>
-                  No Record Found — <strong>check it out!</strong>
-                </Alert>
-              </Stack>
+              <HashLoader
+                color="#08cef4"
+                loading
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={100}
+                speedMultiplier={1}
+              />
             </>
           )}
         </div>

@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios"
 export default function AddBlog(props) {
   // console.log(props.props);
   const [basicModal, setModal] = useState(false);
@@ -23,52 +23,51 @@ export default function AddBlog(props) {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
-  const [reload, setReload] = useState(true);
-
+  const [reload, setReload] = useState(false);
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log(image);
+    // console.log(image);
 
-    setReload(!reload);
+;
     // const empdata = { name, email, password, userId: props.props, image };
-    fetch("http://localhost:5000/addblogs", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
-
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        userId: props.props,
-        base64: image,
-      }),
-    })
+    axios
+      .post(
+        "http://localhost:5000/addblogs",
+        { 
+          name:name,
+          email:email,
+          password:password,
+          userId: props.props,
+          image: image,
+        },
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         toast.success("Successfully Add Your Blog.");
+        setReload(!reload)
+        props.load(reload);
       })
       .catch((err) => {
         console.log(err.message);
         toast.error("Failed :" + err.message);
       });
   };
-  props.load(reload);
-  const convertbase64 = (e) => {
-    console.log(e);
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result); //base64encoded string
-      setimage(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("Enror: ".error);
-    };
-  };
+  // const convertbase64 = (e) => {
+  //   console.log(e);
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(e.target.files[0]);
+  //   reader.onload = () => {
+  //     console.log(reader.result); //base64encoded string
+  //     setimage(reader.result);
+  //   };
+  //   reader.onerror = (error) => {
+  //     console.log("Enror: ".error);
+  //   };
+  // };
   return (
     <>
       <ToastContainer />
@@ -110,9 +109,9 @@ export default function AddBlog(props) {
                   id="image"
                   name="image"
                   className="mt-4"
-                  accept=".jpeg , .jpg , .png"
+                  accept="image/*"
                   onChange={(e) => {
-                    convertbase64(e);
+                    setimage(e.target.files[0]);
                   }}
                 />
               </MDBModalBody>

@@ -8,10 +8,13 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { MDBNavbarLink } from "mdb-react-ui-kit";
+import LoadingBar from "react-top-loading-bar";
+
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
-
   const [relode, setrelode] = useState(true);
+  const [progress, setProgress] = useState(70);
+
   const Load = (function1) => {
     setrelode(function1);
   };
@@ -38,6 +41,8 @@ const DisplayData = (props) => {
   useEffect(() => {
     fetch("http://localhost:5000/getblogs")
       .then((res) => {
+        // setrelode(!relode);
+        setProgress(100);
         return res.json();
       })
       .then((resp) => {
@@ -51,6 +56,13 @@ const DisplayData = (props) => {
   return (
     <div className="container my-3 border ">
       <div className="card">
+        <LoadingBar
+          color="#00BFFF"
+          height="3px"
+
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
@@ -83,7 +95,7 @@ const DisplayData = (props) => {
                         .map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
-                            <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                            <MDBNavbarLink to={`/viewmore/${item._id}`}>
                               <td>{item.name}</td>
                             </MDBNavbarLink>
                             <td>{item.email}</td>

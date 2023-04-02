@@ -7,12 +7,12 @@ import axios from "axios";
 import { MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { toast } from "react-toastify";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
+import HashLoader from "react-spinners/HashLoader";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import LoadingBar from "react-top-loading-bar";
+
 const Myblog = (props) => {
   // console.log(props.props.userId);
   // console.log(props.props.isLoged);
@@ -20,6 +20,7 @@ const Myblog = (props) => {
   const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
+  const [progress, setProgress] = useState(70);
 
   const Remove = (_id) => {
     axios
@@ -38,7 +39,7 @@ const Myblog = (props) => {
       });
   };
   const update = (function2) => {
-    setref(!function2);
+    setref(function2);
     toast.success("ADDED!!!");
   };
   const Load = (function1) => {
@@ -67,7 +68,9 @@ const Myblog = (props) => {
   useEffect(() => {
     fetch("http://localhost:5000/getblogs")
       .then((res) => {
+        setProgress(100);
         return res.json();
+
       })
       .then((resp) => {
         empdatachange(resp);
@@ -80,6 +83,12 @@ const Myblog = (props) => {
   return (
     <div className="container my-3 border ">
       <div className="card">
+      <LoadingBar
+          color="#00BFFF"
+          height="3px"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged ? (
           <>
@@ -120,12 +129,11 @@ const Myblog = (props) => {
                       <tr key={item._id}>
                         <td>{index + 1}</td>
 
-                        <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                        <MDBNavbarLink to={`/viewmore/${item._id}`}>
                           <td>{item.name}</td>
                         </MDBNavbarLink>
 
                         <td>{item.email}</td>
-
                         <td>
                           <Edit
                             props={item}
@@ -143,7 +151,7 @@ const Myblog = (props) => {
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="Delete !!"
                             data-tooltip-variant="error"
-                          />{" "}
+                          />
                           <Tooltip id="my-tooltip" />
                         </td>
                       </tr>
@@ -152,12 +160,15 @@ const Myblog = (props) => {
             </table>
           ) : (
             <>
-              <Stack sx={{ width: "100%" }} spacing={2}>
-                <Alert severity="error">
-                  <AlertTitle>Error</AlertTitle>
-                  No Record Found — <strong>check it out!</strong>
-                </Alert>
-              </Stack>
+            <HashLoader
+                color="#08cef4"
+                loading
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={100}
+                speedMultiplier={1}
+              />
             </>
           )}
         </div>

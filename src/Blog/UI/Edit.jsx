@@ -15,13 +15,12 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
-
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState(" ");
-  const [reloade, setreload] = useState(true);
+  const [reloade, setreload] = useState(false);
   const toggleShow = () => {
     // console.log(props.props);
     // console.log(props.Myid);
@@ -32,7 +31,6 @@ export default function App(props) {
     setBasicModal(!basicModal);
   };
   const UpdateUser = () => {
-    props.data(reloade);
     let _id = props.props._id;
     console.log(_id);
     // console.log(props.Myid);
@@ -58,6 +56,7 @@ export default function App(props) {
       .then((response) => {
         // console.log(response);
         setreload(!reloade);
+        props.data(reloade);
       });
   };
 

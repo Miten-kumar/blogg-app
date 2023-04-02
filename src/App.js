@@ -12,6 +12,7 @@ import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog";
 import ViewDetails from "./Blog/UI/ViewMore";
+
 function App() {
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
@@ -46,12 +47,13 @@ function App() {
     setuserId(null);
     localStorage.clear();
   };
+
   return (
     <>
       <Navbar
         props={{ isLogged, username, logoutSubmitHandler, Role, isLoged }}
       />
-
+       
       <Routes>
         <Route path="/" element={<div>This is Home Component</div>} />
         <Route

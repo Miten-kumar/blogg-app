@@ -80,6 +80,7 @@ export default function Navbar(props) {
                   </MDBNavbarItem>
                 </div>
               )}
+              
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>

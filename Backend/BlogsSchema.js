@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
   password: String,
   userId: ObjectId,
   id: Number,
-  image: String,
+  image: Buffer,
 });
 module.exports = mongoose.model("blogs", userSchema);

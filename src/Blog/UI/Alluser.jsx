@@ -6,10 +6,14 @@ import {
   MDBDropdownMenu,
   MDBDropdownToggle,
 } from "mdb-react-ui-kit";
+import LoadingBar from "react-top-loading-bar";
+import HashLoader from "react-spinners/HashLoader";
 
 const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setreload] = useState(true);
+  const [progress, setProgress] = useState(70);
+
   const ChangeRole = (props, _id) => {
     if (props.role === "admin") {
       axios
@@ -72,6 +76,7 @@ const Users = () => {
       })
       .then((response) => {
         // console.log(response['data']);
+        setProgress(100);
         setState([...response["data"]]);
         
       });
@@ -79,6 +84,14 @@ const Users = () => {
 
   return (
     <div className="container my-3 border p-4">
+     <LoadingBar
+          color="#00BFFF"
+          height="2px"
+
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        {state?.length > 0 ? (
       <table className="table table-hover table-primary text-center">
         <thead>
           <tr>
@@ -124,7 +137,23 @@ const Users = () => {
             );
           })}
         </tbody>
-      </table>
+
+
+      </table> 
+      
+      ) : (
+            <>
+            <HashLoader
+                color="#08cef4"
+                loading
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={90}
+                speedMultiplier={1}
+              />
+            </>
+          )}
     </div>
   );
 };
