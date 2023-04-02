@@ -12,6 +12,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import LoadingBar from "react-top-loading-bar";
+import { NavLink } from "react-router-dom";
 
 const Myblog = (props) => {
   // console.log(props.props.userId);
@@ -129,8 +130,10 @@ const Myblog = (props) => {
                       <tr key={item._id}>
                         <td>{index + 1}</td>
 
-                        <MDBNavbarLink to={`/viewmore/${item._id}`}>
-                          <td>{item.name}</td>
+                        <MDBNavbarLink >
+                        <NavLink to={`/viewmore/${item._id}`}>
+                        <td>{item.name}</td>
+                        </NavLink>
                         </MDBNavbarLink>
 
                         <td>{item.email}</td>

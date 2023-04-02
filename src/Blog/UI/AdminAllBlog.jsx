@@ -12,6 +12,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import HashLoader from "react-spinners/HashLoader";
+import { NavLink } from "react-router-dom";
 
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
@@ -140,9 +141,11 @@ const DisplayData = (props) => {
                     <tr key={item._id}>
                       <td>{index + 1}</td>
 
-                      <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                      <MDBNavbarLink >
+                        <NavLink to={`/viewmore/${item._id}`}>
                         <td>{item.name}</td>
-                      </MDBNavbarLink>
+                        </NavLink>
+                        </MDBNavbarLink>
                       <td>{item.email}</td>
                       <td>
                         <Edit

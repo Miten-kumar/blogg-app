@@ -9,12 +9,14 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { MDBNavbarLink } from "mdb-react-ui-kit";
 import LoadingBar from "react-top-loading-bar";
+import { NavLink } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [relode, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
-
+  const [length, setLength] = useState(false);
   const Load = (function1) => {
     setrelode(function1);
   };
@@ -43,6 +45,7 @@ const DisplayData = (props) => {
       .then((res) => {
         // setrelode(!relode);
         setProgress(100);
+        setLength(true);
         return res.json();
       })
       .then((resp) => {
@@ -53,13 +56,13 @@ const DisplayData = (props) => {
         console.log(err.message);
       });
   }, [relode]);
+
   return (
     <div className="container my-3 border ">
       <div className="card">
         <LoadingBar
           color="#00BFFF"
           height="3px"
-
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
@@ -95,8 +98,10 @@ const DisplayData = (props) => {
                         .map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
-                            <MDBNavbarLink to={`/viewmore/${item._id}`}>
-                              <td>{item.name}</td>
+                            <MDBNavbarLink>
+                              <NavLink to={`/viewmore/${item._id}`}>
+                                <td>{item.name}</td>
+                              </NavLink>
                             </MDBNavbarLink>
                             <td>{item.email}</td>
                           </tr>
@@ -105,12 +110,17 @@ const DisplayData = (props) => {
                 </table>
               ) : (
                 <>
-                  <Stack sx={{ width: "100%" }} spacing={2}>
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      No Record Found — <strong>please add first!</strong>
-                    </Alert>
-                  </Stack>
+                  <HashLoader
+                    color="#08cef4"
+                    loading
+                    cssOverride={{
+                      margin: "auto",
+                    }}
+                    size={100}
+                    speedMultiplier={1}
+                  />
+
+                  
                 </>
               )}
             </div>
