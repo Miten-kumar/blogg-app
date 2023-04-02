@@ -1,4 +1,5 @@
 const express = require("express");
+const { Buffer } = require("buffer");
 require("./Mongodb");
 const User = require("./UserSchema.js");
 const blog = require("./BlogsSchema.js");
@@ -7,18 +8,19 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const jwtkey = "user";
 const port = 5000;
-const multer = require("multer");
-var fs = require("fs");
+// const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+// var fs = require("fs");
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
+// const upload = multer({ storage: storage });
 
 app.use(express.json());
 app.use(cors());
@@ -71,11 +73,15 @@ app.get("/getblogs/:_id", async (req, res) => {
   res.send(data);
 });
 app.post("/addblogs", async (req, res) => {
+  const myBuffer = Buffer.from(req.body.base64, "base64");
+  console.log(myBuffer);
   const { name } = req.body;
   const { email } = req.body;
   const { password } = req.body;
   const { userId } = req.body;
   const { base64 } = req.body;
+
+  // console.log(base64);
   try {
     blog.create({
       name: name,

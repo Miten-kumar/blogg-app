@@ -31,7 +31,16 @@ const DisplayData = (props) => {
         },
       })
       .then((res) => {
-        toast.error("Deleted!!!");
+        toast.error("Deleted!!!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
 
         removeDelete(!Delete);
       });

@@ -12,7 +12,6 @@ const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
 
   const [relode, setrelode] = useState(true);
-  const [image, setimage] = useState([]);
   const Load = (function1) => {
     setrelode(function1);
   };
@@ -75,7 +74,6 @@ const DisplayData = (props) => {
                       <td>No.</td>
                       <td> Autohor</td>
                       <td>category</td>
-                      <td>category</td>
                     </tr>
                   </thead>
                   <tbody className="table-primary">
@@ -89,7 +87,6 @@ const DisplayData = (props) => {
                               <td>{item.name}</td>
                             </MDBNavbarLink>
                             <td>{item.email}</td>
-                            <td>{item.image}</td>
                           </tr>
                         ))}
                   </tbody>

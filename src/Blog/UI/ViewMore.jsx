@@ -6,11 +6,11 @@ const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setrelode] = useState(true);
   const params = useParams();
-  
+
   // console.log(params._id);
   useEffect(() => {
     axios
-      .get('http://localhost:5000/getblogs/'+ params._id)
+      .get("http://localhost:5000/getblogs/" + params._id)
       .then((response) => {
         // console.log(response["data"]);
         setState([response["data"]]);
@@ -25,6 +25,7 @@ const Users = () => {
             <th scope="col"> Author</th>
             <th scope="col">Category</th>
             <th scope="col">Description</th>
+            <th scope="col">Image</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,11 @@ const Users = () => {
                 <th scope="col">{elem.name}</th>
                 <th scope="col">{elem.email}</th>
                 <th scope="col">{elem.password}</th>
+                <th scope="col">
+                  <td>
+                    <img src={elem.image} alt="" width={"150px"} height={"150px"} />
+                  </td>
+                </th>
               </tr>
             );
           })}
