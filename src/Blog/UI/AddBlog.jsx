@@ -15,6 +15,8 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { addblogs } from "./Store/UserSlice";
 export default function AddBlog(props) {
   // console.log(props.props);
   const [basicModal, setModal] = useState(false);
@@ -24,8 +26,10 @@ export default function AddBlog(props) {
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
   const [reload, setReload] = useState(true);
+  const dispatch=useDispatch()
   const handlesubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
+    dispatch(addblogs())
     axios
       .post(
         "http://localhost:5000/addblogs",

@@ -6,24 +6,18 @@ import "react-toastify/dist/ReactToastify.css";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "./Store/UserSlice";
+
 import { useNavigate } from "react-router-dom";
 export default function Register() {
   const [username, namechange] = useState("");
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [Error, setError] = useState(false);
-  const dispatch = useDispatch();
   const status = useSelector((state) => state.users);
 
   const navigate = useNavigate();
 
-  // const Data = {
-  //   username: username,
-  //   email: email,
-  //   password: password,
-  //   role: "user",
-  // };
+ 
   useEffect(() => {
     namechange("");
     emailchange("");
@@ -32,12 +26,7 @@ export default function Register() {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    // dispatch(addData(Data));
-    // toast.success("Successfully signed up. Please login.");
-    // setTimeout(() => {
-    //   navigate("/login");
-    // }, 1500);
-
+  
     if (!username || !email || !password) {
       setError(true);
       return false;
@@ -48,13 +37,18 @@ export default function Register() {
     console.log(empdata);
     let result = await fetch("http://localhost:5000/register", {
       method: "POST",
-      headers: { "content-type": "application/json" ,authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` },
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${JSON.parse(
+          localStorage.getItem("login-auth")
+        )}`,
+      },
       body: JSON.stringify(empdata),
-    })
-    result=await result.json()
-    localStorage.setItem("user",JSON.stringify(result.result.username))
-    localStorage.setItem("sign-auth",JSON.stringify(result.auth))
-      navigate("/login")
+    });
+    result = await result.json();
+    localStorage.setItem("user", JSON.stringify(result.result.username));
+    localStorage.setItem("sign-auth", JSON.stringify(result.auth));
+    navigate("/login");
   };
 
   return (
