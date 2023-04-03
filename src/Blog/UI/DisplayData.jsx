@@ -11,12 +11,16 @@ import { MDBNavbarLink } from "mdb-react-ui-kit";
 import LoadingBar from "react-top-loading-bar";
 import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-
+import { useSelector } from "react-redux";
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [relode, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
-  const [length, setLength] = useState(false);
+  const [length, setLength] = useState(true);
+  const status =useSelector((state) => {
+    return  state.addblogs
+    
+  });
   const Load = (function1) => {
     setrelode(function1);
   };
@@ -36,24 +40,22 @@ const DisplayData = (props) => {
       if (result) {
         empdatachange(result);
       } else {
-        DisplayData()
+        DisplayData();
       }
     }
   };
   useEffect(() => {
     fetch("http://localhost:5000/getblogs")
       .then((res) => {
+        setLength(false);
         setrelode(relode);
         setProgress(100);
-        setLength(false);
 
         return res.json();
       })
       .then((resp) => {
         empdatachange(resp);
         // console.log(resp);
-      
-
       })
       .catch((err) => {
         console.log(err.message);
@@ -67,6 +69,7 @@ const DisplayData = (props) => {
         <LoadingBar
           color="#00BFFF"
           height="3px"
+          loaderSpeed="2500"
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
@@ -74,15 +77,6 @@ const DisplayData = (props) => {
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
-          <HashLoader
-                color="#08cef4"
-                loading={length}
-                cssOverride={{
-                  margin: "auto",
-                }}
-                size={100}
-                speedMultiplier={1}
-              />
             <div className="d-flex">
               <AddBlog load={Load} props={props.props.userId} />
               <Form className="w-25 mt-4 ">
@@ -96,7 +90,15 @@ const DisplayData = (props) => {
               </Form>
             </div>
             <div className="card-body">
-         
+              <HashLoader
+                color="#08cef4"
+                loading={length}
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={100}
+                speedMultiplier={1}
+              />
               {empdata.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">

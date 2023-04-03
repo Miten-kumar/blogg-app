@@ -15,10 +15,9 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { addblogs } from "./Store/UserSlice";
 export default function AddBlog(props) {
-  // console.log(props.props);
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
   const [name, namechange] = useState("");
@@ -26,10 +25,19 @@ export default function AddBlog(props) {
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
   const [reload, setReload] = useState(true);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const handlesubmit = (e) => {
-    e.preventDefault(); 
-    dispatch(addblogs())
+    e.preventDefault();
+    console.log(window.URL.createObjectURL(image));
+    let adddata = {
+      name: name,
+      email: email,
+      password: password,
+      userId: props.props,
+      image: window.URL.createObjectURL(image),
+    };
+    dispatch(addblogs(adddata));
+
     axios
       .post(
         "http://localhost:5000/addblogs",
@@ -47,7 +55,7 @@ export default function AddBlog(props) {
         }
       )
       .then((res) => {
-        toast.success("Successfully Add Your Blog.", { autoClose: 200 });
+        toast.success("Successfully Add Your Blog.", { autoClose: 500 });
 
         setReload(!reload);
         props.load(!reload);
@@ -57,18 +65,7 @@ export default function AddBlog(props) {
         toast.error("Failed :" + err.message);
       });
   };
-  // const convertbase64 = (e) => {
-  //   console.log(e);
-  //   var reader = new FileReader();
-  //   reader.readAsDataURL(e.target.files[0]);
-  //   reader.onload = () => {
-  //     console.log(reader.result); //base64encoded string
-  //     setimage(reader.result);
-  //   };
-  //   reader.onerror = (error) => {
-  //     console.log("Enror: ".error);
-  //   };
-  // };
+
   return (
     <>
       <ToastContainer />
