@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {Buffer } from "buffer"
+import { Buffer } from "buffer";
 import LoadingBar from "react-top-loading-bar";
+import HashLoader from "react-spinners/HashLoader";
 
 const Users = () => {
   const [state, setState] = useState([]);
   const [reloade, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
+  const [length, setLength] = useState(true);
 
   const params = useParams();
 
@@ -19,19 +21,30 @@ const Users = () => {
         // console.log(response["data"]);
         setState([response["data"]]);
         setProgress(100);
-
+        setLength(false);
       });
   }, [reloade]);
   return (
     <div className="container p-0 mt-2">
-    <LoadingBar
-          color="#00BFFF"
-          height="3px"
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
+      <LoadingBar
+        color="#00BFFF"
+        height="3px"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <table className="table table-hover table-primary text-center">
+        <HashLoader
+            color="#08cef4"
+            loading={length}
+            cssOverride={{
+              marginLeft: "15rem",
+            }}
+            size={70}
+            speedMultiplier={1}
+          />
+        
         <thead>
+      
           <tr>
             <th scope="col">#</th>
             <th scope="col"> Author</th>
@@ -39,14 +52,13 @@ const Users = () => {
             <th scope="col">Description</th>
             <th scope="col">Image</th>
           </tr>
+     
         </thead>
         <tbody>
           {state.map((elem, index) => {
-            console.log(elem.image)
-            const image64 = Buffer.from(elem.image, 'base64')
+            const image64 = Buffer.from(elem.image, "base64");
 
-
-            return (  
+            return (
               <tr key={elem._id} className="p-0">
                 <th scope="col">{index + 1}</th>
                 <th scope="col">{elem.name}</th>
@@ -54,7 +66,14 @@ const Users = () => {
                 <th scope="col">{elem.password}</th>
                 <th scope="col">
                   <td>
-                    <img src={`data:image/jpg;base64,${image64.toString('base64')}`} alt="" width={"150px"} height={"150px"} />
+                    <img
+                      src={`data:image/jpg;base64,${image64.toString(
+                        "base64"
+                      )}`}
+                      alt=""
+                      width={"150px"}
+                      height={"150px"}
+                    />
                   </td>
                 </th>
               </tr>

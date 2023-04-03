@@ -20,7 +20,7 @@ export default function App(props) {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState(" ");
-  const [reloade, setreload] = useState(false);
+  const [reloade, setreload] = useState(true);
   const toggleShow = () => {
     // console.log(props.props);
     // console.log(props.Myid);
@@ -56,7 +56,7 @@ export default function App(props) {
       .then((response) => {
         // console.log(response);
         setreload(!reloade);
-        props.data(reloade);
+        props.data(!reloade);
       });
   };
 

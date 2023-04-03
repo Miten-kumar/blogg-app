@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios"
+import axios from "axios";
 export default function AddBlog(props) {
   // console.log(props.props);
   const [basicModal, setModal] = useState(false);
@@ -23,20 +23,16 @@ export default function AddBlog(props) {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(true);
   const handlesubmit = (e) => {
     e.preventDefault();
-    // console.log(image);
-
-;
-    // const empdata = { name, email, password, userId: props.props, image };
     axios
       .post(
         "http://localhost:5000/addblogs",
-        { 
-          name:name,
-          email:email,
-          password:password,
+        {
+          name: name,
+          email: email,
+          password: password,
           userId: props.props,
           image: image,
         },
@@ -47,9 +43,10 @@ export default function AddBlog(props) {
         }
       )
       .then((res) => {
-        toast.success("Successfully Add Your Blog.");
-        setReload(!reload)
-        props.load(reload);
+        toast.success("Successfully Add Your Blog.", { autoClose: 200 });
+
+        setReload(!reload);
+        props.load(!reload);
       })
       .catch((err) => {
         console.log(err.message);

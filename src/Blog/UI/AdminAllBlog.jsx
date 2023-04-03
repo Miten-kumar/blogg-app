@@ -13,14 +13,17 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import HashLoader from "react-spinners/HashLoader";
 import { NavLink } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
-  const [Data1, setData1] = useState({});
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
   const [relode, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
+  const [length, setLength] = useState(true);
 
   const Remove = (_id) => {
     axios
@@ -34,7 +37,7 @@ const DisplayData = (props) => {
       .then((res) => {
         toast.error("Deleted!!!", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 200,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -47,11 +50,10 @@ const DisplayData = (props) => {
       });
   };
   const update = (function2) => {
-    setref(!function2);
-    toast.success("ADDED!!!");
+    setref(function2);
+    toast.success("ADDED!!!", { autoClose: 200 });
   };
   const Load = (function1) => {
-    setData1(() => function1);
     setrelode(function1);
   };
 
@@ -85,6 +87,9 @@ const DisplayData = (props) => {
     })
       .then((res) => {
         setProgress(100);
+        setLength(false);
+        setrelode(relode);
+        // console.log(res.length);
         return res.json();
       })
       .then((resp) => {
@@ -93,8 +98,7 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode, Delete, ref, Data1]);
-
+  }, [relode, Delete, ref]);
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -104,6 +108,7 @@ const DisplayData = (props) => {
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
+
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
@@ -123,8 +128,16 @@ const DisplayData = (props) => {
         ) : (
           <></>
         )}
-
         <div className="card-body">
+          <HashLoader
+            color="#08cef4"
+            loading={length}
+            cssOverride={{
+              margin: "auto",
+            }}
+            size={100}
+            speedMultiplier={1}
+          />
           {empdata.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
@@ -136,53 +149,49 @@ const DisplayData = (props) => {
                 </tr>
               </thead>
               <tbody className="table-primary">
-                {empdata &&
-                  empdata.map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
+                {empdata.map((item, index) => (
+                  <tr key={item._id}>
+                    <td>{index + 1}</td>
 
-                      <MDBNavbarLink >
-                        <NavLink to={`/viewmore/${item._id}`}>
+                    <MDBNavbarLink>
+                      <NavLink to={`/viewmore/${item._id}`}>
                         <td>{item.name}</td>
-                        </NavLink>
-                        </MDBNavbarLink>
-                      <td>{item.email}</td>
-                      <td>
-                        <Edit
-                          props={item}
-                          data={update}
-                          Myid={props.props.userId}
-                        />
-                        <RiDeleteBinLine
-                          onClick={() => {
-                            Remove(item._id);
-                          }}
-                          cursor={"pointer"}
-                          fontSize={"25px"}
-                          color="#EC4A4A"
-                          data-tooltip-id="my-tooltip"
-                          data-tooltip-content="Delete !!"
-                          data-tooltip-variant="error"
-                        />{" "}
-                        <Tooltip id="my-tooltip" />
-                      </td>
-                    </tr>
-                  ))}
+                      </NavLink>
+                    </MDBNavbarLink>
+                    <td>{item.email}</td>
+                    <td>
+                      <Edit
+                        props={item}
+                        data={update}
+                        Myid={props.props.userId}
+                      />
+                      <RiDeleteBinLine
+                        onClick={() => {
+                          Remove(item._id);
+                        }}
+                        cursor={"pointer"}
+                        fontSize={"25px"}
+                        color="#EC4A4A"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content="Delete !!"
+                        data-tooltip-variant="error"
+                      />
+                      <Tooltip id="my-tooltip" />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-          ) : (
+          ) : length === false ? (
             <>
-              <HashLoader
-                color="#08cef4"
-                loading
-                cssOverride={{
-                  margin: "auto",
-                }}
-                size={100}
-                speedMultiplier={1}
-              />
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  This is an error alert — <strong>check it out!</strong>
+                </Alert>
+              </Stack>
             </>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

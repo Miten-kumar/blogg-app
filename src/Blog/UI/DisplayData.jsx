@@ -36,27 +36,31 @@ const DisplayData = (props) => {
       if (result) {
         empdatachange(result);
       } else {
-        DisplayData();
+        DisplayData()
       }
     }
   };
   useEffect(() => {
     fetch("http://localhost:5000/getblogs")
       .then((res) => {
-        // setrelode(!relode);
+        setrelode(relode);
         setProgress(100);
-        setLength(true);
+        setLength(false);
+
         return res.json();
       })
       .then((resp) => {
         empdatachange(resp);
-        console.log(resp);
+        // console.log(resp);
+      
+
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, [relode]);
 
+  // console.log(empdata.length);
   return (
     <div className="container my-3 border ">
       <div className="card">
@@ -66,9 +70,19 @@ const DisplayData = (props) => {
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
+
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
+          <HashLoader
+                color="#08cef4"
+                loading={length}
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={100}
+                speedMultiplier={1}
+              />
             <div className="d-flex">
               <AddBlog load={Load} props={props.props.userId} />
               <Form className="w-25 mt-4 ">
@@ -82,6 +96,7 @@ const DisplayData = (props) => {
               </Form>
             </div>
             <div className="card-body">
+         
               {empdata.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
@@ -108,21 +123,16 @@ const DisplayData = (props) => {
                         ))}
                   </tbody>
                 </table>
-              ) : (
+              ) : length === false ? (
                 <>
-                  <HashLoader
-                    color="#08cef4"
-                    loading
-                    cssOverride={{
-                      margin: "auto",
-                    }}
-                    size={100}
-                    speedMultiplier={1}
-                  />
-
-                  
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      This is an error alert — <strong>check it out!</strong>
+                    </Alert>
+                  </Stack>
                 </>
-              )}
+              ) : null}
             </div>
           </>
         ) : (
