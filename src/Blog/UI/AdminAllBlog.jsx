@@ -105,8 +105,8 @@ const DisplayData = (props) => {
     <div className="container my-3 border ">
       <div className="card">
         <LoadingBar
-          color="#35DEFF"
-          height="3px"
+          color="#0080FF"
+          height="4px"
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />

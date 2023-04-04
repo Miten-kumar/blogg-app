@@ -64,96 +64,95 @@ const Users = () => {
         });
     }
   };
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    axios
-      .get("http://localhost:5000/get", {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      })
-      .then((response) => {
-        // console.log(response['data']);
-        setProgress(100);
-        setState([...response["data"]]);
-        
-      });
-  }, [reloade],[]);
+  useEffect(
+    () => {
+      window.scrollTo(0, 0);
+      axios
+        .get("http://localhost:5000/get", {
+          headers: {
+            authorization: `bearer ${JSON.parse(
+              localStorage.getItem("login-auth")
+            )}`,
+          },
+        })
+        .then((response) => {
+          // console.log(response['data']);
+          setProgress(100);
+          setState([...response["data"]]);
+        });
+    },
+    [reloade],
+    []
+  );
 
   return (
     <div className="container my-3 border p-4">
-     <LoadingBar
-          color="#00BFFF"
-          height="2px"
+      <LoadingBar
+        color="#0080FF"
+        height="4px"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+      {state?.length > 0 ? (
+        <table className="table table-hover table-primary text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
 
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
-        {state?.length > 0 ? (
-      <table className="table table-hover table-primary text-center">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {state.map((elem, index) => {
+              return (
+                <tr key={elem._id} className="p-0">
+                  <th scope="col">{index + 1}</th>
+                  <th scope="col">{elem.username}</th>
 
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.map((elem, index) => {
-            return (
-              <tr key={elem._id} className="p-0">
-                <th scope="col">{index + 1}</th>
-                <th scope="col">{elem.username}</th>
-
-                <th scope="col">{elem.email}</th>
-                <th scope="col">{elem.role}</th>
-                <th scope="col">
-                  <MDBDropdown>
-                    <MDBDropdownToggle color="danger">
-                      ChangeRole
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                      <MDBDropdownItem
-                        link
-                        onClick={() => ChangeRole(elem, elem._id)}
-                      >
-                        User
-                      </MDBDropdownItem>
-                      <MDBDropdownItem
-                        link
-                        onClick={() => ChangeRole(elem, elem._id)}
-                      >
-                        admin
-                      </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
-                </th>
-              </tr>
-            );
-          })}
-        </tbody>
-
-
-      </table> 
-      
+                  <th scope="col">{elem.email}</th>
+                  <th scope="col">{elem.role}</th>
+                  <th scope="col">
+                    <MDBDropdown>
+                      <MDBDropdownToggle color="danger">
+                        ChangeRole
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                        <MDBDropdownItem
+                          link
+                          onClick={() => ChangeRole(elem, elem._id)}
+                        >
+                          User
+                        </MDBDropdownItem>
+                        <MDBDropdownItem
+                          link
+                          onClick={() => ChangeRole(elem, elem._id)}
+                        >
+                          admin
+                        </MDBDropdownItem>
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                  </th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       ) : (
-            <>
-            <HashLoader
-                color="#08cef4"
-                loading
-                cssOverride={{
-                  margin: "auto",
-                }}
-                size={90}
-                speedMultiplier={1}
-              />
-            </>
-          )}
+        <>
+          <HashLoader
+            color="#08cef4"
+            loading
+            cssOverride={{
+              margin: "auto",
+            }}
+            size={90}
+            speedMultiplier={1}
+          />
+        </>
+      )}
     </div>
   );
 };

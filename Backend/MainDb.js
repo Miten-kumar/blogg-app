@@ -72,6 +72,13 @@ app.get("/getblogs/:_id", async (req, res) => {
   let data = await blog.findOne(req.params);
   res.send(data);
 });
+
+
+app.get("/getblog/:userId", async (req, res) => {
+  let data = await blog.find({userId:req.params.userId});
+  res.send(data);
+});
+
 app.post("/addblogs", upload.single("image"), async (req, res) => {
   // console.log(req.body);
 

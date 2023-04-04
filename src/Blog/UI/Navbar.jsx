@@ -21,9 +21,7 @@ export default function Navbar(props) {
   const Name = props.props.username.charAt(0);
   // console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();
-  // console.log(firstLetter);
-  // console.log(props.props.Role);
-  // console.log(props.props.isLoged);
+  
   const func = () => {
     return <>{props.props.logoutSubmitHandler()}</>;
   };

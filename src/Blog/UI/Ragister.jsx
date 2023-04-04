@@ -13,8 +13,9 @@ export default function Register() {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [Error, setError] = useState(false);
-  const status = useSelector((state) => state.users);
-
+  const status = useSelector((state) => {
+    return state.addblogs;
+  });
   const navigate = useNavigate();
 
  

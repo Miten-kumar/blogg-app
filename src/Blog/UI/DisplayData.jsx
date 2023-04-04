@@ -12,13 +12,13 @@ import LoadingBar from "react-top-loading-bar";
 import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useSelector } from "react-redux";
+import { axios } from "axios";
 const DisplayData = (props) => {
-
-
   const [empdata, empdatachange] = useState([]);
   const [relode, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
   const [length, setLength] = useState(true);
+  const [data, setdata] = useState([]);
   const status = useSelector((state) => {
     return state.addblogs;
   });
@@ -45,8 +45,12 @@ const DisplayData = (props) => {
       }
     }
   };
+
   useEffect(() => {
-    fetch("http://localhost:5000/getblogs")
+    (props.props.isLogged === true || props.props.isLoged === true
+      ? fetch("http://localhost:5000/getblog/" + props.props.userId)
+      : fetch("http://localhost:5000/getblogs/")
+    )
       .then((res) => {
         setLength(false);
         setrelode(relode);
@@ -61,8 +65,8 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode,status.success])
-  
+  }, [relode, status.success]);
+
   // console.log(empdata.length);
   return (
     <div className="container my-3 border ">
@@ -100,7 +104,7 @@ const DisplayData = (props) => {
                 size={100}
                 speedMultiplier={1}
               />
-              {empdata.length > 0 ? (
+              {empdata && empdata.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
                     <tr>
@@ -111,19 +115,17 @@ const DisplayData = (props) => {
                   </thead>
                   <tbody className="table-primary">
                     {empdata &&
-                      empdata
-                        .filter((blog) => blog.userId === props.props.userId)
-                        .map((item, index) => (
-                          <tr key={item._id}>
-                            <td>{index + 1}</td>
-                            <MDBNavbarLink>
-                              <NavLink to={`/viewmore/${item._id}`}>
-                                <td>{item.name}</td>
-                              </NavLink>
-                            </MDBNavbarLink>
-                            <td>{item.email}</td>
-                          </tr>
-                        ))}
+                      empdata.map((item, index) => (
+                        <tr key={item._id}>
+                          <td>{index + 1}</td>
+                          <MDBNavbarLink>
+                            <NavLink to={`/viewmore/${item._id}`}>
+                              <td>{item.name}</td>
+                            </NavLink>
+                          </MDBNavbarLink>
+                          <td>{item.email}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               ) : length === false ? (
@@ -135,33 +137,53 @@ const DisplayData = (props) => {
                     </Alert>
                   </Stack>
                 </>
-              ) : <><h2>dafad</h2></>}
+              ) : null}
             </div>
           </>
         ) : (
           <>
             <div className="card-body">
-              <table className="table table-bordered ">
-                <thead className="table table-hover table-primary text-center">
-                  <tr>
-                    <td>No.</td>
-                    <td> Name</td>
-                    <td>category</td>
-                  </tr>
-                </thead>
-                <tbody className="table-primary">
-                  {empdata &&
-                    empdata.map((item, index) => (
-                      <tr key={item._id}>
-                        <td>{index + 1}</td>
-                        <MDBNavbarLink href={`/viewmore/${item._id}`}>
-                          <td>{item.name}</td>
-                        </MDBNavbarLink>
-                        <td>{item.email}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <HashLoader
+                color="#08cef4"
+                loading={length}
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={100}
+                speedMultiplier={1}
+              />
+              {data.length > 0 ? (
+                <table className="table table-bordered ">
+                  <thead className="table table-hover table-primary text-center">
+                    <tr>
+                      <td>No.</td>
+                      <td> Name</td>
+                      <td>category</td>
+                    </tr>
+                  </thead>
+                  <tbody className="table-primary">
+                    {data &&
+                      data.map((item, index) => (
+                        <tr key={item._id}>
+                          <td>{index + 1}</td>
+                          <MDBNavbarLink href={`/viewmore/${item._id}`}>
+                            <td>{item.name}</td>
+                          </MDBNavbarLink>
+                          <td>{item.email}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              ) : length === false ? (
+                <>
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      This is an error alert — <strong>check it out!</strong>
+                    </Alert>
+                  </Stack>
+                </>
+              ) : null}
             </div>
           </>
         )}

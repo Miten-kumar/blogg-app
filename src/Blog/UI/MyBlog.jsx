@@ -68,7 +68,7 @@ const Myblog = (props) => {
     }
   };
   useEffect(() => {
-    fetch("http://localhost:5000/getblogs")
+    fetch("http://localhost:5000/getblog/" + props.props.userId)
       .then((res) => {
         // setData1(Data1);
         setProgress(100);
@@ -88,8 +88,8 @@ const Myblog = (props) => {
     <div className="container my-3 border ">
       <div className="card">
         <LoadingBar
-          color="#00BFFF"
-          height="3px"
+          color="#0080FF"
+          height="4px"
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
@@ -136,7 +136,6 @@ const Myblog = (props) => {
               </thead>
               <tbody className="table-primary">
                 {empdata
-                  .filter((blog) => blog.userId === props.props.userId)
                   .map((item, index) => (
                     <tr key={item._id}>
                       <td>{index + 1}</td>
