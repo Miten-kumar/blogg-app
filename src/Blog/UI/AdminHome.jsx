@@ -21,21 +21,21 @@ export default function MultiActionAreaCard() {
             >
               <CardContent>
                 <CardActions>
-                  <NavLink active to="/admin/alluser" className="d-inline mb-2">
-                    <Button size="small" color="primary">
+                  <NavLink active to="/admin/alluser" className="d-inline mb-2 text-decoration-none" >
+                    <Button  size="small" color="primary">
                      <GroupOutlinedIcon className="mx-2"/>  Users
                     </Button>
                   </NavLink>
                 </CardActions>
                 <CardActions >
-                  <NavLink to="/admin/myblog">
+                  <NavLink to="/admin/myblog" className="text-decoration-none">
                     <Button size="small"className=" mb-3" color="primary">
                      <DescriptionOutlinedIcon className="mx-2"/> MyBlogs
                     </Button>
                   </NavLink>
                 </CardActions>
                 <CardActions>
-                  <NavLink to="/admin/blog">
+                  <NavLink to="/admin/blog" className="text-decoration-none">
                     <Button size="small" color="primary">
                      <DescriptionOutlinedIcon className="mx-2"/>AllBlogs
                     </Button>

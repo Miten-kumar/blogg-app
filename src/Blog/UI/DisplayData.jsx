@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
 import { Form } from "react-bootstrap";
-
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Input } from "@mui/material";
+import { Input, Link } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
@@ -47,9 +46,13 @@ const DisplayData = (props) => {
   };
 
   useEffect(() => {
-    (props.props.isLogged === true || props.props.isLoged === true
-      ? fetch("http://localhost:5000/getblog/" + props.props.userId)
-      : fetch("http://localhost:5000/getblogs/")
+    const userFetch = "http://localhost:5000/getblog/" + props.props.userId;
+    const AlluserFetch = "http://localhost:5000/getblogs";
+
+    fetch(
+      props.props.isLogged === true || props.props.isLoged === true
+        ? userFetch
+        : AlluserFetch
     )
       .then((res) => {
         setLength(false);
@@ -69,7 +72,7 @@ const DisplayData = (props) => {
 
   // console.log(empdata.length);
   return (
-    <div className="container my-3 border ">
+    <div className="container my-3  ">
       <div className="card">
         <LoadingBar
           color="#00BFFF"
@@ -106,20 +109,21 @@ const DisplayData = (props) => {
               />
               {empdata && empdata.length > 0 ? (
                 <table className="table table-bordered ">
-                  <thead className="table table-hover table-primary text-center">
+                  <thead className="table table-hover table-primary text-center ">
                     <tr>
                       <td>No.</td>
                       <td> Autohor</td>
                       <td>category</td>
                     </tr>
                   </thead>
-                  <tbody className="table-primary">
+                  <tbody className="table-primary ">
                     {empdata &&
                       empdata.map((item, index) => (
                         <tr key={item._id}>
                           <td>{index + 1}</td>
                           <MDBNavbarLink>
-                            <NavLink to={`/viewmore/${item._id}`}>
+                            
+                            <NavLink  to={`/viewmore/${item._id}` } className="text-decoration-none">
                               <td>{item.name}</td>
                             </NavLink>
                           </MDBNavbarLink>
@@ -152,7 +156,7 @@ const DisplayData = (props) => {
                 size={100}
                 speedMultiplier={1}
               />
-              {data.length > 0 ? (
+              {empdata.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
                     <tr>
@@ -162,8 +166,8 @@ const DisplayData = (props) => {
                     </tr>
                   </thead>
                   <tbody className="table-primary">
-                    {data &&
-                      data.map((item, index) => (
+                    {empdata &&
+                      empdata.map((item, index) => (
                         <tr key={item._id}>
                           <td>{index + 1}</td>
                           <MDBNavbarLink href={`/viewmore/${item._id}`}>

@@ -85,7 +85,7 @@ const Myblog = (props) => {
   }, [status.success, ref, Delete]);
 
   return (
-    <div className="container my-3 border ">
+    <div className="container my-3 ">
       <div className="card">
         <LoadingBar
           color="#0080FF"
@@ -135,40 +135,41 @@ const Myblog = (props) => {
                 </tr>
               </thead>
               <tbody className="table-primary">
-                {empdata
-                  .map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
+                {empdata.map((item, index) => (
+                  <tr key={item._id}>
+                    <td>{index + 1}</td>
 
-                      <MDBNavbarLink>
-                        <NavLink to={`/viewmore/${item._id}`}>
-                          <td>{item.name}</td>
-                        </NavLink>
-                      </MDBNavbarLink>
-
-                      <td>{item.email}</td>
-                      <td>
-                        <Edit
-                          props={item}
-                          data={update}
-                          Myid={props.props.userId}
-                        />
-                        <RiDeleteBinLine
-                          onClick={() => {
-                            Remove(item._id);
-                          }}
-                          cursor={"pointer"}
-                          className="mx-1"
-                          fontSize={"25px"}
-                          color="#EC4A4A"
-                          data-tooltip-id="my-tooltip"
-                          data-tooltip-content="Delete !!"
-                          data-tooltip-variant="error"
-                        />
-                        <Tooltip id="my-tooltip" />
-                      </td>
-                    </tr>
-                  ))}
+                    <MDBNavbarLink>
+                      <NavLink
+                        to={`/viewmore/${item._id}`}
+                        className="text-decoration-none"
+                      >
+                        <td>{item.name}</td>
+                      </NavLink>
+                    </MDBNavbarLink>
+                    <td>{item.email}</td>
+                    <td>
+                      <Edit
+                        props={item}
+                        data={update}
+                        Myid={props.props.userId}
+                      />
+                      <RiDeleteBinLine
+                        onClick={() => {
+                          Remove(item._id);
+                        }}
+                        cursor={"pointer"}
+                        className="mx-1"
+                        fontSize={"25px"}
+                        color="#EC4A4A"
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content="Delete !!"
+                        data-tooltip-variant="error"
+                      />
+                      <Tooltip id="my-tooltip" />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           ) : length === false ? (

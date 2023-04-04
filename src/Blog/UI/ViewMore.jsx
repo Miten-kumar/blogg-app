@@ -4,6 +4,12 @@ import { useParams } from "react-router-dom";
 import { Buffer } from "buffer";
 import LoadingBar from "react-top-loading-bar";
 import HashLoader from "react-spinners/HashLoader";
+import { MDBCard } from "mdb-react-ui-kit";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Users = () => {
   const [state, setState] = useState([]);
@@ -24,9 +30,10 @@ const Users = () => {
         setLength(false);
       });
   }, [reloade]);
+
   return (
-    <div className="container p-0 mt-2">
-      <LoadingBar
+    <div className="container my-2 mx-5 ">
+      {/* <LoadingBar
         color="#00BFFF"
         height="3px"
         progress={progress}
@@ -34,17 +41,16 @@ const Users = () => {
       />
       <table className="table table-hover table-primary text-center">
         <HashLoader
-            color="#08cef4"
-            loading={length}
-            cssOverride={{
-              marginLeft: "15rem",
-            }}
-            size={70}
-            speedMultiplier={1}
-          />
-        
+          color="#08cef4"
+          loading={length}
+          cssOverride={{
+            marginLeft: "15rem",
+          }}
+          size={70}
+          speedMultiplier={1}
+        />
+
         <thead>
-      
           <tr>
             <th scope="col">#</th>
             <th scope="col"> Author</th>
@@ -52,35 +58,57 @@ const Users = () => {
             <th scope="col">Description</th>
             <th scope="col">Image</th>
           </tr>
-     
         </thead>
-        <tbody>
-          {state.map((elem, index) => {
-            const image64 = Buffer.from(elem.image, "base64");
+        <tbody> */}
+      <LoadingBar
+        color="#00BFFF"
+        height="3px"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+      <HashLoader
+        color="#08cef4"
+        loading={length}
+        cssOverride={{
+          marginLeft: "15rem",
+        }}
+        size={70}
+        speedMultiplier={1}
+      />
 
-            return (
-              <tr key={elem._id} className="p-0">
-                <th scope="col">{index + 1}</th>
-                <th scope="col">{elem.name}</th>
-                <th scope="col">{elem.email}</th>
-                <th scope="col">{elem.password}</th>
-                <th scope="col">
-                  <td>
-                    <img
-                      src={`data:image/jpg;base64,${image64.toString(
-                        "base64"
-                      )}`}
-                      alt=""
-                      width={"150px"}
-                      height={"150px"}
-                    />
-                  </td>
-                </th>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {state.map((elem, index) => {
+        const image64 = Buffer.from(elem.image, "base64");
+
+        return (
+          <Row>
+            <Col xs={6  } className="mt-3 mx-5 " >
+              <Card border="info">
+                <Card.Img
+                  variant="top"
+                  src={`data:image/jpg;base64,${image64.toString("base64")}`}
+                  alt=""
+                  className=""
+                  height={"450px"}
+                />
+              </Card>
+            </Col>
+            <Card border="info" className="w-25 mt-3">
+              <Col>
+                <Card.Body>
+                  <Card.Text> Name:- {elem.name}</Card.Text>
+                  <Card.Text> Dec:- {elem.password}</Card.Text>
+                  <Card.Footer>
+                    <small className="text-muted">{elem.email}</small>
+                  </Card.Footer>
+                </Card.Body>
+              </Col>{" "}
+            </Card>
+          </Row>
+
+        );
+      })}
+      {/* </tbody> */}
+      {/* </table> */}
     </div>
   );
 };

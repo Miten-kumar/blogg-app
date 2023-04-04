@@ -102,7 +102,7 @@ const DisplayData = (props) => {
       });
   }, [relode, Delete, ref, status.success]);
   return (
-    <div className="container my-3 border ">
+    <div className="container my-3 ">
       <div className="card">
         <LoadingBar
           color="#0080FF"
@@ -156,10 +156,11 @@ const DisplayData = (props) => {
                     <td>{index + 1}</td>
 
                     <MDBNavbarLink>
-                      <NavLink to={`/viewmore/${item._id}`}>
-                        <td>{item.name}</td>
-                      </NavLink>
-                    </MDBNavbarLink>
+                            
+                            <NavLink  to={`/viewmore/${item._id}` } className="text-decoration-none">
+                              <td>{item.name}</td>
+                            </NavLink>
+                          </MDBNavbarLink>
                     <td>{item.email}</td>
                     <td>
                       <Edit
