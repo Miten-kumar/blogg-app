@@ -13,13 +13,14 @@ import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useSelector } from "react-redux";
 const DisplayData = (props) => {
+
+
   const [empdata, empdatachange] = useState([]);
   const [relode, setrelode] = useState(true);
   const [progress, setProgress] = useState(70);
   const [length, setLength] = useState(true);
-  const status =useSelector((state) => {
-    return  state.addblogs
-    
+  const status = useSelector((state) => {
+    return state.addblogs;
   });
   const Load = (function1) => {
     setrelode(function1);
@@ -60,8 +61,8 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode]);
-
+  }, [relode,status.success])
+  
   // console.log(empdata.length);
   return (
     <div className="container my-3 border ">
@@ -134,7 +135,7 @@ const DisplayData = (props) => {
                     </Alert>
                   </Stack>
                 </>
-              ) : null}
+              ) : <><h2>dafad</h2></>}
             </div>
           </>
         ) : (

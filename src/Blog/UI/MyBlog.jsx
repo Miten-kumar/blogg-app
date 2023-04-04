@@ -16,15 +16,15 @@ import { NavLink } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import { useSelector } from "react-redux";
 const Myblog = (props) => {
-  
   const [empdata, empdatachange] = useState(null);
   const [Data1, setData1] = useState(true);
   const [ref, setref] = useState(true);
   const [Delete, removeDelete] = useState(true);
   const [progress, setProgress] = useState(70);
   const [length, setLength] = useState(true);
-
+  const status = useSelector((state) => state.addblogs);
   const Remove = (_id) => {
     axios
       .delete(`http://localhost:5000/delete/${_id}`, {
@@ -36,7 +36,7 @@ const Myblog = (props) => {
       })
       .then((res) => {
         toast.error("Deleted!!!", { autoClose: 200 });
-        
+
         removeDelete(!Delete);
       });
   };
@@ -77,11 +77,12 @@ const Myblog = (props) => {
       })
       .then((resp) => {
         empdatachange(resp);
+        console.log("sucess");
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [Data1, Delete, ref]);
+  }, [status.success, ref, Delete]);
 
   return (
     <div className="container my-3 border ">

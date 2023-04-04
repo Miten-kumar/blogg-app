@@ -15,8 +15,8 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { addblogs } from "./Store/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "./Store/UserSlice";
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
@@ -26,44 +26,47 @@ export default function AddBlog(props) {
   const [image, setimage] = useState("");
   const [reload, setReload] = useState(true);
   const dispatch = useDispatch();
+  
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log(window.URL.createObjectURL(image));
+
+    // console.log(window.URL.createObjectURL(image));
     let adddata = {
       name: name,
       email: email,
       password: password,
       userId: props.props,
-      image: window.URL.createObjectURL(image),
+      image: image,
     };
-    dispatch(addblogs(adddata));
+    dispatch(addData(adddata));
+    props.load(!reload)
 
-    axios
-      .post(
-        "http://localhost:5000/addblogs",
-        {
-          name: name,
-          email: email,
-          password: password,
-          userId: props.props,
-          image: image,
-        },
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Successfully Add Your Blog.", { autoClose: 500 });
+    // axios
+    //   .post(
+    //     "http://localhost:5000/addblogs",
+    //     {
+    //       name: name,
+    //       email: email,
+    //       password: password,
+    //       userId: props.props,
+    //       image: image,
+    //     },
+    //     {
+    //       headers: {
+    //         "content-type": "multipart/form-data",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Add Your Blog.", { autoClose: 500 });
 
-        setReload(!reload);
-        props.load(!reload);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error("Failed :" + err.message);
-      });
+    //     setReload(!reload);
+    //     props.load(!reload);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //     toast.error("Failed :" + err.message);
+    //   });
   };
 
   return (
