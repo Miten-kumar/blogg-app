@@ -26,7 +26,7 @@ export default function AddBlog(props) {
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
   // const [reload, setReload] = useState(true);
-  const r1 = false;
+  const reload = true;
   const dispatch = useDispatch();
   
   const handlesubmit = (e) => {
@@ -42,13 +42,13 @@ export default function AddBlog(props) {
     };
 
     dispatch(addData(adddata)).then((res) => {
-      props.reload()
+      props.load(!reload)
     });
 
-    // props.load(!reload)
-    // setTimeout(() => {
+    setTimeout(() => {
+      props.load(reload)
       
-    // }, 1000);
+    }, 100);
     // axios
     //   .post(
     //     "http://localhost:5000/addblogs",

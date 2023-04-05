@@ -63,6 +63,7 @@ const DisplayData = (props) => {
   //     setRelode(!function1)
   //   }, 1000);
   };
+  console.log(relode);
   const searchHandle = async (e) => {
     let key = e.target.value;
     // console.log(key);
@@ -82,11 +83,12 @@ const DisplayData = (props) => {
       }
     }
   };
+  
   useEffect(() => {
     dispatch(getData()).then(({payload}) => {
       setEmpdatachange(payload.data);
     })    
-  }, [setEmpdatachange,Delete]);
+  }, [relode,Delete]);
 
   // const dummy =() => {
   //   dispatch(getData()).then(({payload}) => {
@@ -101,7 +103,7 @@ const DisplayData = (props) => {
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
             <div className="d-flex">
-              <AddBlog reload={Load} props={props.props.userId} />
+              <AddBlog load={Load} props={props.props.userId} />
               <Form className="w-25 mt-4 ">
                 <Input
                   type="search"
