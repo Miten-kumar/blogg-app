@@ -58,11 +58,11 @@ export default function Navbar(props) {
             <MDBNavbarNav className="p-3 ">
               <MDBNavbarItem className="mx-2 mt-2">
                 {props.props.Role === "admin" ? (
-                  <NavLink to="/admin/blog" fontSize="20px">
+                  <NavLink to="/admin/blog" fontSize="20px" className="text-decoration-none">
                     Desh bord
                   </NavLink>
                 ) : (
-                  <NavLink to="/blog">Blogs</NavLink>
+                  <NavLink to="/blog" className="text-decoration-none">Blogs</NavLink>
                 )}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
@@ -71,10 +71,10 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register">Register</NavLink>
+                    <NavLink to="/register" className="text-decoration-none">Register</NavLink>
                   </MDBNavbarItem>
-                  <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/login">Login</NavLink>
+                  <MDBNavbarItem className="mx-2 mt-2 ">
+                    <NavLink to="/login" className="text-decoration-none">Login</NavLink>
                   </MDBNavbarItem>
                 </div>
               )}

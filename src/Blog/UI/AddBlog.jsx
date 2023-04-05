@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "./Store/UserSlice";
+import { useNavigate } from 'react-router-dom';
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
@@ -24,7 +25,8 @@ export default function AddBlog(props) {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
-  const [reload, setReload] = useState(true);
+  // const [reload, setReload] = useState(true);
+  const r1 = false;
   const dispatch = useDispatch();
   
   const handlesubmit = (e) => {
@@ -38,9 +40,15 @@ export default function AddBlog(props) {
       userId: props.props,
       image: image,
     };
-    dispatch(addData(adddata));
-    props.load(!reload)
 
+    dispatch(addData(adddata)).then((res) => {
+      props.reload()
+    });
+
+    // props.load(!reload)
+    // setTimeout(() => {
+      
+    // }, 1000);
     // axios
     //   .post(
     //     "http://localhost:5000/addblogs",

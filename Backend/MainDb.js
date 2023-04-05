@@ -99,8 +99,7 @@ app.post("/addblogs", upload.single("image"), async (req, res) => {
       userId: req.body.userId,
       image: image,
     });
-
-    res.send({ Status: "ok" });
+    res.send({status:"ok"});
   } catch (error) {
     res.send({ Status: "error", data: error });
   }

@@ -16,17 +16,19 @@ import { NavLink } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getData, selectAllPosts } from "./Store/UserSlice";
 
 const DisplayData = (props) => {
-  const [empdata, empdatachange] = useState([]);
-  const [ref, setref] = useState(true);
+  const [empdata, setEmpdatachange] = useState([]);
+  const [ref, setRef] = useState(true);
   const [Delete, removeDelete] = useState(true);
-  const [relode, setrelode] = useState(true);
+  const [relode, setRelode] = useState(false);
   const [progress, setProgress] = useState(70);
   const [length, setLength] = useState(true);
   const status = useSelector((state) => state.addblogs);
 
+  const dispatch = useDispatch();
   const Remove = (_id) => {
     axios
       .delete(`http://localhost:5000/delete/${_id}`, {
@@ -52,13 +54,15 @@ const DisplayData = (props) => {
       });
   };
   const update = (function2) => {
-    setref(function2);
+    setRef(function2);
     toast.success("ADDED!!!", { autoClose: 200 });
   };
-  const Load = (function1) => {
-    setrelode(function1);
+  const Load = () => {
+    setRelode((prev) => !prev);
+    //   setTimeout(() => {
+  //     setRelode(!function1)
+  //   }, 1000);
   };
-
   const searchHandle = async (e) => {
     let key = e.target.value;
     // console.log(key);
@@ -71,51 +75,33 @@ const DisplayData = (props) => {
         },
       });
       result = await result.json();
-
       if (result) {
-        empdatachange(result);
+        setEmpdatachange(result);
       } else {
         DisplayData();
       }
     }
   };
   useEffect(() => {
-    fetch("http://localhost:5000/getblogs", {
-      headers: {
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
-    })
-      .then((res) => {
-        setProgress(100);
-        setLength(false);
-        setrelode(relode);
-        // console.log(res.length);
-        return res.json();
-      })
-      .then((resp) => {
-        empdatachange(resp);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, [relode, Delete, ref, status.success]);
+    dispatch(getData()).then(({payload}) => {
+      setEmpdatachange(payload.data);
+    })    
+  }, [setEmpdatachange,Delete]);
+
+  // const dummy =() => {
+  //   dispatch(getData()).then(({payload}) => {
+  //     setEmpdatachange(payload.data);
+  //   })
+  // }
   return (
     <div className="container my-3 ">
       <div className="card">
-        <LoadingBar
-          color="#0080FF"
-          height="4px"
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
-
+        <LoadingBar color="#0080FF" height="4px" progress={status.progress} />
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
           <>
             <div className="d-flex">
-              <AddBlog load={Load} props={props.props.userId} />
+              <AddBlog reload={Load} props={props.props.userId} />
               <Form className="w-25 mt-4 ">
                 <Input
                   type="search"
@@ -125,21 +111,21 @@ const DisplayData = (props) => {
                   aria-label="Search"
                 ></Input>
               </Form>
+              <HashLoader
+                color="#08cef4"
+                loading={status.loading}
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={50}
+                speedMultiplier={1}
+              />
             </div>
           </>
         ) : (
           <></>
         )}
         <div className="card-body">
-          <HashLoader
-            color="#08cef4"
-            loading={length}
-            cssOverride={{
-              margin: "auto",
-            }}
-            size={100}
-            speedMultiplier={1}
-          />
           {empdata.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
@@ -156,11 +142,13 @@ const DisplayData = (props) => {
                     <td>{index + 1}</td>
 
                     <MDBNavbarLink>
-                            
-                            <NavLink  to={`/viewmore/${item._id}` } className="text-decoration-none">
-                              <td>{item.name}</td>
-                            </NavLink>
-                          </MDBNavbarLink>
+                      <NavLink
+                        to={`/viewmore/${item._id}`}
+                        className="text-decoration-none"
+                      >
+                        <td>{item.name}</td>
+                      </NavLink>
+                    </MDBNavbarLink>
                     <td>{item.email}</td>
                     <td>
                       <Edit
@@ -185,7 +173,7 @@ const DisplayData = (props) => {
                 ))}
               </tbody>
             </table>
-          ) : length === false ? (
+          ) :   (
             <>
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">
@@ -194,7 +182,7 @@ const DisplayData = (props) => {
                 </Alert>
               </Stack>
             </>
-          ) : null}
+          ) }
         </div>
       </div>
     </div>

@@ -11,7 +11,6 @@ import LoadingBar from "react-top-loading-bar";
 import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useSelector } from "react-redux";
-import { axios } from "axios";
 const DisplayData = (props) => {
   const [empdata, empdatachange] = useState([]);
   const [relode, setrelode] = useState(true);
@@ -68,7 +67,7 @@ const DisplayData = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [relode, status.success]);
+  }, [relode,status.success]);
 
   // console.log(empdata.length);
   return (
