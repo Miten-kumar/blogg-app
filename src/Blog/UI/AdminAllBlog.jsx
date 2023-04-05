@@ -13,6 +13,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import HashLoader from "react-spinners/HashLoader";
 import { NavLink } from "react-router-dom";
+
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
@@ -24,10 +25,8 @@ const DisplayData = (props) => {
   const [ref, setRef] = useState(true);
   const [Delete, removeDelete] = useState(true);
   const [relode, setRelode] = useState(false);
-  const [progress, setProgress] = useState(70);
-  const [length, setLength] = useState(true);
   const status = useSelector((state) => state.addblogs);
-
+console.log(status.addblogs);
   const dispatch = useDispatch();
   const Remove = (_id) => {
     axios
@@ -59,9 +58,6 @@ const DisplayData = (props) => {
   };
   const Load = () => {
     setRelode((prev) => !prev);
-    //   setTimeout(() => {
-  //     setRelode(!function1)
-  //   }, 1000);
   };
   console.log(relode);
   const searchHandle = async (e) => {
@@ -88,13 +84,9 @@ const DisplayData = (props) => {
     dispatch(getData()).then(({payload}) => {
       setEmpdatachange(payload.data);
     })    
-  }, [relode,Delete]);
+  }, [relode,Delete,status.addblogs,ref]);
 
-  // const dummy =() => {
-  //   dispatch(getData()).then(({payload}) => {
-  //     setEmpdatachange(payload.data);
-  //   })
-  // }
+
   return (
     <div className="container my-3 ">
       <div className="card">
@@ -128,6 +120,7 @@ const DisplayData = (props) => {
           <></>
         )}
         <div className="card-body">
+        
           {empdata.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
@@ -175,16 +168,16 @@ const DisplayData = (props) => {
                 ))}
               </tbody>
             </table>
-          ) :   (
+          ) :  status.loading===false? (
             <>
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">
                   <AlertTitle>Error</AlertTitle>
-                  This is an error alert — <strong>check it out!</strong>
+                  No record found — <strong>check it out!</strong>
                 </Alert>
               </Stack>
             </>
-          ) }
+          ) :null}
         </div>
       </div>
     </div>

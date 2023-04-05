@@ -45,13 +45,16 @@ export const UserSlice = createSlice({
       state.loading = true;
       state.progress = 70;
       state.success = false;
+      state.addblogs = false;
+
     },
     [addData.fulfilled]: (state, action) => {
       state.addblogs = true;
       state.loading = false;
       state.success = true;
       state.progress = 100;
-      state.blogs = action.payload;
+      
+    
     },
     [addData.rejected]: (state, action) => {
       state.loading = false;
@@ -81,6 +84,7 @@ export const UserSlice = createSlice({
 });
 
 export const { addblogs } = UserSlice.actions;
+
 export const selectAllPosts = (state) => state.posts.posts;
 
 // this is for configureStore
