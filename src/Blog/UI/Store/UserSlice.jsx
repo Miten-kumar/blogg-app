@@ -31,13 +31,16 @@ export const getData = createAsyncThunk("getblogs", async () => {
 });
 export const getUserData = createAsyncThunk("getblog", async (_id) => {
   try {
-    const res = await axios.get(`http://localhost:5000/getblog/${_id}?_start==0&_end=4`, {
-      headers: {
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
-    });
+    const res = await axios.get(
+      `http://localhost:5000/getblog/${_id}?_start==0&_end=4`,
+      {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      }
+    );
     return res;
   } catch (err) {
     console.log(err);
@@ -59,7 +62,6 @@ export const deleteUserData = createAsyncThunk("delete", async (_id) => {
   }
 });
 export const updateData = createAsyncThunk("updateblogs", async (item) => {
-  
   const { name, email, password, userId, _id } = item;
   try {
     const res = await axios
@@ -93,7 +95,7 @@ export const UserSlice = createSlice({
     failed: false,
     loading: false,
     addblogs: false,
-    
+
     progress: 40,
     blogs: [],
   },
@@ -146,7 +148,7 @@ export const UserSlice = createSlice({
       state.loading = false;
       state.success = false;
     },
-    
+
     // reducers: {
     //   addblogs(state, action) {
     //     state.push(action.payload);

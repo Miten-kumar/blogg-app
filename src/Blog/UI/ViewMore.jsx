@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom";
 import { Buffer } from "buffer";
 import LoadingBar from "react-top-loading-bar";
 import HashLoader from "react-spinners/HashLoader";
-import { MDBCard } from "mdb-react-ui-kit";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Users = () => {

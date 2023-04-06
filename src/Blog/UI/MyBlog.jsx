@@ -17,12 +17,16 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, deleteUserData } from "./Store/UserSlice";
+import Pagination from "./Pagination";
 const Myblog = (props) => {
-  const [empdata, setEmpdatachange] = useState(null);
+  const [empdata, setEmpdatachange] = useState([]);
   const [relode, setRelode] = useState(false);
   const [ref, setref] = useState(true);
   const [Delete, setDelete] = useState(true);
   const status = useSelector((state) => state.addblogs);
+  const [postPerPage] = useState(4);
+  const [currentpage, setcurrentPage] = useState(1);
+
   const dispatch = useDispatch();
 
   const Load = () => {
@@ -62,6 +66,16 @@ const Myblog = (props) => {
     });
   }, [ref, Delete, relode]);
 
+  const indexofLastPage = postPerPage * currentpage;
+  const indexofFirstPage = indexofLastPage - postPerPage;
+  const data = empdata.slice(indexofFirstPage, indexofLastPage);
+
+  const paginate = (pageNumber) => {
+    setcurrentPage(pageNumber);
+  };
+
+  console.log(empdata);
+
   return (
     <div className="container my-3 ">
       <div className="card">
@@ -97,7 +111,7 @@ const Myblog = (props) => {
         )}
 
         <div className="card-body ">
-          {empdata && empdata.length > 0 ? (
+          {data && data.length > 0 ? (
             <table className="table table-bordered " id="dtBasicExample">
               <thead className="table table-hover table-primary text-center">
                 <tr>
@@ -109,7 +123,7 @@ const Myblog = (props) => {
                 </tr>
               </thead>
               <tbody className="table-primary">
-                {empdata.map((item, index) => (
+                {data.map((item, index) => (
                   <tr key={item._id}>
                     <td>{index + 1}</td>
 
@@ -157,6 +171,11 @@ const Myblog = (props) => {
               </Stack>
             </>
           ) : null}
+          <Pagination
+            data={empdata}
+            postPerPage={postPerPage}
+            paginate={paginate}
+          />
         </div>
       </div>
     </div>

@@ -12,13 +12,15 @@ import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, getData } from "./Store/UserSlice";
+import Pagination from "./Pagination";
+
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
   const [relode, setRelode] = useState(false);
-
+  const [postPerPage] = useState(4);
+  const [currentpage, setcurrentPage] = useState(1);
   const status = useSelector((state) => state.addblogs);
   const dispatch = useDispatch();
-
   const Load = () => {
     setRelode((prev) => !prev);
   };
@@ -56,6 +58,13 @@ const DisplayData = (props) => {
           setEmpdatachange(payload.data);
         });
   }, [relode]);
+  const indexofLastPage = postPerPage * currentpage;
+  const indexofFirstPage = indexofLastPage - postPerPage;
+  const data = empdata.slice(indexofFirstPage, indexofLastPage);
+
+  const paginate = (pageNumber) => {
+    setcurrentPage(pageNumber);
+  };
 
   return (
     <div className="container my-3  ">
@@ -87,7 +96,7 @@ const DisplayData = (props) => {
               />
             </div>
             <div className="card-body">
-              {empdata && empdata.length > 0 ? (
+              {data && data.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center ">
                     <tr>
@@ -97,8 +106,8 @@ const DisplayData = (props) => {
                     </tr>
                   </thead>
                   <tbody className="table-primary ">
-                    {empdata &&
-                      empdata.map((item, index) => (
+                    {data &&
+                      data.map((item, index) => (
                         <tr key={item._id}>
                           <td>{index + 1}</td>
                           <MDBNavbarLink>
@@ -119,11 +128,16 @@ const DisplayData = (props) => {
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
                       <AlertTitle>Error</AlertTitle>
-                      This is an error alert — <strong>check it out!</strong>
+                    No Record Found — <strong>check it out!</strong>
                     </Alert>
                   </Stack>
                 </>
               ) : null}
+              <Pagination
+                data={empdata}
+                postPerPage={postPerPage}
+                paginate={paginate}
+              />
             </div>
           </>
         ) : (
@@ -135,21 +149,21 @@ const DisplayData = (props) => {
                 cssOverride={{
                   margin: "auto",
                 }}
-                size={100}
+                size={50}
                 speedMultiplier={1}
               />
-              {empdata.length > 0 ? (
+              {data.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
                     <tr>
                       <td>No.</td>
-                      <td> Name</td>
+                      <td> Author</td>
                       <td>category</td>
                     </tr>
                   </thead>
                   <tbody className="table-primary">
-                    {empdata &&
-                      empdata.map((item, index) => (
+                    {data &&
+                      data.map((item, index) => (
                         <tr key={item._id}>
                           <td>{index + 1}</td>
                           <MDBNavbarLink href={`/viewmore/${item._id}`}>
@@ -165,11 +179,16 @@ const DisplayData = (props) => {
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
                       <AlertTitle>Error</AlertTitle>
-                      This is an error alert — <strong>check it out!</strong>
+                      No Record Found— <strong>check it out!</strong>
                     </Alert>
                   </Stack>
                 </>
               ) : null}
+              <Pagination
+                data={empdata}
+                postPerPage={postPerPage}
+                paginate={paginate}
+              />
             </div>
           </>
         )}
