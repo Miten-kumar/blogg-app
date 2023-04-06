@@ -18,15 +18,18 @@ import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { getData, deleteUserData } from "./Store/UserSlice";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
+import Pagination from "./Pagination";
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
   const [ref, setRef] = useState(true);
   const [dense, setDense] = useState(false);
-
   const [Delete, setDelete] = useState(true);
   const [relode, setRelode] = useState(false);
   const status = useSelector((state) => state.addblogs);
   const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
+  const [postPerPage] = useState(4);
+  const [currentpage, setcurrentPage] = useState(1);
+
   const sort = (event) => {
     const usersCopy = [...empdata];
     // console.log(usersCopy);
@@ -51,6 +54,7 @@ const DisplayData = (props) => {
   const Load = () => {
     setRelode((prev) => !prev);
   };
+
   const searchHandle = async (e) => {
     let key = e.target.value;
     if (key) {
@@ -78,6 +82,14 @@ const DisplayData = (props) => {
     });
   }, [relode, Delete, ref]);
 
+  const indexofLastPage = postPerPage * currentpage;
+  const indexofFirstPage = indexofLastPage - postPerPage;
+  const data = empdata.slice(indexofFirstPage, indexofLastPage);
+
+  const paginate = (pageNumber) => {
+    setcurrentPage(pageNumber);
+  };
+
   return (
     <div className="container my-3 ">
       <div className="card">
@@ -103,16 +115,15 @@ const DisplayData = (props) => {
               >
                 <FcAlphabeticalSortingAz fontSize={"30px"} />
               </label>
-              <div class="form-check form-switch mt-4 mx-0 " size="lg"  variant="danger">
+              <div class="form-check form-switch mt-4 mx-0 " size="lg">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-              
+                  style={{ background: "lightblue" }}
                   id="flexSwitchCheckChecked"
                   checked={dense}
                   onChange={sort}
-                  variant="danger"
                 />
               </div>
 
@@ -131,7 +142,7 @@ const DisplayData = (props) => {
           <></>
         )}
         <div className="card-body">
-          {empdata.length > 0 ? (
+          {data.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
                 <tr>
@@ -146,7 +157,7 @@ const DisplayData = (props) => {
                 </tr>
               </thead>
               <tbody className="table-primary">
-                {empdata.map((item, index) => (
+                {data.map((item, index) => (
                   <tr key={item._id}>
                     <td>{index + 1}</td>
 
@@ -193,6 +204,12 @@ const DisplayData = (props) => {
               </Stack>
             </>
           ) : null}
+
+          <Pagination
+            data={empdata}
+            postPerPage={postPerPage}
+            paginate={paginate}
+          />
         </div>
       </div>
     </div>
