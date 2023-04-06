@@ -3,7 +3,6 @@ import AddBlog from "./AddBlog";
 import Edit from "./Edit";
 import { Form } from "react-bootstrap";
 import { Input } from "@mui/material";
-import axios from "axios";
 import { MDBNavbarLink } from "mdb-react-ui-kit";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { toast } from "react-toastify";
@@ -16,36 +15,21 @@ import { NavLink } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData, deleteUserData } from "./Store/UserSlice";
 const Myblog = (props) => {
-  const [empdata, empdatachange] = useState(null);
-  const [Data1, setData1] = useState(true);
+  const [empdata, setEmpdatachange] = useState(null);
+  const [relode, setRelode] = useState(false);
   const [ref, setref] = useState(true);
-  const [Delete, removeDelete] = useState(true);
-  const [progress, setProgress] = useState(70);
-  const [length, setLength] = useState(true);
+  const [Delete, setDelete] = useState(true);
   const status = useSelector((state) => state.addblogs);
-  const Remove = (_id) => {
-    axios
-      .delete(`http://localhost:5000/delete/${_id}`, {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      })
-      .then((res) => {
-        toast.error("Deleted!!!", { autoClose: 200 });
+  const dispatch = useDispatch();
 
-        removeDelete(!Delete);
-      });
+  const Load = () => {
+    setRelode((prev) => !prev);
   };
-  const Load = (function1) => {
-    setData1(function1);
-    console.log(function1);
-  };
-  const update = (function2) => {
-    setref(function2);
+  const update = () => {
+    setref((prev)=>!prev);
     toast.success("ADDED!!!", { autoClose: 200 });
   };
   const searchHandle = async (e) => {
@@ -62,37 +46,22 @@ const Myblog = (props) => {
       result = await result.json();
 
       if (result) {
-        empdatachange(result);
+        setEmpdatachange(result);
       } else {
       }
     }
   };
   useEffect(() => {
-    fetch("http://localhost:5000/getblog/" + props.props.userId)
-      .then((res) => {
-        // setData1(Data1);
-        setProgress(100);
-        setLength(false);
-        return res.json();
-      })
-      .then((resp) => {
-        empdatachange(resp);
-        console.log("sucess");
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, [status.success, ref, Delete]);
+    dispatch(getUserData(props.props.userId)).then(({ payload }) => {
+      setEmpdatachange(payload.data);
+    });
+  }, [ref, Delete, relode,]);
 
   return (
     <div className="container my-3 ">
       <div className="card">
-        <LoadingBar
-          color="#0080FF"
-          height="4px"
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
+        <LoadingBar color="#0080FF" height="4px" progress={status.progress} />
+
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged ? (
           <>
@@ -107,6 +76,15 @@ const Myblog = (props) => {
                   aria-label="Search"
                 ></Input>
               </Form>
+              <HashLoader
+                color="#08cef4"
+                loading={status.loading}
+                cssOverride={{
+                  margin: "auto",
+                }}
+                size={50}
+                speedMultiplier={1}
+              />
             </div>
           </>
         ) : (
@@ -114,15 +92,6 @@ const Myblog = (props) => {
         )}
 
         <div className="card-body">
-          <HashLoader
-            color="#08cef4"
-            loading={length}
-            cssOverride={{
-              margin: "auto",
-            }}
-            size={70}
-            speedMultiplier={1}
-          />
           {empdata && empdata.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
@@ -156,7 +125,8 @@ const Myblog = (props) => {
                       />
                       <RiDeleteBinLine
                         onClick={() => {
-                          Remove(item._id);
+                          dispatch(deleteUserData(item._id));
+                          setDelete(!Delete);
                         }}
                         cursor={"pointer"}
                         className="mx-1"
@@ -172,7 +142,7 @@ const Myblog = (props) => {
                 ))}
               </tbody>
             </table>
-          ) : length === false ? (
+          ) : status.loading === false ? (
             <>
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">

@@ -12,12 +12,10 @@ import {
   MDBInput,
   MDBFile,
 } from "mdb-react-ui-kit";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "./Store/UserSlice";
-import { useNavigate } from 'react-router-dom';
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
@@ -25,14 +23,12 @@ export default function AddBlog(props) {
   const [email, emailchange] = useState("");
   const [password, passwordchange] = useState("");
   const [image, setimage] = useState("");
-  // const [reload, setReload] = useState(true);
   const reload = true;
   const dispatch = useDispatch();
   
   const handlesubmit = (e) => {
     e.preventDefault();
 
-    // console.log(window.URL.createObjectURL(image));
     let adddata = {
       name: name,
       email: email,
@@ -49,32 +45,7 @@ export default function AddBlog(props) {
       props.load(reload)
       
     }, 100);
-    // axios
-    //   .post(
-    //     "http://localhost:5000/addblogs",
-    //     {
-    //       name: name,
-    //       email: email,
-    //       password: password,
-    //       userId: props.props,
-    //       image: image,
-    //     },
-    //     {
-    //       headers: {
-    //         "content-type": "multipart/form-data",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success("Successfully Add Your Blog.", { autoClose: 500 });
-
-    //     setReload(!reload);
-    //     props.load(!reload);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //     toast.error("Failed :" + err.message);
-    //   });
+ 
   };
 
   return (

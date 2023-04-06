@@ -123,6 +123,10 @@ app.get("/search/:key", verifyToken, async (req, res) => {
   });
   res.send(data);
 });
+
+
+
+
 function verifyToken(req, resp, next) {
   let token = req.headers["authorization"];
   if (token) {

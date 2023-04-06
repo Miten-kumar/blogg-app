@@ -18,40 +18,16 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
-import { getData, selectAllPosts } from "./Store/UserSlice";
+import { getData, deleteUserData } from "./Store/UserSlice";
 
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
   const [ref, setRef] = useState(true);
-  const [Delete, removeDelete] = useState(true);
+  const [Delete, setDelete] = useState(true);
   const [relode, setRelode] = useState(false);
   const status = useSelector((state) => state.addblogs);
-console.log(status.addblogs);
   const dispatch = useDispatch();
-  const Remove = (_id) => {
-    axios
-      .delete(`http://localhost:5000/delete/${_id}`, {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      })
-      .then((res) => {
-        toast.error("Deleted!!!", {
-          position: "top-right",
-          autoClose: 200,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-
-        removeDelete(!Delete);
-      });
-  };
+  
   const update = (function2) => {
     setRef(function2);
     toast.success("ADDED!!!", { autoClose: 200 });
@@ -59,10 +35,8 @@ console.log(status.addblogs);
   const Load = () => {
     setRelode((prev) => !prev);
   };
-  console.log(relode);
   const searchHandle = async (e) => {
     let key = e.target.value;
-    // console.log(key);
     if (key) {
       let result = await fetch(`http://localhost:5000/search/${key}`, {
         headers: {
@@ -79,13 +53,12 @@ console.log(status.addblogs);
       }
     }
   };
-  
-  useEffect(() => {
-    dispatch(getData()).then(({payload}) => {
-      setEmpdatachange(payload.data);
-    })    
-  }, [relode,Delete,status.addblogs,ref]);
 
+  useEffect(() => {
+    dispatch(getData()).then(({ payload }) => {
+      setEmpdatachange(payload.data);
+    });
+  }, [relode, Delete, ref]);
 
   return (
     <div className="container my-3 ">
@@ -120,7 +93,6 @@ console.log(status.addblogs);
           <></>
         )}
         <div className="card-body">
-        
           {empdata.length > 0 ? (
             <table className="table table-bordered ">
               <thead className="table table-hover table-primary text-center">
@@ -153,7 +125,8 @@ console.log(status.addblogs);
                       />
                       <RiDeleteBinLine
                         onClick={() => {
-                          Remove(item._id);
+                          dispatch(deleteUserData(item._id));
+                          setDelete(!Delete);
                         }}
                         cursor={"pointer"}
                         fontSize={"25px"}
@@ -168,7 +141,7 @@ console.log(status.addblogs);
                 ))}
               </tbody>
             </table>
-          ) :  status.loading===false? (
+          ) : status.loading === false ? (
             <>
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity="error">
@@ -177,7 +150,7 @@ console.log(status.addblogs);
                 </Alert>
               </Stack>
             </>
-          ) :null}
+          ) : null}
         </div>
       </div>
     </div>

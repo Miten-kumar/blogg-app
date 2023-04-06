@@ -15,16 +15,19 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import { updateData } from "./Store/UserSlice";
+import { useDispatch } from 'react-redux';
+
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState(" ");
-  const [reloade, setreload] = useState(true);
+  const reloade = true;
+  const dispatch=useDispatch()
   const toggleShow = () => {
     // console.log(props.props);
     // console.log(props.Myid);
-
     setname(props.props.name);
     setemail(props.props.email);
     setpassword(props.props.password);
@@ -32,32 +35,16 @@ export default function App(props) {
   };
   const UpdateUser = () => {
     let _id = props.props._id;
-    console.log(_id);
-    // console.log(props.Myid);
-    let item = { name, email, password, _id, userId: props.Myid };
-    console.log(item);
-    axios
-      .put(
-        "http://localhost:5000/updateblogs/" + _id,
-        {
-          name: name,
-          email: email,
-          password: password,
-          userId: props.Myid,
-        },
-        {
-          headers: {
-            authorization: `bearer ${JSON.parse(
-              localStorage.getItem("login-auth")
-            )}`,
-          },
-        }
-      )
-      .then((response) => {
-        // console.log(response);
-        setreload(!reloade);
-        props.data(!reloade);
-      });
+    let userId=props.Myid
+    let item = { name, email, password, _id, userId };
+    dispatch(updateData(item)).then((res) => {
+      props.data(!reloade)
+    });
+
+    setTimeout(() => {
+      props.data(reloade)
+      
+    }, 100);
   };
 
   return (
