@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addData } from "./Store/UserSlice";
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);

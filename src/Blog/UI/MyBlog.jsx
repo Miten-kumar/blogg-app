@@ -29,25 +29,30 @@ const Myblog = (props) => {
     setRelode((prev) => !prev);
   };
   const update = () => {
-    setref((prev)=>!prev);
+    setref((prev) => !prev);
     toast.success("ADDED!!!", { autoClose: 200 });
   };
   const searchHandle = async (e) => {
     let key = e.target.value;
-    console.log(key);
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`, {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      });
+      let result = await fetch(
+        `http://localhost:5000/search/${props.props.userId}/${key}`,
+        {
+          headers: {
+            authorization: `bearer ${JSON.parse(
+              localStorage.getItem("login-auth")
+            )}`,
+          },
+        }
+      );
       result = await result.json();
 
       if (result) {
         setEmpdatachange(result);
       } else {
+        dispatch(getUserData(props.props.userId)).then(({ payload }) => {
+          setEmpdatachange(payload.data);
+        });
       }
     }
   };
@@ -55,7 +60,7 @@ const Myblog = (props) => {
     dispatch(getUserData(props.props.userId)).then(({ payload }) => {
       setEmpdatachange(payload.data);
     });
-  }, [ref, Delete, relode,]);
+  }, [ref, Delete, relode]);
 
   return (
     <div className="container my-3 ">
@@ -91,9 +96,9 @@ const Myblog = (props) => {
           <> </>
         )}
 
-        <div className="card-body">
+        <div className="card-body ">
           {empdata && empdata.length > 0 ? (
-            <table className="table table-bordered ">
+            <table className="table table-bordered " id="dtBasicExample">
               <thead className="table table-hover table-primary text-center">
                 <tr>
                   <td>No</td>

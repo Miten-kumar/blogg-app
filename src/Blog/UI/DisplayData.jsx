@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
 import { Form } from "react-bootstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Input, Link } from "@mui/material";
+import { Input } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
@@ -10,76 +10,57 @@ import { MDBNavbarLink } from "mdb-react-ui-kit";
 import LoadingBar from "react-top-loading-bar";
 import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData, getData } from "./Store/UserSlice";
 const DisplayData = (props) => {
-  const [empdata, empdatachange] = useState([]);
-  const [relode, setrelode] = useState(true);
-  const [progress, setProgress] = useState(70);
-  const [length, setLength] = useState(true);
-  const [data, setdata] = useState([]);
-  const status = useSelector((state) => {
-    return state.addblogs;
-  });
-  const Load = (function1) => {
-    setrelode(function1);
+  const [empdata, setEmpdatachange] = useState([]);
+  const [relode, setRelode] = useState(false);
+
+  const status = useSelector((state) => state.addblogs);
+  const dispatch = useDispatch();
+
+  const Load = () => {
+    setRelode((prev) => !prev);
   };
   const searchHandle = async (e) => {
     let key = e.target.value;
-    console.log(key);
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`, {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      });
+      let result = await fetch(
+        `http://localhost:5000/search/${props.props.userId}/${key}`,
+        {
+          headers: {
+            authorization: `bearer ${JSON.parse(
+              localStorage.getItem("login-auth")
+            )}`,
+          },
+        }
+      );
       result = await result.json();
 
       if (result) {
-        empdatachange(result);
+        setEmpdatachange(result);
       } else {
-        DisplayData();
+        dispatch(getUserData(props.props.userId)).then(({ payload }) => {
+          setEmpdatachange(payload.data);
+        });
       }
     }
   };
 
   useEffect(() => {
-    const userFetch = "http://localhost:5000/getblog/" + props.props.userId;
-    const AlluserFetch = "http://localhost:5000/getblogs";
+    props.props.isLogged === true || props.props.isLoged === true
+      ? dispatch(getUserData(props.props.userId)).then(({ payload }) => {
+          setEmpdatachange(payload.data);
+        })
+      : dispatch(getData()).then(({ payload }) => {
+          setEmpdatachange(payload.data);
+        });
+  }, [relode]);
 
-    fetch(
-      props.props.isLogged === true || props.props.isLoged === true
-        ? userFetch
-        : AlluserFetch
-    )
-      .then((res) => {
-        setLength(false);
-        setrelode(relode);
-        setProgress(100);
-
-        return res.json();
-      })
-      .then((resp) => {
-        empdatachange(resp);
-        // console.log(resp);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, [relode,status.success]);
-
-  // console.log(empdata.length);
   return (
     <div className="container my-3  ">
       <div className="card">
-        <LoadingBar
-          color="#00BFFF"
-          height="3px"
-          loaderSpeed="2500"
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
+        <LoadingBar color="#0080FF" height="4px" progress={status.progress} />
 
         {/* ADD BUTTON................... */}
         {props.props.isLogged === true || props.props.isLoged === true ? (
@@ -95,17 +76,17 @@ const DisplayData = (props) => {
                   aria-label="Search"
                 ></Input>
               </Form>
-            </div>
-            <div className="card-body">
               <HashLoader
                 color="#08cef4"
-                loading={length}
+                loading={status.loading}
                 cssOverride={{
                   margin: "auto",
                 }}
-                size={100}
+                size={50}
                 speedMultiplier={1}
               />
+            </div>
+            <div className="card-body">
               {empdata && empdata.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center ">
@@ -121,8 +102,10 @@ const DisplayData = (props) => {
                         <tr key={item._id}>
                           <td>{index + 1}</td>
                           <MDBNavbarLink>
-                            
-                            <NavLink  to={`/viewmore/${item._id}` } className="text-decoration-none">
+                            <NavLink
+                              to={`/viewmore/${item._id}`}
+                              className="text-decoration-none"
+                            >
                               <td>{item.name}</td>
                             </NavLink>
                           </MDBNavbarLink>
@@ -131,7 +114,7 @@ const DisplayData = (props) => {
                       ))}
                   </tbody>
                 </table>
-              ) : length === false ? (
+              ) : status.loading === false ? (
                 <>
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
@@ -148,7 +131,7 @@ const DisplayData = (props) => {
             <div className="card-body">
               <HashLoader
                 color="#08cef4"
-                loading={length}
+                loading={status.loading}
                 cssOverride={{
                   margin: "auto",
                 }}
@@ -177,7 +160,7 @@ const DisplayData = (props) => {
                       ))}
                   </tbody>
                 </table>
-              ) : length === false ? (
+              ) : status.loading === false ? (
                 <>
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">

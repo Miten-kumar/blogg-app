@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AddBlog from "./AddBlog";
 import Edit from "./Edit";
-import axios from "axios";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { MDBNavbarLink } from "mdb-react-ui-kit";
@@ -27,7 +26,7 @@ const DisplayData = (props) => {
   const [relode, setRelode] = useState(false);
   const status = useSelector((state) => state.addblogs);
   const dispatch = useDispatch();
-  
+
   const update = (function2) => {
     setRef(function2);
     toast.success("ADDED!!!", { autoClose: 200 });
@@ -38,7 +37,7 @@ const DisplayData = (props) => {
   const searchHandle = async (e) => {
     let key = e.target.value;
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`, {
+      let result = await fetch(`http://localhost:5000/searchall/${key}`, {
         headers: {
           authorization: `bearer ${JSON.parse(
             localStorage.getItem("login-auth")
@@ -49,7 +48,9 @@ const DisplayData = (props) => {
       if (result) {
         setEmpdatachange(result);
       } else {
-        DisplayData();
+        dispatch(getData()).then(({ payload }) => {
+          setEmpdatachange(payload.data);
+        });
       }
     }
   };

@@ -73,9 +73,8 @@ app.get("/getblogs/:_id", async (req, res) => {
   res.send(data);
 });
 
-
 app.get("/getblog/:userId", async (req, res) => {
-  let data = await blog.find({userId:req.params.userId});
+  let data = await blog.find({ userId: req.params.userId });
   res.send(data);
 });
 
@@ -99,7 +98,7 @@ app.post("/addblogs", upload.single("image"), async (req, res) => {
       userId: req.body.userId,
       image: image,
     });
-    res.send({status:"ok"});
+    res.send({ status: "ok" });
   } catch (error) {
     res.send({ Status: "error", data: error });
   }
@@ -113,8 +112,9 @@ app.delete("/delete/:_id", verifyToken, async (req, res) => {
   let data = await blog.deleteOne(req.params);
   res.send(data);
 });
-app.get("/search/:key", verifyToken, async (req, res) => {
+app.get("/search/:userId/:key",verifyToken, async (req, res) => {
   let data = await blog.find({
+    userId: req.params.userId,
     $or: [
       { name: { $regex: req.params.key } },
       { password: { $regex: req.params.key } },
@@ -125,7 +125,16 @@ app.get("/search/:key", verifyToken, async (req, res) => {
 });
 
 
-
+app.get("/searchall/:key", verifyToken, async (req, res) => {
+  let data = await blog.find({
+    $or: [
+      { name: { $regex: req.params.key } },
+      { password: { $regex: req.params.key } },
+      { email: { $regex: req.params.key } },
+    ],
+  });
+  res.send(data);
+});
 
 function verifyToken(req, resp, next) {
   let token = req.headers["authorization"];
