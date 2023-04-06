@@ -12,21 +12,38 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import HashLoader from "react-spinners/HashLoader";
 import { NavLink } from "react-router-dom";
-
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { getData, deleteUserData } from "./Store/UserSlice";
-
+import { FcAlphabeticalSortingAz } from "react-icons/fc";
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
   const [ref, setRef] = useState(true);
+  const [dense, setDense] = useState(false);
+
   const [Delete, setDelete] = useState(true);
   const [relode, setRelode] = useState(false);
   const status = useSelector((state) => state.addblogs);
-  const dispatch = useDispatch();
+  const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
+  const sort = (event) => {
+    const usersCopy = [...empdata];
+    // console.log(usersCopy);
+    setDense(event.target.checked);
+    usersCopy.sort((userA, userB) => {
+      const fullNameA = `${userA.name} `;
+      const fullNameB = `${userB.name} `;
+      if (sorted.reversed) {
+        return fullNameB.localeCompare(fullNameA);
+      }
+      return fullNameA.localeCompare(fullNameB);
+    });
+    setEmpdatachange(usersCopy);
+    setSorted({ sorted: "name", reversed: !sorted.reversed });
+  };
 
+  const dispatch = useDispatch();
   const update = (function2) => {
     setRef(function2);
     toast.success("ADDED!!!", { autoClose: 200 });
@@ -70,7 +87,7 @@ const DisplayData = (props) => {
           <>
             <div className="d-flex">
               <AddBlog load={Load} props={props.props.userId} />
-              <Form className="w-25 mt-4 ">
+              <Form className=" mt-4 ">
                 <Input
                   type="search"
                   startAdornment={<SearchOutlinedIcon />}
@@ -79,6 +96,26 @@ const DisplayData = (props) => {
                   aria-label="Search"
                 ></Input>
               </Form>
+
+              <label
+                class="form-check-label mt-4  mx-2 d-grid"
+                for="flexSwitchCheckChecked"
+              >
+                <FcAlphabeticalSortingAz fontSize={"30px"} />
+              </label>
+              <div class="form-check form-switch mt-4 mx-0 " size="lg"  variant="danger">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+              
+                  id="flexSwitchCheckChecked"
+                  checked={dense}
+                  onChange={sort}
+                  variant="danger"
+                />
+              </div>
+
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -99,7 +136,11 @@ const DisplayData = (props) => {
               <thead className="table table-hover table-primary text-center">
                 <tr>
                   <td>No</td>
-                  <td>Author</td>
+
+                  <td onClick={sort} checked={!dense}>
+                    Author
+                  </td>
+
                   <td>Category</td>
                   <td>Actions</td>
                 </tr>

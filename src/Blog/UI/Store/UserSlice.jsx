@@ -31,7 +31,7 @@ export const getData = createAsyncThunk("getblogs", async () => {
 });
 export const getUserData = createAsyncThunk("getblog", async (_id) => {
   try {
-    const res = await axios.get(`http://localhost:5000/getblog/${_id}`, {
+    const res = await axios.get(`http://localhost:5000/getblog/${_id}?_start==0&_end=4`, {
       headers: {
         authorization: `bearer ${JSON.parse(
           localStorage.getItem("login-auth")
