@@ -10,7 +10,6 @@ const port = 5000;
 const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -172,30 +171,61 @@ app.post("/forgotPassword", async (req, res) => {
       }
     );
     const olduserId = oldUser[0]._id;
-    const link = `http://localhost:3000/resetPassword/${olduserId}/${token}`;
+    var link = "";
+    if (olduserId === oldUser[0]._id && token === token) {
+      link = `http://localhost:3000/resetPassword/${olduserId}/${token}`;
+    } else {
+      link = `http://localhost:3000/login/forgotPassword/`;
+      alert("please enter valid email")
+    }
     console.log(link);
     res.send("ok ");
   } catch (error) {}
 });
 app.get("/resetPassword/:id/:token", async (req, res) => {
   const { id, token } = req.params;
-  // console.log(req.params);
-// console.log(id);
-  const oldUser = await User.findOne({ _id:id});
-  // console.log(oldUser);
+  const oldUser = await User.findOne({ _id: id });
   if (!oldUser) {
-    res.send("no authorized")
     return res.json({ status: "User Not Exists!!" });
   }
   const secret = jwtkey + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
-    // console.log(verify);
-    // res.render("index", { email: verify.email, status: "Not Verified" });
+    res.send({ email: verify.email, status: "not varify" });
   } catch (error) {
     console.log(error);
-    res.send("Not Verified");
+    res.send("Not Verified" + error);
   }
+});
+app.post("/resetPassword/:id/:token", async (req, res) => {
+  // const { id, token } = req.params;
+  const{password}=req.body
+  console.log(password);
+  // const oldUser = await User.findOne({ _id: id });
+  // console.log(oldUser);
+  // if (!oldUser) {
+  //   return res.json({ status: "User Not Exists!!" });
+  // }
+  // const secret = jwtkey + oldUser.password;
+  // const password1=await password
+  // try {
+  //   const verify = jwt.verify(token, secret);
+  //   console.log(verify);
+  //   await User.updateOne(
+  //     {
+  //       _id: id,
+  //     },
+  //     {
+  //       $set: {
+  //         password: password1,
+  //       },
+  //     }
+  //   );
+
+  // } catch (error) {
+  //   console.log(error);
+  //   res.send("Not Verified");
+  // }
 });
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));
