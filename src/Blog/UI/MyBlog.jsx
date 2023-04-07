@@ -26,7 +26,13 @@ const Myblog = (props) => {
   const status = useSelector((state) => state.addblogs);
   const [postPerPage] = useState(4);
   const [currentpage, setcurrentPage] = useState(1);
+  const indexofLastPage = postPerPage * currentpage;
+  const indexofFirstPage = indexofLastPage - postPerPage;
+  const data = empdata.slice(indexofFirstPage, indexofLastPage);
 
+  const paginate = (pageNumber) => {
+    setcurrentPage(pageNumber);
+  };
   const dispatch = useDispatch();
 
   const Load = () => {
@@ -50,12 +56,16 @@ const Myblog = (props) => {
         }
       );
       result = await result.json();
-
+      var data = [];
       if (result) {
         setEmpdatachange(result);
+        data = empdata.slice(indexofFirstPage, indexofLastPage);
+        console.log(data);
       } else {
         dispatch(getUserData(props.props.userId)).then(({ payload }) => {
           setEmpdatachange(payload.data);
+          data = empdata.slice(indexofFirstPage, indexofLastPage);
+          console.log(data);
         });
       }
     }
@@ -66,15 +76,9 @@ const Myblog = (props) => {
     });
   }, [ref, Delete, relode]);
 
-  const indexofLastPage = postPerPage * currentpage;
-  const indexofFirstPage = indexofLastPage - postPerPage;
-  const data = empdata.slice(indexofFirstPage, indexofLastPage);
 
-  const paginate = (pageNumber) => {
-    setcurrentPage(pageNumber);
-  };
 
-  console.log(empdata);
+  // console.log(empdata);
 
   return (
     <div className="container my-3 ">
@@ -111,7 +115,7 @@ const Myblog = (props) => {
         )}
 
         <div className="card-body ">
-          {data && data.length > 0 ? (
+          {data.length > 0 ? (
             <table className="table table-bordered " id="dtBasicExample">
               <thead className="table table-hover table-primary text-center">
                 <tr>

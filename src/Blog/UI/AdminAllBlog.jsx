@@ -32,7 +32,6 @@ const DisplayData = (props) => {
 
   const sort = (event) => {
     const usersCopy = [...empdata];
-    // console.log(usersCopy);
     setDense(event.target.checked);
     usersCopy.sort((userA, userB) => {
       const fullNameA = `${userA.name} `;
@@ -66,13 +65,20 @@ const DisplayData = (props) => {
         },
       });
       result = await result.json();
+      var data=[]
       if (result) {
         setEmpdatachange(result);
+         data = empdata.slice(indexofFirstPage, indexofLastPage);
+
       } else {
         dispatch(getData()).then(({ payload }) => {
           setEmpdatachange(payload.data);
+           data = empdata.slice(indexofFirstPage, indexofLastPage);
+
         });
+        
       }
+    
     }
   };
 

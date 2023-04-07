@@ -38,12 +38,16 @@ const DisplayData = (props) => {
         }
       );
       result = await result.json();
-
+        var data=[]
       if (result) {
         setEmpdatachange(result);
+         data = empdata.slice(indexofFirstPage, indexofLastPage);
+
       } else {
         dispatch(getUserData(props.props.userId)).then(({ payload }) => {
           setEmpdatachange(payload.data);
+           data = empdata.slice(indexofFirstPage, indexofLastPage);
+
         });
       }
     }

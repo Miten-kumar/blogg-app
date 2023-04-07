@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 
 const pagination = ({ data, postPerPage, paginate }) => {
-  console.log(data);
+  // console.log(data);
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(data.length / postPerPage); i++) {
     pageNumbers.push(i);
