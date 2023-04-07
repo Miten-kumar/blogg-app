@@ -12,7 +12,7 @@ import MyBlog from "./Blog/UI/MyBlog";
 import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog";
 import ViewDetails from "./Blog/UI/ViewMore";
-
+import Forgotpassword from "./Blog/UI/ForgotPassword.jsx";
 function App() {
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
@@ -74,6 +74,8 @@ function App() {
           element={<Users props={username} password={password} />}
         />
         <Route path="viewmore/:_id" element={<ViewDetails />} />
+        <Route path="login/forgotPassword" element={<Forgotpassword />} />
+
         <Route
           path="/admin"
           element={

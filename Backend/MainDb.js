@@ -153,4 +153,32 @@ function verifyToken(req, resp, next) {
   }
 }
 
+app.post("/forgotPassword", async (req, res) => {
+  console.log(req.body);
+  const { email } = req.body;
+  console.log(email);
+  try {
+    const oldUser = await User.find({ email });
+    console.log(oldUser);
+    if (!oldUser) {
+      res.send("error")
+      return res.json({ status: "User Not Exists!!" });
+    }
+    const secret = jwtkey + oldUser[0].password;
+    const token = jwt.sign({ email: oldUser[0].email, id: oldUser[0]._id }, secret, {
+      expiresIn: "4h",
+    });
+    const olduserId=oldUser[0]._id;
+    const link = `http://localhost:5000/reset-password/${olduserId}/${token}`;
+   console.log(link);
+   res.send("ok ")
+  } catch (error) { }
+});
+
+
+
+
+
+
+
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

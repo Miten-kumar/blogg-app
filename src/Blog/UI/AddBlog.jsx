@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addData } from "./Store/UserSlice";
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
@@ -25,7 +25,7 @@ export default function AddBlog(props) {
   const [image, setimage] = useState("");
   const reload = true;
   const dispatch = useDispatch();
-  
+
   const handlesubmit = (e) => {
     e.preventDefault();
 
@@ -38,14 +38,12 @@ export default function AddBlog(props) {
     };
 
     dispatch(addData(adddata)).then((res) => {
-      props.load(!reload)
+      props.load(!reload);
     });
 
     setTimeout(() => {
-      props.load(reload)
-      
+      props.load(reload);
     }, 100);
- 
   };
 
   return (
@@ -67,20 +65,20 @@ export default function AddBlog(props) {
                   label="Name"
                   value={name}
                   onChange={(e) => namechange(e.target.value)}
-                  _id="Name"
+                  id="Name"
                   type="Name"
                 />
                 <MDBInput
                   wrapperClass="mb-4"
                   label="Category"
-                  _id="email"
+                  id="email"
                   value={email}
                   onChange={(e) => emailchange(e.target.value)}
                   type="category"
                 />
                 <MDBTextArea
                   label="Message"
-                  _id="password"
+                  id="password"
                   rows={4}
                   value={password}
                   onChange={(e) => passwordchange(e.target.value)}

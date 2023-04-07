@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   const navigate = useNavigate();
@@ -184,7 +184,7 @@ export default function Login(props) {
             </MDBBtn>
           </div>
 
-          <p className="text-center mt-3">or:</p>
+          <p className="text-center mt-3">OR :</p>
         </div>
 
         <MDBInput
@@ -210,7 +210,7 @@ export default function Login(props) {
             _id="flexCheckDefault"
             label="Remember me"
           />
-          <a href="!#">Forgot password?</a>
+          <NavLink to="forgotpassword">Forgot password?</NavLink>
         </div>
         <MDBBtn className="mb-4 w-100" type="submit">
           Sign in

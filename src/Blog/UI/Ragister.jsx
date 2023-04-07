@@ -103,7 +103,7 @@ export default function Register() {
             </MDBBtn>
           </div>
 
-          <p className="text-center mt-3">or:</p>
+          <p className="text-center mt-3">OR :</p>
         </div>
 
         <MDBInput

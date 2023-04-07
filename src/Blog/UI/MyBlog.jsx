@@ -32,7 +32,7 @@ const Myblog = (props) => {
 
   const paginate = (pageNumber) => {
     setcurrentPage(pageNumber);
-  };
+  };  
   const dispatch = useDispatch();
 
   const Load = () => {
