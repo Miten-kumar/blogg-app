@@ -112,7 +112,7 @@ app.delete("/delete/:_id", verifyToken, async (req, res) => {
   let data = await blog.deleteOne(req.params);
   res.send(data);
 });
-app.get("/search/:userId/:key",verifyToken, async (req, res) => {
+app.get("/search/:userId/:key", verifyToken, async (req, res) => {
   let data = await blog.find({
     userId: req.params.userId,
     $or: [
@@ -123,7 +123,6 @@ app.get("/search/:userId/:key",verifyToken, async (req, res) => {
   });
   res.send(data);
 });
-
 
 app.get("/searchall/:key", verifyToken, async (req, res) => {
   let data = await blog.find({
@@ -161,24 +160,42 @@ app.post("/forgotPassword", async (req, res) => {
     const oldUser = await User.find({ email });
     console.log(oldUser);
     if (!oldUser) {
-      res.send("error")
+      res.send("error");
       return res.json({ status: "User Not Exists!!" });
     }
     const secret = jwtkey + oldUser[0].password;
-    const token = jwt.sign({ email: oldUser[0].email, id: oldUser[0]._id }, secret, {
-      expiresIn: "4h",
-    });
-    const olduserId=oldUser[0]._id;
-    const link = `http://localhost:5000/reset-password/${olduserId}/${token}`;
-   console.log(link);
-   res.send("ok ")
-  } catch (error) { }
+    const token = jwt.sign(
+      { email: oldUser[0].email, id: oldUser[0]._id },
+      secret,
+      {
+        expiresIn: "8h",
+      }
+    );
+    const olduserId = oldUser[0]._id;
+    const link = `http://localhost:3000/resetPassword/${olduserId}/${token}`;
+    console.log(link);
+    res.send("ok ");
+  } catch (error) {}
 });
-
-
-
-
-
-
+app.get("/resetPassword/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  // console.log(req.params);
+// console.log(id);
+  const oldUser = await User.findOne({ _id:id});
+  // console.log(oldUser);
+  if (!oldUser) {
+    res.send("no authorized")
+    return res.json({ status: "User Not Exists!!" });
+  }
+  const secret = jwtkey + oldUser.password;
+  try {
+    const verify = jwt.verify(token, secret);
+    // console.log(verify);
+    // res.render("index", { email: verify.email, status: "Not Verified" });
+  } catch (error) {
+    console.log(error);
+    res.send("Not Verified");
+  }
+});
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

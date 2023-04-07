@@ -19,6 +19,7 @@ const Forgotpassword = () => {
       })
       .catch((error) => {
         console.error("Something went wrong!", error);
+        alert("Somthng Went Wrong")
       });
   };
   return (

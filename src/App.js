@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, useParams } from "react-router-dom";
 import Navbar from "./Blog/UI/Navbar.jsx";
 import DisplayData from "./Blog/UI/DisplayData";
 import Register from "./Blog/UI/Ragister.jsx";
@@ -13,7 +13,10 @@ import Users from "./Blog/UI/User.jsx";
 import AdminAllBlogs from "./Blog/UI/AdminAllBlog";
 import ViewDetails from "./Blog/UI/ViewMore";
 import Forgotpassword from "./Blog/UI/ForgotPassword.jsx";
+import Resetpassword from "./Blog/UI/ResetPassword.jsx";
 function App() {
+  const { id, token } = useParams();
+
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState(
@@ -69,12 +72,16 @@ function App() {
           path="/login"
           element={<Login props={status} statusMethod={statusMethod} />}
         />
+        <Route path="login/forgotPassword" element={<Forgotpassword />} />
+        <Route
+          path={`resetPassword/:${id}/:${token}`}
+          element={<Resetpassword />}
+        />
         <Route
           path="/details"
           element={<Users props={username} password={password} />}
         />
         <Route path="viewmore/:_id" element={<ViewDetails />} />
-        <Route path="login/forgotPassword" element={<Forgotpassword />} />
 
         <Route
           path="/admin"
