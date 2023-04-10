@@ -10,6 +10,8 @@ const port = 5000;
 const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
+var bcrypt = require("bcryptjs");
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -24,21 +26,38 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 app.use(cors());
 app.post("/register", async (req, res) => {
-  let user = new User(req.body);
-  let result = await user.save();
-  result = result.toObject();
-  jwt.sign({ result }, jwtkey, { expiresIn: "4h" }, (err, token) => {
-    if (err) {
-      res.send({ result: "somthing went wrong" });
+  // console.log(req.body);
+  const secpass = await bcrypt.hash(req.body.password, 10);
+  // console.log(secpass);
+    try {
+      const result = User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: secpass,
+        role: req.body.role,
+      });
+      jwt.sign({ result }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+        if (err) {
+          res.send({ result: "somthing went wrong" });
+        }
+        res.send({ result, auth: token });
+      })
+      res.send({ status: "ok" });
+    } catch (error) {
+      res.send({ Status: "error", data: error });
     }
-    res.send({ result, auth: token });
-  });
 });
 
+
+
 app.post("/login", async (req, res) => {
+
   if (req.body.username && req.body.password) {
-    let user = await User.findOne(req.body);
-    if (user) {
+    let user = await User.findOne({username : req.body.username});
+    // console.log(user);
+    const password= await bcrypt.compare(req.body.password,user.password)
+    // console.log(password);
+    if (password) {
       jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
         if (err) {
           res.send({ result: "somthing went wrong" });
@@ -176,7 +195,7 @@ app.post("/forgotPassword", async (req, res) => {
       link = `http://localhost:3000/resetPassword/${olduserId}/${token}`;
     } else {
       link = `http://localhost:3000/login/forgotPassword/`;
-      alert("please enter valid email")
+      alert("please enter valid email");
     }
     console.log(link);
     res.send("ok ");
@@ -201,7 +220,7 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
   const { id, token } = req.params;
   console.log(id);
   console.log(token);
-  const{password}=req.body
+  const { password } = req.body;
   console.log(password);
   const oldUser = await User.find({ _id: id });
   console.log(oldUser);
@@ -210,7 +229,7 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
     return res.json({ status: "User Not Exists!!" });
   }
   const secret = jwtkey + oldUser[0].password;
-  const password1=await password
+  const password1 = await password;
   console.log(password1);
   try {
     const verify = jwt.verify(token, secret);
@@ -225,7 +244,6 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
         },
       }
     );
-
   } catch (error) {
     console.log(error);
     res.send("Not Verified");
