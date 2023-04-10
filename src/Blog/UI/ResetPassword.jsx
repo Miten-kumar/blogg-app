@@ -8,12 +8,15 @@ import { useParams } from "react-router-dom";
 const Resetpassword = () => {
   const [password, setPassword] = useState("");
   const { id, token } = useParams();
+  
+  console.log(token);
+  console.log(id);
   const ForGotPassword = (e) => {
     e.preventDefault();
     const data = { password: password };
     console.log(data);
     axios
-      .post(`http://localhost:5000/resetPassword/:${id}/:${token}`, data)
+      .post(`http://localhost:5000/resetPassword/${id}/${token}`, data)
       .then((response) => {
         console.log("Status: ", response.status);
         console.log("Data: ", response.data);

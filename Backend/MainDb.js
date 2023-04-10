@@ -198,34 +198,38 @@ app.get("/resetPassword/:id/:token", async (req, res) => {
   }
 });
 app.post("/resetPassword/:id/:token", async (req, res) => {
-  // const { id, token } = req.params;
+  const { id, token } = req.params;
+  console.log(id);
+  console.log(token);
   const{password}=req.body
   console.log(password);
-  // const oldUser = await User.findOne({ _id: id });
-  // console.log(oldUser);
-  // if (!oldUser) {
-  //   return res.json({ status: "User Not Exists!!" });
-  // }
-  // const secret = jwtkey + oldUser.password;
-  // const password1=await password
-  // try {
-  //   const verify = jwt.verify(token, secret);
-  //   console.log(verify);
-  //   await User.updateOne(
-  //     {
-  //       _id: id,
-  //     },
-  //     {
-  //       $set: {
-  //         password: password1,
-  //       },
-  //     }
-  //   );
+  const oldUser = await User.find({ _id: id });
+  console.log(oldUser);
+  console.log(oldUser[0].password);
+  if (!oldUser) {
+    return res.json({ status: "User Not Exists!!" });
+  }
+  const secret = jwtkey + oldUser[0].password;
+  const password1=await password
+  console.log(password1);
+  try {
+    const verify = jwt.verify(token, secret);
+    console.log(verify);
+    await User.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          password: password1,
+        },
+      }
+    );
 
-  // } catch (error) {
-  //   console.log(error);
-  //   res.send("Not Verified");
-  // }
+  } catch (error) {
+    console.log(error);
+    res.send("Not Verified");
+  }
 });
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));
