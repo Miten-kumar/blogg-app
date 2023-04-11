@@ -19,8 +19,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getData, deleteUserData } from "./Store/UserSlice";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
 import Pagination from "./Pagination";
+import axios from "axios";
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
+  const [user, setUser] = useState([]);
   const [ref, setRef] = useState(true);
   const [dense, setDense] = useState(false);
   const [Delete, setDelete] = useState(true);
@@ -65,26 +67,26 @@ const DisplayData = (props) => {
         },
       });
       result = await result.json();
-      var data=[]
+      var data = [];
       if (result) {
         setEmpdatachange(result);
-         data = empdata.slice(indexofFirstPage, indexofLastPage);
-
+        data = empdata.slice(indexofFirstPage, indexofLastPage);
       } else {
         dispatch(getData()).then(({ payload }) => {
           setEmpdatachange(payload.data);
-           data = empdata.slice(indexofFirstPage, indexofLastPage);
-
+          data = empdata.slice(indexofFirstPage, indexofLastPage);
         });
-        
       }
-    
     }
   };
 
   useEffect(() => {
     dispatch(getData()).then(({ payload }) => {
       setEmpdatachange(payload.data);
+    });
+    axios.get("http://localhost:5000/get").then((response) => {
+      console.log(response["data"]);
+      setUser([...response["data"]]);
     });
   }, [relode, Delete, ref]);
 
@@ -155,7 +157,7 @@ const DisplayData = (props) => {
                   <td>No</td>
 
                   <td onClick={sort} checked={!dense}>
-                  Title
+                    Title
                   </td>
 
                   <td>Category</td>
@@ -175,7 +177,15 @@ const DisplayData = (props) => {
                         <td>{item.name}</td>
                       </NavLink>
                     </MDBNavbarLink>
-                    <td>{item.email}</td>
+                    <td>
+                      {item.email}{" "}
+                      <span className="float-end shadow text-success">
+                        {` :- ${
+                          user.filter((user) => user._id === item.userId)[0]
+                            .username
+                        } `}
+                      </span>
+                    </td>
                     <td>
                       <Edit
                         props={item}

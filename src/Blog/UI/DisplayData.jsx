@@ -14,14 +14,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserData, getData } from "./Store/UserSlice";
 import Pagination from "./Pagination";
 import axios from "axios";
+import { FcAlphabeticalSortingAz } from 'react-icons/fc';
 
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
   const [user, setUser] = useState([]);
   const [relode, setRelode] = useState(false);
   const [postPerPage] = useState(4);
+  const [dense, setDense] = useState(false);
   const [currentpage, setcurrentPage] = useState(1);
   const status = useSelector((state) => state.addblogs);
+  const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
   const dispatch = useDispatch();
   const Load = () => {
     setRelode((prev) => !prev);
@@ -73,7 +76,20 @@ const DisplayData = (props) => {
   const paginate = (pageNumber) => {
     setcurrentPage(pageNumber);
   };
-
+  const sort = (event) => {
+    const usersCopy = [...empdata];
+    setDense(event.target.checked);
+    usersCopy.sort((userA, userB) => {
+      const fullNameA = `${userA.name} `;
+      const fullNameB = `${userB.name} `;
+      if (sorted.reversed) {
+        return fullNameB.localeCompare(fullNameA);
+      }
+      return fullNameA.localeCompare(fullNameB);
+    });
+    setEmpdatachange(usersCopy);
+    setSorted({ sorted: "name", reversed: !sorted.reversed });
+  };
   return (
     <div className="container my-3  ">
       <div className="card">
@@ -92,7 +108,24 @@ const DisplayData = (props) => {
                   onChange={searchHandle}
                   aria-label="Search"
                 ></Input>
-              </Form>
+              </Form> <label
+                class="form-check-label mt-4  mx-2 d-grid"
+                for="flexSwitchCheckChecked"
+              >
+                <FcAlphabeticalSortingAz fontSize={"30px"} />
+              </label>
+              <div class="form-check form-switch mt-4 mx-0 " size="lg">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  style={{ background: "lightblue" }}
+                  id="flexSwitchCheckChecked"
+                  checked={dense}
+                  onChange={sort}
+                />
+              </div>
+
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -109,7 +142,8 @@ const DisplayData = (props) => {
                   <thead className="table table-hover table-primary text-center ">
                     <tr>
                       <td>No.</td>
-                      <td> Autohor</td>
+                      
+                      <td  onClick={sort} checked={!dense}> Title</td>
                       <td>category</td>
                     </tr>
                   </thead>
@@ -151,6 +185,27 @@ const DisplayData = (props) => {
         ) : (
           <>
             <div className="card-body">
+
+            
+             
+                {/* <FcAlphabeticalSortingAz fontSize={"30px"} /> */}
+              <label
+                class="form-check-label mt-4  mx-2 d-grid"
+                for="flexSwitchCheckChecked"
+              >
+              </label>
+              <div class="form-check form-switch mt-4 mx-0 " size="lg">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  style={{ background: "lightblue" }}
+                  id="flexSwitchCheckChecked"
+                  checked={dense}
+                  onChange={sort}
+                />
+          
+              </div>
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -159,13 +214,15 @@ const DisplayData = (props) => {
                 }}
                 size={50}
                 speedMultiplier={1}
+
+
               />
               {data.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
                     <tr>
                       <td>No.</td>
-                      <td> Title</td>
+                      <td  onClick={sort} checked={!dense}> Title</td>
                       <td>category</td>
                     </tr>
                   </thead>
@@ -177,13 +234,13 @@ const DisplayData = (props) => {
                           <MDBNavbarLink href={`/viewmore/${item._id}`}>
                             <td>{item.name}</td>
                           </MDBNavbarLink>
-                          <td >
+                          <td>
                             {item.email}
-                            <span className="d-flex justify-content-end "  >
+                            <span className="float-end shadow text-success">
                               {
-                                user.filter(
+                               ` :- ${user.filter(
                                   (user) => user._id === item.userId
-                                )[0].username
+                                )[0].username} `
                               }
                             </span>
                           </td>
