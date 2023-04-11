@@ -32,7 +32,7 @@ const Myblog = (props) => {
 
   const paginate = (pageNumber) => {
     setcurrentPage(pageNumber);
-  };  
+  };
   const dispatch = useDispatch();
 
   const Load = () => {
@@ -76,8 +76,6 @@ const Myblog = (props) => {
     });
   }, [ref, Delete, relode]);
 
-
-
   // console.log(empdata);
 
   return (
@@ -120,7 +118,7 @@ const Myblog = (props) => {
               <thead className="table table-hover table-primary text-center">
                 <tr>
                   <td>No</td>
-                  <td>Author </td>
+                  <td>Title </td>
                   <td>Category</td>
 
                   <td>Actions</td>

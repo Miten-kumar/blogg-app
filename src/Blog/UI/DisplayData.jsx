@@ -13,9 +13,11 @@ import HashLoader from "react-spinners/HashLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, getData } from "./Store/UserSlice";
 import Pagination from "./Pagination";
+import axios from "axios";
 
 const DisplayData = (props) => {
   const [empdata, setEmpdatachange] = useState([]);
+  const [user, setUser] = useState([]);
   const [relode, setRelode] = useState(false);
   const [postPerPage] = useState(4);
   const [currentpage, setcurrentPage] = useState(1);
@@ -38,16 +40,14 @@ const DisplayData = (props) => {
         }
       );
       result = await result.json();
-        var data=[]
+      var data = [];
       if (result) {
         setEmpdatachange(result);
-         data = empdata.slice(indexofFirstPage, indexofLastPage);
-
+        data = empdata.slice(indexofFirstPage, indexofLastPage);
       } else {
         dispatch(getUserData(props.props.userId)).then(({ payload }) => {
           setEmpdatachange(payload.data);
-           data = empdata.slice(indexofFirstPage, indexofLastPage);
-
+          data = empdata.slice(indexofFirstPage, indexofLastPage);
         });
       }
     }
@@ -61,6 +61,10 @@ const DisplayData = (props) => {
       : dispatch(getData()).then(({ payload }) => {
           setEmpdatachange(payload.data);
         });
+    axios.get("http://localhost:5000/get").then((response) => {
+      console.log(response["data"]);
+      setUser([...response["data"]]);
+    });
   }, [relode]);
   const indexofLastPage = postPerPage * currentpage;
   const indexofFirstPage = indexofLastPage - postPerPage;
@@ -122,7 +126,7 @@ const DisplayData = (props) => {
                               <td>{item.name}</td>
                             </NavLink>
                           </MDBNavbarLink>
-                          <td>{item.email}</td>
+                          <td>{item.email} </td>
                         </tr>
                       ))}
                   </tbody>
@@ -132,7 +136,7 @@ const DisplayData = (props) => {
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
                       <AlertTitle>Error</AlertTitle>
-                    No Record Found — <strong>check it out!</strong>
+                      No Record Found — <strong>check it out!</strong>
                     </Alert>
                   </Stack>
                 </>
@@ -161,7 +165,7 @@ const DisplayData = (props) => {
                   <thead className="table table-hover table-primary text-center">
                     <tr>
                       <td>No.</td>
-                      <td> Author</td>
+                      <td> Title</td>
                       <td>category</td>
                     </tr>
                   </thead>
@@ -173,7 +177,16 @@ const DisplayData = (props) => {
                           <MDBNavbarLink href={`/viewmore/${item._id}`}>
                             <td>{item.name}</td>
                           </MDBNavbarLink>
-                          <td>{item.email}</td>
+                          <td >
+                            {item.email}
+                            <span className="d-flex justify-content-end "  >
+                              {
+                                user.filter(
+                                  (user) => user._id === item.userId
+                                )[0].username
+                              }
+                            </span>
+                          </td>
                         </tr>
                       ))}
                   </tbody>

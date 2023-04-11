@@ -57,12 +57,12 @@ export default function AddBlog(props) {
           <MDBModalDialog>
             <MDBModalContent>
               <MDBModalHeader>
-                <MDBModalTitle>Modal title</MDBModalTitle>
+                <MDBModalTitle>Add your Blog details</MDBModalTitle>
               </MDBModalHeader>
               <MDBModalBody>
                 <MDBInput
                   wrapperClass="mb-4"
-                  label="Name"
+                  label="Title"
                   value={name}
                   onChange={(e) => namechange(e.target.value)}
                   id="Name"
@@ -77,7 +77,7 @@ export default function AddBlog(props) {
                   type="category"
                 />
                 <MDBTextArea
-                  label="Message"
+                  label="Description"
                   id="password"
                   rows={4}
                   value={password}

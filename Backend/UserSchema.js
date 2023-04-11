@@ -5,5 +5,9 @@ const userSchema = new mongoose.Schema({
   id:Number,
   email: String,
   role: String,
+  createdTime:{
+    type:Date,
+    default:Date.now()
+  }
 });
 module.exports= mongoose.model("users",userSchema)

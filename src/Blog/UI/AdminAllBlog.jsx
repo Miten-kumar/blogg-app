@@ -155,7 +155,7 @@ const DisplayData = (props) => {
                   <td>No</td>
 
                   <td onClick={sort} checked={!dense}>
-                    Author
+                  Title
                   </td>
 
                   <td>Category</td>

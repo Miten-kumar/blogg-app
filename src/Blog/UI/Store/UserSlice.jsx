@@ -29,6 +29,7 @@ export const getData = createAsyncThunk("getblogs", async () => {
     console.log(err);
   }
 });
+
 export const getUserData = createAsyncThunk("getblog", async (_id) => {
   try {
     const res = await axios.get(

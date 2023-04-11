@@ -7,5 +7,9 @@ const userSchema = new mongoose.Schema({
   userId: ObjectId,
   id: Number,
   image: Buffer,
+  createdTime:{
+    type:Date,
+    default:Date.now()
+  }
 });
 module.exports = mongoose.model("blogs", userSchema);

@@ -72,7 +72,8 @@ app.post("/login", async (req, res) => {
     res.status(403).send({ result: "Please filled first- " });
   }
 });
-app.get("/get", verifyToken, async (req, res) => {
+//Because of also Logout person can see blog author
+app.get("/get", async (req, res) => {
   let data = await User.find();
   res.send(data);
 });
