@@ -46,10 +46,14 @@ export default function Register() {
       },
       body: JSON.stringify(empdata),
     });
+    toast.success("Now U Login!!!", { autoClose: 200 });
+    setTimeout(() => {
+      
+      navigate("/login");
+    }, 1500);
     result = await result.json();
     localStorage.setItem("user", JSON.stringify(result.result.username));
     localStorage.setItem("sign-auth", JSON.stringify(result.auth));
-    navigate("/login");
   };
 
   return (

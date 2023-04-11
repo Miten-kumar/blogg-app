@@ -11,6 +11,7 @@ const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
 var bcrypt = require("bcryptjs");
+var nodemailer = require('nodemailer');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -198,6 +199,33 @@ app.post("/forgotPassword", async (req, res) => {
       alert("please enter valid email");
     }
     console.log(link);
+
+
+    // var transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: 'mitenpate1234@gmail.com',
+    //     pass: 'nqsjkbvucdbsnnfa'
+    //   }
+    // });
+    
+    // var mailOptions = {
+    //   from: 'mitenpate1234@gmail.com',
+    //   to: `${email}`,
+    //   subject: 'Sending Email using Node.js',
+    //   text: `${link}`
+    // };
+    
+    // transporter.sendMail(mailOptions, function(error, info){
+    //   if (error) {
+    //     console.log(error);
+    //   } else {
+    //     console.log('Email sent: ' + info.response);
+    //   }
+    // });
+
+
+
     res.send("ok ");
   } catch (error) {}
 });
@@ -229,10 +257,11 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
     return res.json({ status: "User Not Exists!!" });
   }
   const secret = jwtkey + oldUser[0].password;
-  const password1 = await password;
-  console.log(password1);
+  const secpass = await bcrypt.hash(password, 10);
+  console.log(secpass);
   try {
     const verify = jwt.verify(token, secret);
+
     console.log(verify);
     await User.updateOne(
       {
@@ -240,7 +269,7 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
       },
       {
         $set: {
-          password: password1,
+          password: secpass,
         },
       }
     );
@@ -248,6 +277,7 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
     console.log(error);
     res.send("Not Verified");
   }
+  res.send(oldUser)
 });
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

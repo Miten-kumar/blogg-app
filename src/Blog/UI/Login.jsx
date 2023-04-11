@@ -37,7 +37,7 @@ export default function Login(props) {
       localStorage.setItem("login-auth", JSON.stringify(result.auth));
       localStorage.setItem("username", JSON.stringify(result.user.username));
       localStorage.setItem("isLoggedIn", true);
-      toast.success(result.user.username + " You As  ADMIN");
+      toast.success(result.user.username + "(Admin) Login");
       setTimeout(() => {
         navigate("/admin/blog");
       }, 1000);
@@ -62,77 +62,6 @@ export default function Login(props) {
       props.props(isLoggedIn, result.user.username, result.user.password);
     }
   };
-  // localStorage.setItem("sign-auth",JSON.stringify(result.auth))
-
-  // axios
-  //   .get("http://localhost:5000/get")
-  //   .then((resp) => {
-  //     if (
-  //       resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       ) &&
-  //       resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       ).role === "admin"
-  //     ) {
-  //       const validate = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       );
-  //       let role = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       ).role;
-  //       localStorage.setItem("Token", JSON.stringify(validate));
-  //       localStorage.setItem("isLoggedIn", true);
-
-  //       let _id = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       )._id;
-  //       isLoggedIn = true;
-  //       props.statusMethod(role, _id);
-
-  // toast.success(username + " As a ADMIN  loged in");
-  //       setTimeout(() => {
-  //         navigate("/admin/blog");
-  //       }, 1000);
-  // props.props(isLoggedIn, username, password);
-  //     } else if (
-  //       resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       )
-  //     ) {
-  //       isLoggedIn = true;
-  //       const validate = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       );
-  //       localStorage.setItem("Token", JSON.stringify(validate));
-  //       localStorage.setItem("isLoggedIn", true);
-  //       let _id = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       )._id;
-  //       let role = resp["data"].find(
-  //         (user) => user.username === username && user.password === password
-  //       ).role;
-
-  //       props.statusMethod(role, _id);
-  //       toast.success(username + " you loged in");
-  //       setTimeout(() => {
-  //         navigate("/blog");
-  //       }, 1000);
-  //       props.props(isLoggedIn, username, password);
-  //     } else {
-  //       isLoggedIn = false;
-  //       let role = null;
-  //       let _id = null;
-  //       props.props(isLoggedIn, username, password);
-  //       props.statusMethod(role, _id);
-  //       toast.error("something went wrong");
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     toast.error("Login Failed due to :" + err.message);
-  //     console.log(err.message);
-  //   });
-  // }
   return (
     <div
       className="container mt-5 w-50 "
