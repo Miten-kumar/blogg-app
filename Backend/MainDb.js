@@ -11,7 +11,7 @@ const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
 var bcrypt = require("bcryptjs");
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -30,33 +30,30 @@ app.post("/register", async (req, res) => {
   // console.log(req.body);
   const secpass = await bcrypt.hash(req.body.password, 10);
   // console.log(secpass);
-    try {
-      const result = User.create({
-        username: req.body.username,
-        email: req.body.email,
-        password: secpass,
-        role: req.body.role,
-      });
-      jwt.sign({ result }, jwtkey, { expiresIn: "4h" }, (err, token) => {
-        if (err) {
-          res.send({ result: "somthing went wrong" });
-        }
-        res.send({ result, auth: token });
-      })
-      res.send({ status: "ok" });
-    } catch (error) {
-      res.send({ Status: "error", data: error });
-    }
+  try {
+    const result = User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: secpass,
+      role: req.body.role,
+    });
+    jwt.sign({ result }, jwtkey, { expiresIn: "4h" }, (err, token) => {
+      if (err) {
+        res.send({ result: "somthing went wrong" });
+      }
+      res.send({ result, auth: token });
+    });
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.send({ Status: "error", data: error });
+  }
 });
 
-
-
 app.post("/login", async (req, res) => {
-
   if (req.body.username && req.body.password) {
-    let user = await User.findOne({username : req.body.username});
+    let user = await User.findOne({ username: req.body.username });
     // console.log(user);
-    const password= await bcrypt.compare(req.body.password,user.password)
+    const password = await bcrypt.compare(req.body.password, user.password);
     // console.log(password);
     if (password) {
       jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
@@ -85,8 +82,16 @@ app.put("/update/:_id", verifyToken, async (req, res) => {
 // ###########Blogs collection##################
 
 app.get("/getblogs", async (req, res) => {
-  let data = await blog.find();
-  res.send(data);
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 3;
+  console.log(page, limit);
+  
+  let skip = (page - 1) * limit;
+  let data = await blog.find().skip(skip).limit(limit);
+  let totalpage=Math.ceil((await blog.find()).length/limit)
+  
+  // res.send(data);
+  res.status(200).json({ data, nbHits: data.length });
 });
 app.get("/getblogs/:_id", async (req, res) => {
   let data = await blog.findOne(req.params);
@@ -201,7 +206,6 @@ app.post("/forgotPassword", async (req, res) => {
     }
     console.log(link);
 
-
     // var transporter = nodemailer.createTransport({
     //   service: 'gmail',
     //   auth: {
@@ -209,14 +213,14 @@ app.post("/forgotPassword", async (req, res) => {
     //     pass: 'nqsjkbvucdbsnnfa'
     //   }
     // });
-    
+
     // var mailOptions = {
     //   from: 'mitenpate1234@gmail.com',
     //   to: `${email}`,
     //   subject: 'Sending Email using Node.js',
     //   text: `${link}`
     // };
-    
+
     // transporter.sendMail(mailOptions, function(error, info){
     //   if (error) {
     //     console.log(error);
@@ -224,8 +228,6 @@ app.post("/forgotPassword", async (req, res) => {
     //     console.log('Email sent: ' + info.response);
     //   }
     // });
-
-
 
     res.send("ok ");
   } catch (error) {}
@@ -278,7 +280,7 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
     console.log(error);
     res.send("Not Verified");
   }
-  res.send(oldUser)
+  res.send(oldUser);
 });
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

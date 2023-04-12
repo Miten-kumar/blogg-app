@@ -184,15 +184,12 @@ const DisplayData = (props) => {
           </>
         ) : (
           <>
-            <div className="card-body">
-
-            
-             
-                {/* <FcAlphabeticalSortingAz fontSize={"30px"} /> */}
-              <label
+          <div className="d-flex mx-3">
+               <label
                 class="form-check-label mt-4  mx-2 d-grid"
                 for="flexSwitchCheckChecked"
               >
+                <FcAlphabeticalSortingAz fontSize={"30px"} />
               </label>
               <div class="form-check form-switch mt-4 mx-0 " size="lg">
                 <input
@@ -204,8 +201,8 @@ const DisplayData = (props) => {
                   checked={dense}
                   onChange={sort}
                 />
-          
               </div>
+
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -214,9 +211,9 @@ const DisplayData = (props) => {
                 }}
                 size={50}
                 speedMultiplier={1}
-
-
               />
+            </div>
+            <div className="card-body">
               {data.length > 0 ? (
                 <table className="table table-bordered ">
                   <thead className="table table-hover table-primary text-center">
@@ -236,7 +233,7 @@ const DisplayData = (props) => {
                           </MDBNavbarLink>
                           <td>
                             {item.email}
-                            <span className="float-end shadow text-success">
+                            <span className="float-end shadow " color="#45B39D">
                               {
                                ` :- ${user.filter(
                                   (user) => user._id === item.userId

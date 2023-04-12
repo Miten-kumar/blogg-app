@@ -178,7 +178,7 @@ const DisplayData = (props) => {
                       </NavLink>
                     </MDBNavbarLink>
                     <td>
-                      {item.email}{" "}
+                      {item.email}
                       <span className="float-end shadow text-success">
                         {` :- ${
                           user.filter((user) => user._id === item.userId)[0]
