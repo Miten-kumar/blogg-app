@@ -84,14 +84,15 @@ app.put("/update/:_id", verifyToken, async (req, res) => {
 app.get("/getblogs", async (req, res) => {
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 3;
-  console.log(page, limit);
+  // console.log(page, limit);
   
   let skip = (page - 1) * limit;
-  let data = await blog.find().skip(skip).limit(limit);
+  let blogs = await blog.find().skip(skip).limit(limit);
+  // console.log(blogs);
   let totalpage=Math.ceil((await blog.find()).length/limit)
-  
-  // res.send(data);
-  res.status(200).json({ data, nbHits: data.length });
+  res.send({blogs,totalpage});
+
+  // res.status(200).json({ data, nbHits: data.length });
 });
 app.get("/getblogs/:_id", async (req, res) => {
   let data = await blog.findOne(req.params);
@@ -99,8 +100,15 @@ app.get("/getblogs/:_id", async (req, res) => {
 });
 
 app.get("/getblog/:userId", async (req, res) => {
-  let data = await blog.find({ userId: req.params.userId });
-  res.send(data);
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 3;
+  // console.log(page, limit);
+  
+  let skip = (page - 1) * limit;
+  let blogs = await blog.find({ userId: req.params.userId }).skip(skip).limit(limit);
+  // console.log(blogs);
+  let totalpage=Math.ceil((await blog.find({ userId: req.params.userId })).length/limit)
+  res.send({blogs,totalpage});
 });
 
 app.post("/addblogs", upload.single("image"), async (req, res) => {

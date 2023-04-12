@@ -17,22 +17,21 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, deleteUserData } from "./Store/UserSlice";
-import Pagination from "./Pagination";
+import { Pagination } from "antd";
+import { FcAlphabeticalSortingAz } from "react-icons/fc";
+
 const Myblog = (props) => {
-  const [empdata, setEmpdatachange] = useState([]);
   const [relode, setRelode] = useState(false);
   const [ref, setref] = useState(true);
   const [Delete, setDelete] = useState(true);
-  const status = useSelector((state) => state.addblogs);
-  const [postPerPage] = useState(4);
-  const [currentpage, setcurrentPage] = useState(1);
-  const indexofLastPage = postPerPage * currentpage;
-  const indexofFirstPage = indexofLastPage - postPerPage;
-  const data = empdata.slice(indexofFirstPage, indexofLastPage);
+  const [dense, setDense] = useState(false);
 
-  const paginate = (pageNumber) => {
-    setcurrentPage(pageNumber);
-  };
+  const status = useSelector((state) => state.addblogs);
+  const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [pageCount, setPageCount] = useState(1);
+  const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
+
   const dispatch = useDispatch();
 
   const Load = () => {
@@ -56,24 +55,52 @@ const Myblog = (props) => {
         }
       );
       result = await result.json();
-      var data = [];
+      
       if (result) {
-        setEmpdatachange(result);
-        data = empdata.slice(indexofFirstPage, indexofLastPage);
+        setData(result);
         console.log(data);
       } else {
         dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-          setEmpdatachange(payload.data);
-          data = empdata.slice(indexofFirstPage, indexofLastPage);
+          setData(payload.data);
           console.log(data);
         });
       }
     }
   };
-  useEffect(() => {
-    dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-      setEmpdatachange(payload.data);
+
+
+  const sort = (event) => {
+    const usersCopy = [...data];
+    setDense(event.target.checked);
+    usersCopy.sort((userA, userB) => {
+      const fullNameA = `${userA.name} `;
+      const fullNameB = `${userB.name} `;
+      if (sorted.reversed) {
+        return fullNameB.localeCompare(fullNameA);
+      }
+      return fullNameA.localeCompare(fullNameB);
     });
+    setData(usersCopy);
+    setSorted({ sorted: "name", reversed: !sorted.reversed });
+  };
+  const UserClick = (e) => {
+    console.log(props.props.userId);
+    console.log(e);
+    const count = e;
+    let data = {
+      limit: limit,
+      count: count,
+      userId: props.props.userId,
+    };
+    // console.log(data);
+    dispatch(getUserData(data)).then(({ payload }) => {
+      setData(payload.data.blogs);
+      setPageCount(payload.data.totalpage);
+    });
+  };
+  useEffect(() => {
+     UserClick()
+
   }, [ref, Delete, relode]);
 
   // console.log(empdata);
@@ -96,7 +123,23 @@ const Myblog = (props) => {
                   onChange={searchHandle}
                   aria-label="Search"
                 ></Input>
-              </Form>
+              </Form><label
+                class="form-check-label mt-4  mx-2 d-grid"
+                for="flexSwitchCheckChecked"
+              >
+                <FcAlphabeticalSortingAz fontSize={"30px"} />
+              </label>
+              <div class="form-check form-switch mt-4 mx-0 " size="lg">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  style={{ background: "lightblue" }}
+                  id="flexSwitchCheckChecked"
+                  checked={dense}
+                  onChange={sort}
+                />
+              </div>
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -174,10 +217,10 @@ const Myblog = (props) => {
             </>
           ) : null}
           <Pagination
-            data={empdata}
-            postPerPage={postPerPage}
-            paginate={paginate}
-          />
+                defaultCurrent={1}
+                total={pageCount * 10}
+                onChange={UserClick}
+              />
         </div>
       </div>
     </div>

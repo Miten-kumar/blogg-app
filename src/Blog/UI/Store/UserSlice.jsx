@@ -15,9 +15,11 @@ export const addData = createAsyncThunk("addblogs", async (blogs) => {
     console.log(err);
   }
 });
-export const getData = createAsyncThunk("getblogs", async () => {
+export const getData = createAsyncThunk("getblogs", async (data) => {
+  let{limit,count}=data
+  // console.log(count);
   try {
-    const res = await axios.get("http://localhost:5000/getblogs", {
+    const res = await axios.get(`http://localhost:5000/getblogs?page=${count}&limit=${limit}`, {
       headers: {
         authorization: `bearer ${JSON.parse(
           localStorage.getItem("login-auth")
@@ -30,10 +32,12 @@ export const getData = createAsyncThunk("getblogs", async () => {
   }
 });
 
-export const getUserData = createAsyncThunk("getblog", async (_id) => {
+export const getUserData = createAsyncThunk("getblog", async (data) => {
+  let{limit,userId,count}=data
+// console.log(userId);
   try {
     const res = await axios.get(
-      `http://localhost:5000/getblog/${_id}?_start==0&_end=4`,
+      `http://localhost:5000/getblog/${userId}?page=${count}&limit=${limit}`,
       {
         headers: {
           authorization: `bearer ${JSON.parse(

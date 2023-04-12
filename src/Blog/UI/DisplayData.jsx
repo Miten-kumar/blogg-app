@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddBlog from "./AddBlog";
 import { Form } from "react-bootstrap";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -12,19 +12,19 @@ import { NavLink } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, getData } from "./Store/UserSlice";
-import Pagination from "./Pagination";
 import axios from "axios";
-import { FcAlphabeticalSortingAz } from 'react-icons/fc';
+import { FcAlphabeticalSortingAz } from "react-icons/fc";
+import { Pagination } from "antd";
 
 const DisplayData = (props) => {
-  const [empdata, setEmpdatachange] = useState([]);
   const [user, setUser] = useState([]);
   const [relode, setRelode] = useState(false);
-  const [postPerPage] = useState(4);
   const [dense, setDense] = useState(false);
-  const [currentpage, setcurrentPage] = useState(1);
   const status = useSelector((state) => state.addblogs);
   const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
+  const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [pageCount, setPageCount] = useState(1);
   const dispatch = useDispatch();
   const Load = () => {
     setRelode((prev) => !prev);
@@ -43,41 +43,18 @@ const DisplayData = (props) => {
         }
       );
       result = await result.json();
-      var data = [];
       if (result) {
-        setEmpdatachange(result);
-        data = empdata.slice(indexofFirstPage, indexofLastPage);
+        setData(result);
       } else {
         dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-          setEmpdatachange(payload.data);
-          data = empdata.slice(indexofFirstPage, indexofLastPage);
+          setData(payload.data);
         });
       }
     }
   };
 
-  useEffect(() => {
-    props.props.isLogged === true || props.props.isLoged === true
-      ? dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-          setEmpdatachange(payload.data);
-        })
-      : dispatch(getData()).then(({ payload }) => {
-          setEmpdatachange(payload.data);
-        });
-    axios.get("http://localhost:5000/get").then((response) => {
-      console.log(response["data"]);
-      setUser([...response["data"]]);
-    });
-  }, [relode]);
-  const indexofLastPage = postPerPage * currentpage;
-  const indexofFirstPage = indexofLastPage - postPerPage;
-  const data = empdata.slice(indexofFirstPage, indexofLastPage);
-
-  const paginate = (pageNumber) => {
-    setcurrentPage(pageNumber);
-  };
   const sort = (event) => {
-    const usersCopy = [...empdata];
+    const usersCopy = [...data];
     setDense(event.target.checked);
     usersCopy.sort((userA, userB) => {
       const fullNameA = `${userA.name} `;
@@ -87,9 +64,48 @@ const DisplayData = (props) => {
       }
       return fullNameA.localeCompare(fullNameB);
     });
-    setEmpdatachange(usersCopy);
+    setData(usersCopy);
     setSorted({ sorted: "name", reversed: !sorted.reversed });
   };
+  function CommonUserClick(e) {
+    console.log(e);
+    const count = e;
+    let data = {
+      limit: limit,
+      count: count,
+    };
+    console.log(data);
+    dispatch(getData(data)).then(({ payload }) => {
+      setData(payload.data.blogs);
+      setPageCount(payload.data.totalpage);
+    });
+  }
+
+  const UserClick = (e) => {
+    console.log(props.props.userId);
+    console.log(e);
+    const count = e;
+    let data = {
+      limit: limit,
+      count: count,
+      userId: props.props.userId,
+    };
+    // console.log(data);
+    dispatch(getUserData(data)).then(({ payload }) => {
+      setData(payload.data.blogs);
+      setPageCount(payload.data.totalpage);
+    });
+  };
+
+  useEffect(() => {
+    props.props.isLogged === true || props.props.isLoged === true
+      ? UserClick()
+      : CommonUserClick();
+
+    axios.get("http://localhost:5000/get").then((response) => {
+      setUser([...response["data"]]);
+    });
+  }, [relode]);
   return (
     <div className="container my-3  ">
       <div className="card">
@@ -108,7 +124,8 @@ const DisplayData = (props) => {
                   onChange={searchHandle}
                   aria-label="Search"
                 ></Input>
-              </Form> <label
+              </Form>{" "}
+              <label
                 class="form-check-label mt-4  mx-2 d-grid"
                 for="flexSwitchCheckChecked"
               >
@@ -125,7 +142,6 @@ const DisplayData = (props) => {
                   onChange={sort}
                 />
               </div>
-
               <HashLoader
                 color="#08cef4"
                 loading={status.loading}
@@ -142,8 +158,10 @@ const DisplayData = (props) => {
                   <thead className="table table-hover table-primary text-center ">
                     <tr>
                       <td>No.</td>
-                      
-                      <td  onClick={sort} checked={!dense}> Title</td>
+
+                      <td onClick={sort} checked={!dense}>
+                        Title
+                      </td>
                       <td>category</td>
                     </tr>
                   </thead>
@@ -175,17 +193,18 @@ const DisplayData = (props) => {
                   </Stack>
                 </>
               ) : null}
+
               <Pagination
-                data={empdata}
-                postPerPage={postPerPage}
-                paginate={paginate}
+                defaultCurrent={1}
+                total={pageCount * 10}
+                onChange={UserClick}
               />
             </div>
           </>
         ) : (
           <>
-          <div className="d-flex mx-3">
-               <label
+            <div className="d-flex mx-3">
+              <label
                 class="form-check-label mt-4  mx-2 d-grid"
                 for="flexSwitchCheckChecked"
               >
@@ -219,7 +238,10 @@ const DisplayData = (props) => {
                   <thead className="table table-hover table-primary text-center">
                     <tr>
                       <td>No.</td>
-                      <td  onClick={sort} checked={!dense}> Title</td>
+                      <td onClick={sort} checked={!dense}>
+                        {" "}
+                        Title
+                      </td>
                       <td>category</td>
                     </tr>
                   </thead>
@@ -234,11 +256,11 @@ const DisplayData = (props) => {
                           <td>
                             {item.email}
                             <span className="float-end shadow " color="#45B39D">
-                              {
-                               ` :- ${user.filter(
+                              {` :- ${
+                                user.filter(
                                   (user) => user._id === item.userId
-                                )[0].username} `
-                              }
+                                )[0].username
+                              } `}
                             </span>
                           </td>
                         </tr>
@@ -255,10 +277,11 @@ const DisplayData = (props) => {
                   </Stack>
                 </>
               ) : null}
+
               <Pagination
-                data={empdata}
-                postPerPage={postPerPage}
-                paginate={paginate}
+                defaultCurrent={1}
+                total={pageCount * 10}
+                onChange={CommonUserClick}
               />
             </div>
           </>

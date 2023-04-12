@@ -18,10 +18,9 @@ import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { getData, deleteUserData } from "./Store/UserSlice";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
-import Pagination from "./Pagination";
+import { Pagination } from "antd";
 import axios from "axios";
 const DisplayData = (props) => {
-  const [empdata, setEmpdatachange] = useState([]);
   const [user, setUser] = useState([]);
   const [ref, setRef] = useState(true);
   const [dense, setDense] = useState(false);
@@ -29,11 +28,11 @@ const DisplayData = (props) => {
   const [relode, setRelode] = useState(false);
   const status = useSelector((state) => state.addblogs);
   const [sorted, setSorted] = useState({ sorted: "name", reversed: false });
-  const [postPerPage] = useState(4);
-  const [currentpage, setcurrentPage] = useState(1);
-
+  const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [pageCount, setPageCount] = useState(1);
   const sort = (event) => {
-    const usersCopy = [...empdata];
+    const usersCopy = [...data];
     setDense(event.target.checked);
     usersCopy.sort((userA, userB) => {
       const fullNameA = `${userA.name} `;
@@ -43,7 +42,7 @@ const DisplayData = (props) => {
       }
       return fullNameA.localeCompare(fullNameB);
     });
-    setEmpdatachange(usersCopy);
+    setData(usersCopy);
     setSorted({ sorted: "name", reversed: !sorted.reversed });
   };
 
@@ -67,36 +66,35 @@ const DisplayData = (props) => {
         },
       });
       result = await result.json();
-      var data = [];
       if (result) {
-        setEmpdatachange(result);
-        data = empdata.slice(indexofFirstPage, indexofLastPage);
+        setData(result);
       } else {
         dispatch(getData()).then(({ payload }) => {
-          setEmpdatachange(payload.data);
-          data = empdata.slice(indexofFirstPage, indexofLastPage);
+          setData(payload.data);
         });
       }
     }
   };
-
-  useEffect(() => {
-    dispatch(getData()).then(({ payload }) => {
-      setEmpdatachange(payload.data);
+  function Click(e) {
+    console.log(e);
+    const count = e;
+    let data = {
+      limit: limit,
+      count: count,
+    };
+    console.log(data);
+    dispatch(getData(data)).then(({ payload }) => {
+      setData(payload.data.blogs);
+      setPageCount(payload.data.totalpage);
     });
+  }
+  useEffect(() => {
+    Click();
     axios.get("http://localhost:5000/get").then((response) => {
       console.log(response["data"]);
       setUser([...response["data"]]);
     });
   }, [relode, Delete, ref]);
-
-  const indexofLastPage = postPerPage * currentpage;
-  const indexofFirstPage = indexofLastPage - postPerPage;
-  const data = empdata.slice(indexofFirstPage, indexofLastPage);
-
-  const paginate = (pageNumber) => {
-    setcurrentPage(pageNumber);
-  };
 
   return (
     <div className="container my-3 ">
@@ -220,11 +218,10 @@ const DisplayData = (props) => {
               </Stack>
             </>
           ) : null}
-
           <Pagination
-            data={empdata}
-            postPerPage={postPerPage}
-            paginate={paginate}
+            defaultCurrent={1}
+            total={pageCount * 10}
+            onChange={Click}
           />
         </div>
       </div>
