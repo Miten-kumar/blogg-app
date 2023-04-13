@@ -87,7 +87,7 @@ app.get("/getblogs", async (req, res) => {
   // console.log(page, limit);
   
   let skip = (page - 1) * limit;
-  let blogs = await blog.find().skip(skip).limit(limit);
+  let blogs = await blog.find().skip(skip).limit(limit).populate("userId")
   // console.log(blogs);
   let totalpage=Math.ceil((await blog.find()).length/limit)
   res.send({blogs,totalpage});

@@ -15,13 +15,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import myimg from "./572.png";
 import { FcHome } from "react-icons/fc";
 import LogedBtn from "./Logedbtn";
+import { Dna } from "react-loader-spinner";
 
 export default function Navbar(props) {
   // console.log(props);
   const Name = props.props.username.charAt(0);
   // console.log(props.props.Role);
   const firstLetter = Name.toUpperCase();
-  
+
   const func = () => {
     return <>{props.props.logoutSubmitHandler()}</>;
   };
@@ -58,11 +59,17 @@ export default function Navbar(props) {
             <MDBNavbarNav className="p-3 ">
               <MDBNavbarItem className="mx-2 mt-2">
                 {props.props.Role === "admin" ? (
-                  <NavLink to="/admin/blog" fontSize="20px" className="text-decoration-none">
+                  <NavLink
+                    to="/admin/blog"
+                    fontSize="20px"
+                    className="text-decoration-none"
+                  >
                     Desh bord
                   </NavLink>
                 ) : (
-                  <NavLink to="/blog" className="text-decoration-none">Blogs</NavLink>
+                  <NavLink to="/blog" className="text-decoration-none">
+                    Blogs
+                  </NavLink>
                 )}
               </MDBNavbarItem>
               {/* login butoon................................................ */}
@@ -71,14 +78,27 @@ export default function Navbar(props) {
               ) : (
                 <div className="d-flex ">
                   <MDBNavbarItem className="mx-2 mt-2">
-                    <NavLink to="/register" className="text-decoration-none">Register</NavLink>
+                    <NavLink to="/register" className="text-decoration-none">
+                      Register
+                    </NavLink>
                   </MDBNavbarItem>
                   <MDBNavbarItem className="mx-2 mt-2 ">
-                    <NavLink to="/login" className="text-decoration-none">Login</NavLink>
+                    <NavLink to="/login" className="text-decoration-none">
+                      Login
+                    </NavLink>
                   </MDBNavbarItem>
                 </div>
               )}
-              
+              <div className="">
+                <Dna
+                  visible={true}
+                  height="80"
+                  width="80"
+                  ariaLabel="dna-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="dna-wrapper"
+                />
+              </div>
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   MDBModal,
-  MDBTextArea,
   MDBModalDialog,
   MDBModalContent,
   MDBModalHeader,
@@ -10,49 +9,48 @@ import {
   MDBModalFooter,
   MDBBtn,
   MDBInput,
-  MDBFile,
 } from "mdb-react-ui-kit";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { addData } from "./Store/UserSlice";
+import { useForm} from "react-hook-form";
+
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
   const toggleshow = () => setModal(!basicModal);
-  const [name, namechange] = useState("");
-  const [email, emailchange] = useState("");
-  const [password, passwordchange] = useState("");
-  const [image, setimage] = useState("");
   const reload = true;
   const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
 
-  const handlesubmit = (e) => {
-    e.preventDefault();
-
+ 
+  const onSubmit = (data) => {
+    
+    
     let adddata = {
-      name: name,
-      email: email,
-      password: password,
+      name: data.name,
+      email: data.email,
+      password: data.password,
       userId: props.props,
-      image: image,
+      image: data.image[0],
     };
-
     dispatch(addData(adddata)).then((res) => {
       props.load(!reload);
     });
+    // console.log(adddata)
 
+       
     setTimeout(() => {
       props.load(reload);
     }, 100);
   };
-
   return (
     <>
       <ToastContainer />
       <MDBBtn className="mx-4 mt-4 w-25" color="info" onClick={toggleshow}>
         ADD Blog<sup>+</sup>
       </MDBBtn>
-      <form onSubmit={handlesubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <MDBModal show={basicModal} setShow={setModal} tabIndex="-1">
           <MDBModalDialog>
             <MDBModalContent>
@@ -63,8 +61,7 @@ export default function AddBlog(props) {
                 <MDBInput
                   wrapperClass="mb-4"
                   label="Title"
-                  value={name}
-                  onChange={(e) => namechange(e.target.value)}
+                  {...register("name")}
                   id="Name"
                   type="Name"
                 />
@@ -72,24 +69,23 @@ export default function AddBlog(props) {
                   wrapperClass="mb-4"
                   label="Category"
                   id="email"
-                  value={email}
-                  onChange={(e) => emailchange(e.target.value)}
+                  {...register("email")}
                   type="category"
                 />
-                <MDBTextArea
+                <MDBInput
                   label="Description"
                   id="password"
                   rows={4}
-                  value={password}
-                  onChange={(e) => passwordchange(e.target.value)}
+                  {...register("password")}
                 />
-                <MDBFile
+                <MDBInput
                   id="image"
                   name="image"
+                  type="file"
+                  {...register("image")}
                   className="mt-4"
                   accept="image/*"
                   onChange={(e) => {
-                    setimage(e.target.files[0]);
                   }}
                 />
               </MDBModalBody>

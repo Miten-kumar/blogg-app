@@ -4,12 +4,16 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  userId: ObjectId,
+  userId: {
+    type: ObjectId,
+
+    ref: "users",
+  },
   id: Number,
   image: Buffer,
-  createdTime:{
-    type:Date,
-    default:Date.now()
-  }
+  createdTime: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 module.exports = mongoose.model("blogs", userSchema);

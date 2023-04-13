@@ -3,7 +3,7 @@ import AddBlog from "./AddBlog";
 import Edit from "./Edit";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { MDBNavbarLink } from "mdb-react-ui-kit";
+
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Input } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
@@ -19,9 +19,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { getData, deleteUserData } from "./Store/UserSlice";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
 import { Pagination } from "antd";
-import axios from "axios";
+import { Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 const DisplayData = (props) => {
-  const [user, setUser] = useState([]);
   const [ref, setRef] = useState(true);
   const [dense, setDense] = useState(false);
   const [Delete, setDelete] = useState(true);
@@ -90,12 +97,67 @@ const DisplayData = (props) => {
   }
   useEffect(() => {
     Click();
-    axios.get("http://localhost:5000/get").then((response) => {
-      console.log(response["data"]);
-      setUser([...response["data"]]);
-    });
   }, [relode, Delete, ref]);
+  function changeLimit() {
+    setPageCount(1);
+    Click();
+  }
 
+  const IOSSwitch = styled((props) => (
+    <Switch
+      focusVisibleClassName=".Mui-focusVisible"
+      disableRipple
+      {...props}
+    />
+  ))(({ theme }) => ({
+    width: 42,
+    height: 26,
+    padding: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor:
+            theme.palette.mode === "dark" ? "#2ECA45" : "#16B2DA",
+          opacity: 1,
+          border: 0,
+        },
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
+        },
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color:
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[600],
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+      },
+    },
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
+    },
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
+    },
+  }));
   return (
     <div className="container my-3 ">
       <div className="card">
@@ -116,22 +178,42 @@ const DisplayData = (props) => {
               </Form>
 
               <label
-                class="form-check-label mt-4  mx-2 d-grid"
-                for="flexSwitchCheckChecked"
+                className="form-check-label mt-4 d-grid"
+                htmlFor="flexSwitchCheckChecked"
               >
                 <FcAlphabeticalSortingAz fontSize={"30px"} />
               </label>
-              <div class="form-check form-switch mt-4 mx-0 " size="lg">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  style={{ background: "lightblue" }}
-                  id="flexSwitchCheckChecked"
-                  checked={dense}
-                  onChange={sort}
-                />
-              </div>
+
+              <FormControlLabel
+                className="mt-2 mx-0"
+                control={
+                  <IOSSwitch sx={{ m: 1 }} checked={dense} onChange={sort} />
+                }
+              />
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-simple-select-label" className="mt-3">
+                    Set Limit
+                  </InputLabel>
+                  <Select
+                    className="m-0 p-0  mt-3 "
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onBlur={changeLimit}
+                    value={limit}
+                    label="set Limit"
+                    onChange={(e) => setLimit(e.target.value)}
+                  >
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={8}>8</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                  </Select>
+                </FormControl>
+                <Button className="mt-4 " variant="outlined">
+                  Set
+                </Button>
+              </Box>
 
               <HashLoader
                 color="#08cef4"
@@ -167,21 +249,19 @@ const DisplayData = (props) => {
                   <tr key={item._id}>
                     <td>{index + 1}</td>
 
-                    <MDBNavbarLink>
-                      <NavLink
-                        to={`/viewmore/${item._id}`}
-                        className="text-decoration-none"
-                      >
-                        <td>{item.name}</td>
-                      </NavLink>
-                    </MDBNavbarLink>
+                    <NavLink
+                      to={`/viewmore/${item._id}`}
+                      className="text-decoration-none m-0 p-0 mx-2"
+                    >
+                      <td>{item.name}</td>
+                    </NavLink>
                     <td>
                       {item.email}
-                      <span className="float-end shadow text-success">
-                        {` :- ${
-                          user.filter((user) => user._id === item.userId)[0]
-                            .username
-                        } `}
+                      <span
+                        className="float-end shadow text-success"
+                        color="#45B39D"
+                      >
+                        {`:- ${item.userId.username}`}
                       </span>
                     </td>
                     <td>
