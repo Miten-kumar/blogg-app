@@ -176,8 +176,7 @@ const Myblog = (props) => {
         <LoadingBar color="#0080FF" height="4px" progress={status.progress} />
 
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true || props.props.isLoged ? (
-          <>
+          
             <div className="d-flex">
               <AddBlog load={Load} props={props.props.userId} />
               <Form className="w-25 mt-4 ">
@@ -236,10 +235,9 @@ const Myblog = (props) => {
                 speedMultiplier={1}
               />
             </div>
-          </>
-        ) : (
-          <> </>
-        )}
+        
+      {/* print data........................... */}
+        
 
         <div className="card-body ">
           {data.length > 0 ? (

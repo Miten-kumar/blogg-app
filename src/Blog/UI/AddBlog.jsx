@@ -81,6 +81,7 @@ export default function AddBlog(props) {
                 <MDBInput
                   id="image"
                   name="image"
+                  multiple
                   type="file"
                   {...register("image")}
                   className="mt-4"

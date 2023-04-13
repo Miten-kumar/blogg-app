@@ -15,7 +15,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import myimg from "./572.png";
 import { FcHome } from "react-icons/fc";
 import LogedBtn from "./Logedbtn";
-import { Dna } from "react-loader-spinner";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 export default function Navbar(props) {
   // console.log(props);
@@ -56,6 +56,7 @@ export default function Navbar(props) {
                 style={{ fontSize: "2rem", cursor: "pointer" }}
               />
             </NavLink>
+
             <MDBNavbarNav className="p-3 ">
               <MDBNavbarItem className="mx-2 mt-2">
                 {props.props.Role === "admin" ? (
@@ -72,7 +73,6 @@ export default function Navbar(props) {
                   </NavLink>
                 )}
               </MDBNavbarItem>
-              {/* login butoon................................................ */}
               {props.props.isLogged === true || props.props.isLoged === true ? (
                 <LogedBtn props={firstLetter} logout={func} />
               ) : (
@@ -89,17 +89,14 @@ export default function Navbar(props) {
                   </MDBNavbarItem>
                 </div>
               )}
-              <div className="">
-                <Dna
-                  visible={true}
-                  height="80"
-                  width="80"
-                  ariaLabel="dna-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="dna-wrapper"
-                />
-              </div>
             </MDBNavbarNav>
+            {props.props.isLogged === true || props.props.isLoged === true ? (
+              <div className="">
+                <ClimbingBoxLoader color="#00BFFF" size={10} />
+              </div>
+            ) : (
+              <></>
+            )}
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>

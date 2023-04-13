@@ -24,7 +24,8 @@ export default function Login(props) {
       },
       body: JSON.stringify(empdata),
     });
-    console.log(result.status);
+    // console.log(result.status);
+    
     if (result.status === 401 || result.status === 403) {
       toast.error("something went wrong");
     }

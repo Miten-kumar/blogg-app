@@ -137,7 +137,7 @@ const DisplayData = (props) => {
             theme.palette.mode === "dark" ? "#2ECA45" : "#16B2DA",
           opacity: 1,
           border: 0,
-        },
+        },  
         "&.Mui-disabled + .MuiSwitch-track": {
           opacity: 0.5,
         },

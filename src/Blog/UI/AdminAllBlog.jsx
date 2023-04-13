@@ -163,72 +163,67 @@ const DisplayData = (props) => {
       <div className="card">
         <LoadingBar color="#0080FF" height="4px" progress={status.progress} />
         {/* ADD BUTTON................... */}
-        {props.props.isLogged === true || props.props.isLoged === true ? (
-          <>
-            <div className="d-flex">
-              <AddBlog load={Load} props={props.props.userId} />
-              <Form className=" mt-4 ">
-                <Input
-                  type="search"
-                  startAdornment={<SearchOutlinedIcon />}
-                  placeholder="serach..."
-                  onChange={searchHandle}
-                  aria-label="Search"
-                ></Input>
-              </Form>
+        <div className="d-flex">
+          <AddBlog load={Load} props={props.props.userId} />
+          <Form className=" mt-4 ">
+            <Input
+              type="search"
+              startAdornment={<SearchOutlinedIcon />}
+              placeholder="serach..."
+              onChange={searchHandle}
+              aria-label="Search"
+            ></Input>
+          </Form>
 
-              <label
-                className="form-check-label mt-4 d-grid"
-                htmlFor="flexSwitchCheckChecked"
+          <label
+            className="form-check-label mt-4 d-grid"
+            htmlFor="flexSwitchCheckChecked"
+          >
+            <FcAlphabeticalSortingAz fontSize={"30px"} />
+          </label>
+
+          <FormControlLabel
+            className="mt-2 mx-0"
+            control={
+              <IOSSwitch sx={{ m: 1 }} checked={dense} onChange={sort} />
+            }
+          />
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-simple-select-label" className="mt-3">
+                Set Limit
+              </InputLabel>
+              <Select
+                className="m-0 p-0  mt-3 "
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onBlur={changeLimit}
+                value={limit}
+                label="set Limit"
+                onChange={(e) => setLimit(e.target.value)}
               >
-                <FcAlphabeticalSortingAz fontSize={"30px"} />
-              </label>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+              </Select>
+            </FormControl>
+            <Button className="mt-4 " variant="outlined">
+              Set
+            </Button>
+          </Box>
 
-              <FormControlLabel
-                className="mt-2 mx-0"
-                control={
-                  <IOSSwitch sx={{ m: 1 }} checked={dense} onChange={sort} />
-                }
-              />
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <InputLabel id="demo-simple-select-label" className="mt-3">
-                    Set Limit
-                  </InputLabel>
-                  <Select
-                    className="m-0 p-0  mt-3 "
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    onBlur={changeLimit}
-                    value={limit}
-                    label="set Limit"
-                    onChange={(e) => setLimit(e.target.value)}
-                  >
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                  </Select>
-                </FormControl>
-                <Button className="mt-4 " variant="outlined">
-                  Set
-                </Button>
-              </Box>
+          <HashLoader
+            color="#08cef4"
+            loading={status.loading}
+            cssOverride={{
+              margin: "auto",
+            }}
+            size={50}
+            speedMultiplier={1}
+          />
+        </div>
 
-              <HashLoader
-                color="#08cef4"
-                loading={status.loading}
-                cssOverride={{
-                  margin: "auto",
-                }}
-                size={50}
-                speedMultiplier={1}
-              />
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
         <div className="card-body">
           {data.length > 0 ? (
             <table className="table table-bordered ">

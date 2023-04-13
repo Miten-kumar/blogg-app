@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, Outlet, useParams } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Navbar from "./Blog/UI/Navbar.jsx";
 import DisplayData from "./Blog/UI/DisplayData";
 import Register from "./Blog/UI/Ragister.jsx";
@@ -15,7 +15,6 @@ import ViewDetails from "./Blog/UI/ViewMore";
 import Forgotpassword from "./Blog/UI/ForgotPassword.jsx";
 import Resetpassword from "./Blog/UI/ResetPassword.jsx";
 function App() {
-  const { id, token } = useParams();
 
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
@@ -39,6 +38,7 @@ function App() {
 
   const status = (data, user, password) => {
     setisLogged(data);
+    console.log(isLogged);
     setUsername(user);
     setpassword(password);
   };
