@@ -16,16 +16,19 @@ export const addData = createAsyncThunk("addblogs", async (blogs) => {
   }
 });
 export const getData = createAsyncThunk("getblogs", async (data) => {
-  let{limit,count}=data
+  let { limit, count } = data;
   // console.log(count);
   try {
-    const res = await axios.get(`http://localhost:5000/getblogs?page=${count}&limit=${limit}`, {
-      headers: {
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
-    });
+    const res = await axios.get(
+      `http://localhost:5000/getblogs?page=${count}&limit=${limit}`,
+      {
+        headers: {
+          authorization: `bearer ${JSON.parse(
+            localStorage.getItem("login-auth")
+          )}`,
+        },
+      }
+    );
     return res;
   } catch (err) {
     console.log(err);
@@ -33,8 +36,8 @@ export const getData = createAsyncThunk("getblogs", async (data) => {
 });
 
 export const getUserData = createAsyncThunk("getblog", async (data) => {
-  let{limit,userId,count}=data
-// console.log(userId);
+  let { limit, userId, count } = data;
+  // console.log(userId);
   try {
     const res = await axios.get(
       `http://localhost:5000/getblog/${userId}?page=${count}&limit=${limit}`,
@@ -67,10 +70,10 @@ export const deleteUserData = createAsyncThunk("delete", async (_id) => {
   }
 });
 export const updateData = createAsyncThunk("updateblogs", async (item) => {
-  const { name, email, password,image, userId, _id } = item;
+  const { name, email, password, image, userId, _id } = item;
   // console.log(_id);
   // console.log(userId);
-  // console.log(image)
+  console.log(item);
   try {
     const res = await axios
       .put(
@@ -79,18 +82,21 @@ export const updateData = createAsyncThunk("updateblogs", async (item) => {
           name: name,
           email: email,
           password: password,
-          image:image,
           userId: userId,
+          image: image,
         },
         {
           headers: {
             authorization: `bearer ${JSON.parse(
               localStorage.getItem("login-auth")
             )}`,
+            "content-type": "multipart/form-data",
           },
         }
       )
-      .then((response) => {console.log(response);});
+      .then((response) => {
+        console.log(response);
+      });
     return res;
   } catch (err) {
     console.log(err);

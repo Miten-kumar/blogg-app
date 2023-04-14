@@ -54,6 +54,7 @@ export default function App(props) {
   //   }, 100);
   // };
   const onSubmit = (data) => {
+    console.log(data.image[0])
     let _id = props.props._id;
     let userId = props.Myid;
     let adddata = {

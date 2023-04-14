@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cors());
 // app.use(express.static(path.join(__dirname, "src")));
 
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 app.post("/register", async (req, res) => {
   // console.log(req.body);
@@ -89,12 +89,12 @@ app.get("/getblogs", async (req, res) => {
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 3;
   // console.log(page, limit);
-  
+
   let skip = (page - 1) * limit;
-  let blogs = await blog.find().skip(skip).limit(limit).populate("userId")
+  let blogs = await blog.find().skip(skip).limit(limit).populate("userId");
   // console.log(blogs);
-  let totalpage=Math.ceil((await blog.find()).length/limit)
-  res.send({blogs,totalpage});
+  let totalpage = Math.ceil((await blog.find()).length / limit);
+  res.send({ blogs, totalpage });
 
   // res.status(200).json({ data, nbHits: data.length });
 });
@@ -107,12 +107,17 @@ app.get("/getblog/:userId", async (req, res) => {
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 3;
   // console.log(page, limit);
-  
+
   let skip = (page - 1) * limit;
-  let blogs = await blog.find({ userId: req.params.userId }).skip(skip).limit(limit);
+  let blogs = await blog
+    .find({ userId: req.params.userId })
+    .skip(skip)
+    .limit(limit);
   // console.log(blogs);
-  let totalpage=Math.ceil((await blog.find({ userId: req.params.userId })).length/limit)
-  res.send({blogs,totalpage});
+  let totalpage = Math.ceil(
+    (await blog.find({ userId: req.params.userId })).length / limit
+  );
+  res.send({ blogs, totalpage });
 });
 
 app.post("/addblogs", upload.single("image"), async (req, res) => {
@@ -122,7 +127,7 @@ app.post("/addblogs", upload.single("image"), async (req, res) => {
   //     fs.unlinkSync(folder + file);
   //   }
   // });
-  const image=req.file.filename
+  const image = req.file.filename;
 
   try {
     blog.create({
@@ -138,11 +143,30 @@ app.post("/addblogs", upload.single("image"), async (req, res) => {
   }
 });
 
-app.put("/updateblogs/:_id", verifyToken, async (req, res) => {
-  let data = await blog.updateOne(req.params, { $set: req.body });
-  console.log(data);
-  // res.send(data);
-});
+app.put(
+  "/updateblogs/:_id",
+  upload.single("image"),
+  verifyToken,
+  async (req, res) => {
+    // console.log(req.body);
+    // console.log(req.body.email);
+    // console.log(req.body.password);
+    // console.log(req.body.name);
+    // console.log(req.file);
+    // console.log(req.params);
+    // console.log(req.file.name);
+
+    let data = await blog.updateOne(req.params, {
+      $set: {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        image: req.file.filename,
+      },
+    });
+    res.send(data);
+  }
+);
 app.delete("/delete/:_id", verifyToken, async (req, res) => {
   let data = await blog.deleteOne(req.params);
   res.send(data);
