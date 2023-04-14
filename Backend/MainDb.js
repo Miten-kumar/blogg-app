@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, file.originalname + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage: storage });
@@ -148,23 +148,30 @@ app.put(
   upload.single("image"),
   verifyToken,
   async (req, res) => {
-    // console.log(req.body);
-    // console.log(req.body.email);
-    // console.log(req.body.password);
-    // console.log(req.body.name);
-    // console.log(req.file);
-    // console.log(req.params);
-    // console.log(req.file.name);
-
-    let data = await blog.updateOne(req.params, {
-      $set: {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        image: req.file.filename,
-      },
-    });
-    res.send(data);
+    try {
+      let image;
+      const oldBlogs = await blog.findOne({ _id: req.params });
+      console.log('old blog : ',oldBlogs);
+      if (req.file.filename !== oldBlogs.image) {
+        const oldImage = `uploads/${oldBlogs.image}`;
+        console.log('image : ',oldImage);
+        image = req.file.filename;
+        await fs.unlinkSync(oldImage);
+      } else {
+        image = oldBlogs.image;
+      }
+      let data = await blog.updateOne(req.params, {
+        $set: {
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          image: image,
+        },
+      });
+      res.send(data);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
   }
 );
 app.delete("/delete/:_id", verifyToken, async (req, res) => {
@@ -283,19 +290,19 @@ app.get("/resetPassword/:id/:token", async (req, res) => {
 });
 app.post("/resetPassword/:id/:token", async (req, res) => {
   const { id, token } = req.params;
-  console.log(id);
-  console.log(token);
+  // console.log(id);
+  // console.log(token);
   const { password } = req.body;
-  console.log(password);
+  // console.log(password);
   const oldUser = await User.find({ _id: id });
-  console.log(oldUser);
-  console.log(oldUser[0].password);
+  // console.log(oldUser);
+  // console.log(oldUser[0].password);
   if (!oldUser) {
     return res.json({ status: "User Not Exists!!" });
   }
   const secret = jwtkey + oldUser[0].password;
   const secpass = await bcrypt.hash(password, 10);
-  console.log(secpass);
+  // console.log(secpass);
   try {
     const verify = jwt.verify(token, secret);
 

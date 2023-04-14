@@ -259,7 +259,8 @@ const Myblog = (props) => {
                             <td>{item.name}</td>
                           </NavLink>
                     <td>{item.email}</td>
-                    <td>
+                    <td><div className="d-flex justify-content-center">
+
                       <Edit
                         props={item}
                         data={update}
@@ -279,6 +280,7 @@ const Myblog = (props) => {
                         data-tooltip-variant="error"
                       />
                       <Tooltip id="my-tooltip" />
+                    </div>
                     </td>
                   </tr>
                 ))}

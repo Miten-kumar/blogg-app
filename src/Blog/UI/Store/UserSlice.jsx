@@ -71,8 +71,7 @@ export const deleteUserData = createAsyncThunk("delete", async (_id) => {
 });
 export const updateData = createAsyncThunk("updateblogs", async (item) => {
   const { name, email, password, image, userId, _id } = item;
-  // console.log(_id);
-  // console.log(userId);
+  
   console.log(item);
   try {
     const res = await axios

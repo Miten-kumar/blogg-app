@@ -16,45 +16,26 @@ import "react-tooltip/dist/react-tooltip.css";
 import { updateData } from "./Store/UserSlice";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-
 export default function App(props) {
+  // console.log(props.props.image);
   const [basicModal, setBasicModal] = useState(false);
-  // const [name, setname] = useState("");
-  // const [password, setpassword] = useState(" ");
-  // const [email, setemail] = useState("");
-  // const [image, setImage] = useState(" ");
-  const LoadedValues={
-    name:props.props.name,
-    email:props.props.email,
-    password:props.props.password
-  }
+  const LoadedValues = {
+    name: props.props.name,
+    email: props.props.email,
+    password: props.props.password,
+    image: props.props.image,
+  };
   const { register, handleSubmit } = useForm({
-    defaultValues:LoadedValues
+    defaultValues: LoadedValues,
   });
   const reloade = true;
   const dispatch = useDispatch();
   const toggleShow = () => {
-    // console.log(props.props.image);
-    // console.log(props.Myid);
-    
-    // setImage(props.props.image);
     setBasicModal(!basicModal);
   };
-  // const UpdateUser = () => {
-  //   let _id = props.props._id;
-  //   let userId = props.Myid;
-  //   let item = { name, email, password, image, _id, userId };
-  //   console.log(item);
-    // dispatch(updateData(item)).then((res) => {
-    //   props.data(!reloade);
-    // });
 
-  //   setTimeout(() => {
-  //     props.data(reloade);
-  //   }, 100);
-  // };
   const onSubmit = (data) => {
-    console.log(data.image[0])
+    // console.log(data.image[0]);
     let _id = props.props._id;
     let userId = props.Myid;
     let adddata = {
@@ -65,7 +46,6 @@ export default function App(props) {
       _id: _id,
       image: data.image[0],
     };
-    console.log(adddata);
 
     dispatch(updateData(adddata)).then((res) => {
       props.data(!reloade);
@@ -79,7 +59,7 @@ export default function App(props) {
     <>
       <FaEdit
         onClick={toggleShow}
-        className="mx-3"
+        // className="mx-5"
         fontSize={"25px"}
         color="#45B39D"
         cursor={"pointer"}
@@ -89,11 +69,11 @@ export default function App(props) {
       />
       <Tooltip id="my-tooltip" />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+        <MDBModal show={basicModal} tabIndex="-1">
           <MDBModalDialog>
             <MDBModalContent>
               <MDBModalHeader>
-                <MDBModalTitle>Modal title</MDBModalTitle>
+                <MDBModalTitle>Update Form</MDBModalTitle>
                 <MDBBtn
                   className="btn-close"
                   color="none"
@@ -102,39 +82,38 @@ export default function App(props) {
               </MDBModalHeader>
               <MDBModalBody>
                 <MDBModalBody>
-                <MDBInput
-                  wrapperClass="mb-4"
-                  label="Title"
-                  {...register("name")}
-                  id="Name"
-                  type="Name"
-                  // value={name}
-                />
-                <MDBInput
-                  wrapperClass="mb-4"
-                  label="Category"
-                  id="email"
-                  {...register("email")}
-                  type="category"
-                  // value={email}
-
-                />
-                <MDBInput
-                  label="Description"
-                  id="password"
-                  rows={4}
-                  // value={password}
-                  {...register("password")}
-                />
-                <MDBInput
-                  id="image"
-                  name="image"
-                  multiple
-                  type="file"
-                  {...register("image")}
-                  className="mt-4"
-                  accept="image/*"
-                />
+                  <MDBInput
+                    wrapperClass="mb-4"
+                    label="Title"
+                    {...register("name")}
+                    id="Name"
+                    type="Name"
+                    // value={name}
+                  />
+                  <MDBInput
+                    wrapperClass="mb-4"
+                    label="Category"
+                    id="email"
+                    {...register("email")}
+                    type="category"
+                    // value={email}
+                  />
+                  <MDBInput
+                    label="Description"
+                    id="password"
+                    rows={4}
+                    // value={password}
+                    {...register("password")}
+                  />
+                  <MDBInput
+                    id="image"
+                    name="image"
+                    multiple
+                    type="file"
+                    {...register("image")}
+                    className="mt-4"
+                    accept="image/*"
+                  />
                 </MDBModalBody>
               </MDBModalBody>
 

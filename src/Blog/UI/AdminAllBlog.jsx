@@ -248,9 +248,9 @@ const DisplayData = (props) => {
                       to={`/viewmore/${item._id}`}
                       className="text-decoration-none m-0 p-0 mx-2"
                     >
-                      <td>{item.name}</td>
+                      <td >{item.name}</td>
                     </NavLink>
-                    <td>
+                    <td className="m-0 p-0">
                       {item.email}
                       <span
                         className="float-end shadow text-success"
@@ -260,8 +260,10 @@ const DisplayData = (props) => {
                       </span>
                     </td>
                     <td>
-                      <Edit
+                    <div className="d-flex justify-content-center">
+                      <Edit 
                         props={item}
+                      
                         data={update}
                         Myid={props.props.userId}
                       />
@@ -273,11 +275,13 @@ const DisplayData = (props) => {
                         cursor={"pointer"}
                         fontSize={"25px"}
                         color="#EC4A4A"
+                        className="mx-2"
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="Delete !!"
                         data-tooltip-variant="error"
                       />
                       <Tooltip id="my-tooltip" />
+                    </div>
                     </td>
                   </tr>
                 ))}
