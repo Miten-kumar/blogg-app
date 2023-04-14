@@ -54,8 +54,8 @@ const DisplayData = (props) => {
   };
 
   const dispatch = useDispatch();
-  const update = (function2) => {
-    setRef(function2);
+  const update = () => {
+    setRef((prev) => !prev);
     toast.success("ADDED!!!", { autoClose: 200 });
   };
   const Load = () => {
@@ -83,13 +83,13 @@ const DisplayData = (props) => {
     }
   };
   function Click(e) {
-    console.log(e);
+    // console.log(e);
     const count = e;
     let data = {
       limit: limit,
       count: count,
     };
-    console.log(data);
+    // console.log(data);
     dispatch(getData(data)).then(({ payload }) => {
       setData(payload.data.blogs);
       setPageCount(payload.data.totalpage);

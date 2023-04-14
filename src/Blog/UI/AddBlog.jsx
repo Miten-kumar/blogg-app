@@ -14,7 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { addData } from "./Store/UserSlice";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function AddBlog(props) {
   const [basicModal, setModal] = useState(false);
@@ -23,10 +23,7 @@ export default function AddBlog(props) {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
- 
   const onSubmit = (data) => {
-    
-    
     let adddata = {
       name: data.name,
       email: data.email,
@@ -34,12 +31,11 @@ export default function AddBlog(props) {
       userId: props.props,
       image: data.image[0],
     };
+    console.log(adddata);
     dispatch(addData(adddata)).then((res) => {
       props.load(!reload);
     });
-    // console.log(adddata)
 
-       
     setTimeout(() => {
       props.load(reload);
     }, 100);
@@ -86,8 +82,7 @@ export default function AddBlog(props) {
                   {...register("image")}
                   className="mt-4"
                   accept="image/*"
-                  onChange={(e) => {
-                  }}
+                  onChange={(e) => {}}
                 />
               </MDBModalBody>
               <MDBModalFooter>

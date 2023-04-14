@@ -28,7 +28,6 @@ const Users = () => {
         setLength(false);
       });
   }, [reloade]);
-
   return (
     <div className="container my-2 mx-5 ">
       {/* <LoadingBar
@@ -75,31 +74,31 @@ const Users = () => {
       />
 
       {state.map((elem, index) => {
-        const image64 = Buffer.from(elem.image, "base64");
-
+        {/* const image64 = Buffer.from(elem.image, "base64"); */}
+console.log(elem.image)
         return (
           <Row>
-            <Col xs={6  } className="mt-3 mx-5 " >
+            <Col xs={5  } className="mt-3 mx-2 " >
               <Card border="info">
                 <Card.Img
                   variant="top"
-                  src={`data:image/jpg;base64,${image64.toString("base64")}`}
+                  src={`http://localhost:5000/uploads/${elem.image}`}
                   alt=""
                   className=""
-                  height={"450px"}
+                  height={"650px"}
                 />
               </Card>
             </Col>
-            <Card border="info" className="w-25 mt-3">
-              <Col>
-                <Card.Body>
+            <Card border="info" className="w-50 mt-3">
+              <Col >
+                <Card.Body >
                   <Card.Text> Name:- {elem.name}</Card.Text>
                   <Card.Text> Dec:- {elem.password}</Card.Text>
                   <Card.Footer>
                     <small className="text-muted">{elem.email}</small>
                   </Card.Footer>
                 </Card.Body>
-              </Col>{" "}
+              </Col>
             </Card>
           </Row>
 

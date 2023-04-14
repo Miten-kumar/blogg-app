@@ -67,7 +67,10 @@ export const deleteUserData = createAsyncThunk("delete", async (_id) => {
   }
 });
 export const updateData = createAsyncThunk("updateblogs", async (item) => {
-  const { name, email, password, userId, _id } = item;
+  const { name, email, password,image, userId, _id } = item;
+  // console.log(_id);
+  // console.log(userId);
+  // console.log(image)
   try {
     const res = await axios
       .put(
@@ -76,6 +79,7 @@ export const updateData = createAsyncThunk("updateblogs", async (item) => {
           name: name,
           email: email,
           password: password,
+          image:image,
           userId: userId,
         },
         {
@@ -86,7 +90,7 @@ export const updateData = createAsyncThunk("updateblogs", async (item) => {
           },
         }
       )
-      .then((response) => {});
+      .then((response) => {console.log(response);});
     return res;
   } catch (err) {
     console.log(err);

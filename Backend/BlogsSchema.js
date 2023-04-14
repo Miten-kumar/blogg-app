@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     ref: "users",
   },
   id: Number,
-  image: Buffer,
+  image: String,
   createdTime: {
     type: Date,
     default: Date.now(),

@@ -26,6 +26,10 @@ const upload = multer({ storage: storage });
 
 app.use(express.json());
 app.use(cors());
+// app.use(express.static(path.join(__dirname, "src")));
+
+app.use('/uploads', express.static('uploads'));
+
 app.post("/register", async (req, res) => {
   // console.log(req.body);
   const secpass = await bcrypt.hash(req.body.password, 10);
@@ -112,17 +116,14 @@ app.get("/getblog/:userId", async (req, res) => {
 });
 
 app.post("/addblogs", upload.single("image"), async (req, res) => {
-  // console.log(req.body);
+  // var folder = "./uploads/";
+  // fs.readdir(folder, (err, files) => {
+  //   for (const file of files) {
+  //     fs.unlinkSync(folder + file);
+  //   }
+  // });
+  const image=req.file.filename
 
-  const image = fs.readFileSync(
-    path.join(__dirname + "/uploads/" + req.file.filename)
-  );
-  var folder = "./uploads/";
-  fs.readdir(folder, (err, files) => {
-    for (const file of files) {
-      fs.unlinkSync(folder + file);
-    }
-  });
   try {
     blog.create({
       name: req.body.name,
@@ -139,7 +140,8 @@ app.post("/addblogs", upload.single("image"), async (req, res) => {
 
 app.put("/updateblogs/:_id", verifyToken, async (req, res) => {
   let data = await blog.updateOne(req.params, { $set: req.body });
-  res.send(data);
+  console.log(data);
+  // res.send(data);
 });
 app.delete("/delete/:_id", verifyToken, async (req, res) => {
   let data = await blog.deleteOne(req.params);

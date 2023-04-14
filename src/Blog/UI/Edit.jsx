@@ -9,40 +9,68 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBTextArea,
 } from "mdb-react-ui-kit";
 import { FaEdit } from "react-icons/fa";
-import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import { updateData } from "./Store/UserSlice";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 
 export default function App(props) {
   const [basicModal, setBasicModal] = useState(false);
-  const [name, setname] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState(" ");
+  // const [name, setname] = useState("");
+  // const [password, setpassword] = useState(" ");
+  // const [email, setemail] = useState("");
+  // const [image, setImage] = useState(" ");
+  const LoadedValues={
+    name:props.props.name,
+    email:props.props.email,
+    password:props.props.password
+  }
+  const { register, handleSubmit } = useForm({
+    defaultValues:LoadedValues
+  });
   const reloade = true;
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const toggleShow = () => {
-    // console.log(props.props);
+    // console.log(props.props.image);
     // console.log(props.Myid);
-    setname(props.props.name);
-    setemail(props.props.email);
-    setpassword(props.props.password);
+    
+    // setImage(props.props.image);
     setBasicModal(!basicModal);
   };
-  const UpdateUser = () => {
-    let _id = props.props._id;
-    let userId=props.Myid
-    let item = { name, email, password, _id, userId };
-    dispatch(updateData(item)).then((res) => {
-      props.data(!reloade)
-    });
+  // const UpdateUser = () => {
+  //   let _id = props.props._id;
+  //   let userId = props.Myid;
+  //   let item = { name, email, password, image, _id, userId };
+  //   console.log(item);
+    // dispatch(updateData(item)).then((res) => {
+    //   props.data(!reloade);
+    // });
 
+  //   setTimeout(() => {
+  //     props.data(reloade);
+  //   }, 100);
+  // };
+  const onSubmit = (data) => {
+    let _id = props.props._id;
+    let userId = props.Myid;
+    let adddata = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      userId: userId,
+      _id: _id,
+      image: data.image[0],
+    };
+    console.log(adddata);
+
+    dispatch(updateData(adddata)).then((res) => {
+      props.data(!reloade);
+    });
     setTimeout(() => {
-      props.data(reloade)
-      
+      props.data(reloade);
     }, 100);
   };
 
@@ -58,62 +86,74 @@ export default function App(props) {
         data-tooltip-content="Update/Edit"
         data-tooltip-variant="info"
       />
-     <Tooltip id="my-tooltip" /> 
-      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
-              <MDBBtn
-                className="btn-close"
-                color="none"
-                onClick={toggleShow}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
+      <Tooltip id="my-tooltip" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+          <MDBModalDialog>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Modal title</MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleShow}
+                ></MDBBtn>
+              </MDBModalHeader>
               <MDBModalBody>
+                <MDBModalBody>
                 <MDBInput
                   wrapperClass="mb-4"
-                  label="Name"
-                  value={name}
-                  onChange={(e) => setname(e.target.value)}
-                  _id="Name"
+                  label="Title"
+                  {...register("name")}
+                  id="Name"
                   type="Name"
+                  // value={name}
                 />
                 <MDBInput
                   wrapperClass="mb-4"
                   label="Category"
-                  _id="email"
-                  value={email}
-                  onChange={(e) => setemail(e.target.value)}
+                  id="email"
+                  {...register("email")}
                   type="category"
-                />
-                <MDBTextArea
-                  label="Message"
-                  _id="textAreaExample"
-                  rows={4}
-                  value={password}
-                  onChange={(e) => setpassword(e.target.value)}
-                />
-              </MDBModalBody>
-            </MDBModalBody>
+                  // value={email}
 
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleShow}>
-                Close
-              </MDBBtn>
-              <MDBBtn
-                onClick={() => {
-                  UpdateUser();
-                  toggleShow();
-                }}
-              >
-                Save changes
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+                />
+                <MDBInput
+                  label="Description"
+                  id="password"
+                  rows={4}
+                  // value={password}
+                  {...register("password")}
+                />
+                <MDBInput
+                  id="image"
+                  name="image"
+                  multiple
+                  type="file"
+                  {...register("image")}
+                  className="mt-4"
+                  accept="image/*"
+                />
+                </MDBModalBody>
+              </MDBModalBody>
+
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={toggleShow}>
+                  Close
+                </MDBBtn>
+                <MDBBtn
+                  onClick={() => {
+                    toggleShow();
+                  }}
+                  type="submit"
+                >
+                  Save changes
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </form>
     </>
   );
 }
