@@ -121,12 +121,6 @@ app.get("/getblog/:userId", async (req, res) => {
 });
 
 app.post("/addblogs", upload.single("image"), async (req, res) => {
-  // var folder = "./uploads/";
-  // fs.readdir(folder, (err, files) => {
-  //   for (const file of files) {
-  //     fs.unlinkSync(folder + file);
-  //   }
-  // });
   const image = req.file.filename;
 
   try {
@@ -151,15 +145,19 @@ app.put(
     try {
       let image;
       const oldBlogs = await blog.findOne({ _id: req.params });
-      console.log('old blog : ',oldBlogs);
-      if (req.file.filename !== oldBlogs.image) {
-        const oldImage = `uploads/${oldBlogs.image}`;
-        console.log('image : ',oldImage);
-        image = req.file.filename;
-        await fs.unlinkSync(oldImage);
+      if (req.file) {
+        if (req.file.filename === oldBlogs.image) {
+          image = req.file.filename;
+        } else if (req.file.filename !== oldBlogs.image) {
+          image = req.file.filename;
+          const oldImage = `uploads/${oldBlogs.image}`;
+          await fs.unlinkSync(oldImage);
+        }
       } else {
         image = oldBlogs.image;
+        console.log(image);
       }
+
       let data = await blog.updateOne(req.params, {
         $set: {
           name: req.body.name,
@@ -246,7 +244,7 @@ app.post("/forgotPassword", async (req, res) => {
       alert("please enter valid email");
     }
     console.log(link);
-
+    // code for mailling.........................................................................................
     // var transporter = nodemailer.createTransport({
     //   service: 'gmail',
     //   auth: {
