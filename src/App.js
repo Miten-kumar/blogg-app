@@ -14,8 +14,8 @@ import AdminAllBlogs from "./Blog/UI/AdminAllBlog";
 import ViewDetails from "./Blog/UI/ViewMore";
 import Forgotpassword from "./Blog/UI/ForgotPassword.jsx";
 import Resetpassword from "./Blog/UI/ResetPassword.jsx";
+import axios from "axios";
 function App() {
-
   const isLoged = JSON.parse(localStorage.getItem("isLoggedIn"));
   const [isLogged, setisLogged] = useState(null);
   const [username, setUsername] = useState(
@@ -51,6 +51,46 @@ function App() {
     localStorage.clear();
   };
 
+  axios.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("login-auth");
+      // console.log(token);
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      Promise.reject(error);
+    }
+  );
+
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    function (error) {
+      const originalRequest = error.config;
+
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        // console.log(JSON.parse(localStorage.getItem("refreshToken")));
+        const refreshToken = localStorage.getItem("refreshToken");
+        return axios
+          .post("/token", { refreshToken: refreshToken })
+          .then((res) => {
+            if (res.status === 201) {
+              localStorage.removeItem("login-auth");
+              localStorage.setItem("login-auth", res.data);
+              axios.defaults.headers.common["Authorization"] =
+                "Bearer " + localStorage.getItem("login-auth");
+              return axios(originalRequest);
+            }
+          });
+      }
+      return Promise.reject(error);
+    }
+  );
   return (
     <>
       <Navbar
@@ -73,10 +113,7 @@ function App() {
           element={<Login props={status} statusMethod={statusMethod} />}
         />
         <Route path="login/forgotPassword" element={<Forgotpassword />} />
-        <Route
-          path={`resetPassword/:id/:token`}
-          element={<Resetpassword />}
-        />
+        <Route path={`resetPassword/:id/:token`} element={<Resetpassword />} />
         <Route
           path="/details"
           element={<Users props={username} password={password} />}

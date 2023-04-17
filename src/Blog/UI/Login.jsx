@@ -36,6 +36,7 @@ export default function Login(props) {
       props.props(isLoggedIn, result.user.username, result.user.password);
       localStorage.setItem("Token", JSON.stringify(result.user));
       localStorage.setItem("login-auth", JSON.stringify(result.auth));
+      localStorage.setItem("refreshToken", result.refreshToken);
       localStorage.setItem("username", JSON.stringify(result.user.username));
       localStorage.setItem("isLoggedIn", true);
       toast.success(result.user.username + "(Admin) Login");

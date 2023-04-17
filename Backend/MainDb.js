@@ -13,6 +13,18 @@ var fs = require("fs");
 var bcrypt = require("bcryptjs");
 var nodemailer = require("nodemailer");
 
+app.post("/token", async (req, res) => {
+  console.log(req.headers.authorization);
+  await jwt.verify(req.headers.authorization.split(" ")[1], "refreshToken", (err, auth) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      let token = jwt.sign({ _id: auth._id }, jwtkey, { expiresIn: "2h" });
+      res.status(201).send(token);
+    }
+  });
+});
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -60,17 +72,14 @@ app.post("/login", async (req, res) => {
     const password = await bcrypt.compare(req.body.password, user.password);
     // console.log(password);
     if (password) {
-      jwt.sign({ user }, jwtkey, { expiresIn: "4h" }, (err, token) => {
-        if (err) {
-          res.send({ result: "somthing went wrong" });
-        }
-        res.send({ user, auth: token });
+      let token = jwt.sign({ user }, jwtkey, { expiresIn: "15s" });
+      let refreshToken = jwt.sign({ user }, "refreshToken", {
+        expiresIn: "4h",
       });
-    } else {
-      res.status(401).send({ result: "Please provide valid details - " });
+      res.send({ user, auth: token, refreshToken: refreshToken });
     }
   } else {
-    res.status(403).send({ result: "Please filled first- " });
+    res.status(401).send({ result: "Please provide valid details - " });
   }
 });
 //Because of also Logout person can see blog author
@@ -188,7 +197,7 @@ app.get("/search/:userId/:key", verifyToken, async (req, res) => {
   res.send(data);
 });
 
-app.get("/searchall/:key", verifyToken, async (req, res) => {
+app.get("/searchall/:key", async (req, res) => {
   let data = await blog.find({
     $or: [
       { name: { $regex: req.params.key } },

@@ -21,13 +21,6 @@ export const getData = createAsyncThunk("getblogs", async (data) => {
   try {
     const res = await axios.get(
       `http://localhost:5000/getblogs?page=${count}&limit=${limit}`,
-      {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      }
     );
     return res;
   } catch (err) {
@@ -56,13 +49,7 @@ export const getUserData = createAsyncThunk("getblog", async (data) => {
 });
 export const deleteUserData = createAsyncThunk("delete", async (_id) => {
   try {
-    const res = await axios.delete(`http://localhost:5000/delete/${_id}`, {
-      headers: {
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
-    });
+    const res = await axios.delete(`http://localhost:5000/delete/${_id}`);
     toast.error("Deleted!!!", { autoClose: 200 });
     return res;
   } catch (err) {
