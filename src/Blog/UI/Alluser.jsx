@@ -17,49 +17,29 @@ const Users = () => {
   const ChangeRole = (props, _id) => {
     if (props.role === "admin") {
       axios
-        .put(
-          "http://localhost:5000/update/" + _id,
-          {
-            username: props.username,
-            password: props.password,
-            email: props.email,
-            role: "user",
-          },
-          {
-            headers: {
-              authorization: `bearer ${JSON.parse(
-                localStorage.getItem("login-auth")
-              )}`,
-            },
-          }
-        )
+        .put("http://localhost:5000/update/" + _id, {
+          username: props.username,
+          password: props.password,
+          email: props.email,
+          role: "user",
+        })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           console.log("Changed to User");
           setreload(!reloade);
         });
     } else {
       axios
-        .put(
-          "http://localhost:5000/update/" + _id,
-          {
-            username: props.username,
-            password: props.password,
-            email: props.email,
-            role: "admin",
-          },
-          {
-            headers: {
-              authorization: `bearer ${JSON.parse(
-                localStorage.getItem("login-auth")
-              )}`,
-            },
-          }
-        )
+        .put("http://localhost:5000/update/" + _id, {
+          username: props.username,
+          password: props.password,
+          email: props.email,
+          role: "admin",
+        })
         .then((response) => {
           // console.log(response['data']);
           console.log(response);
-          console.log("Changed to Admin");
+          // console.log("Changed to Admin");
           setreload(!reloade);
         });
     }
@@ -67,19 +47,11 @@ const Users = () => {
   useEffect(
     () => {
       window.scrollTo(0, 0);
-      axios
-        .get("http://localhost:5000/get", {
-          headers: {
-            authorization: `bearer ${JSON.parse(
-              localStorage.getItem("login-auth")
-            )}`,
-          },
-        })
-        .then((response) => {
-          // console.log(response['data']);
-          setProgress(100);
-          setState([...response["data"]]);
-        });
+      axios.get("http://localhost:5000/get").then((response) => {
+        // console.log(response['data']);
+        setProgress(100);
+        setState([...response["data"]]);
+      });
     },
     [reloade],
     []

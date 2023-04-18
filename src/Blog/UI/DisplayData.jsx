@@ -23,6 +23,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+import axios  from 'axios';
 const DisplayData = (props) => {
   const [relode, setRelode] = useState(false);
   const [dense, setDense] = useState(false);
@@ -38,24 +39,26 @@ const DisplayData = (props) => {
   const searchHandle = async (e) => {
     let key = e.target.value;
     if (key) {
-      let result = await fetch(
+      let result = await axios.get(
         `http://localhost:5000/search/${props.props.userId}/${key}`,
-        {
-          headers: {
-            authorization: `bearer ${JSON.parse(
-              localStorage.getItem("login-auth")
-            )}`,
-          },
-        }
       );
-      result = await result.json();
+      console.log(result);
       if (result) {
-        setData(result);
+        setData(result.data);
       } else {
-        dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-          setData(payload.data);
-        });
+        <h2>No record Found</h2>
       }
+    }else{
+      let data = {
+        limit: 3,
+        count: 1,
+        userId: props.props.userId,
+      };
+      // console.log(data);
+      dispatch(getUserData(data)).then(({ payload }) => {
+        setData(payload.data.blogs);
+        setPageCount(payload.data.totalpage);
+      });
     }
   };
 

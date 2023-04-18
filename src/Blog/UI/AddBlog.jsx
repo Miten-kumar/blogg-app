@@ -21,7 +21,7 @@ export default function AddBlog(props) {
   const toggleshow = () => setModal(!basicModal);
   const reload = true;
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,reset } = useForm();
 
   const onSubmit = (data) => {
     let adddata = {
@@ -31,11 +31,11 @@ export default function AddBlog(props) {
       userId: props.props,
       image: data.image[0],
     };
-    console.log(adddata);
+    // console.log(adddata);
     dispatch(addData(adddata)).then((res) => {
       props.load(!reload);
     });
-
+    reset()
     setTimeout(() => {
       props.load(reload);
     }, 100);
@@ -46,7 +46,7 @@ export default function AddBlog(props) {
       <MDBBtn className="mx-4 mt-4 w-25" color="info" onClick={toggleshow}>
         ADD Blog<sup>+</sup>
       </MDBBtn>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} >
         <MDBModal show={basicModal} setShow={setModal} tabIndex="-1">
           <MDBModalDialog>
             <MDBModalContent>

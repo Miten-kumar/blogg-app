@@ -13,7 +13,6 @@ var fs = require("fs");
 var bcrypt = require("bcryptjs");
 var nodemailer = require("nodemailer");
 
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -72,11 +71,11 @@ app.post("/login", async (req, res) => {
   }
 });
 //Because of also Logout person can see blog author
-app.get("/get", async (req, res) => {
+app.get("/get", verifyToken, async (req, res) => {
   let data = await User.find();
   res.send(data);
 });
-app.put("/update/:_id", verifyToken, async (req, res) => {
+app.put("/update/:_id", async (req, res) => {
   let data = await User.updateOne(req.params, { $set: req.body });
   res.send(data);
 });
@@ -101,7 +100,7 @@ app.get("/getblogs/:_id", async (req, res) => {
   res.send(data);
 });
 
-app.get("/getblog/:userId", async (req, res) => {
+app.get("/getblog/:userId", verifyToken, async (req, res) => {
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 3;
   // console.log(page, limit);
@@ -175,20 +174,19 @@ app.delete("/delete/:_id", verifyToken, async (req, res) => {
   res.send(data);
 });
 
-
 app.get("/search/:userId/:key", verifyToken, async (req, res) => {
   let data = await blog.find({
     userId: req.params.userId,
     $or: [
       { name: { $regex: req.params.key } },
-      { password: { $regex: req.params.key } },
-      { email: { $regex: req.params.key } },
+      // { password: { $regex: req.params.key } },
+      // { email: { $regex: req.params.key } },
     ],
   });
   res.send(data);
 });
 
-app.get("/searchall/:key", async (req, res) => {
+app.get("/searchall/:key",verifyToken, async (req, res) => {
   let data = await blog.find({
     $or: [
       { name: { $regex: req.params.key } },
@@ -212,7 +210,8 @@ function verifyToken(req, resp, next) {
       }
     });
   } else {
-    resp.status(401).send({ result: "Please Add token with headers" });
+    console.log("error");
+    // resp.status(401).send({ result: "Please Add token with headers" });
   }
 }
 
@@ -323,19 +322,18 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
 });
 
 app.post("/refreshToken", async (req, res) => {
-  console.log(req.body.Refresh);
+  // console.log(req.body.Refresh);
 
- await jwt.verify(req.body.Refresh, "refreshToken", (err, auth) => {
-   if (err) {
-     res.status(404).send(err);
-   } else {
-     let token = jwt.sign({ _id: auth._id }, jwtkey, { expiresIn: "2h" });
-     res.status(201).send(token);
-     console.log(token);
-   }
- });
- res.status(200).send(req.body)
+  await jwt.verify(req.body.Refresh, "refreshToken", (err, auth) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      let token = jwt.sign({ _id: auth._id }, jwtkey, { expiresIn: "2h" });
+      res.status(201).send(token);
+      // console.log(token);
+    }
+  });
+  // res.status(200).send(req.body);
 });
-
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

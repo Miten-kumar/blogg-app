@@ -27,6 +27,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import axios  from 'axios';
+
 const Myblog = (props) => {
   const [relode, setRelode] = useState(false);
   const [ref, setref] = useState(true);
@@ -51,29 +53,32 @@ const Myblog = (props) => {
   const searchHandle = async (e) => {
     let key = e.target.value;
     if (key) {
-      let result = await fetch(
+      let result = await axios.get(
         `http://localhost:5000/search/${props.props.userId}/${key}`,
-        {
-          headers: {
-            authorization: `bearer ${JSON.parse(
-              localStorage.getItem("login-auth")
-            )}`,
-          },
-        }
       );
-      result = await result.json();
-      
+      console.log(result);
       if (result) {
-        setData(result);
-        console.log(data);
+        setData(result.data);
       } else {
-        dispatch(getUserData(props.props.userId)).then(({ payload }) => {
-          setData(payload.data);
-          console.log(data);
-        });
+        <h2>No record Found</h2>
+        // dispatch(getUserData(props.props.userId)).then(({ payload }) => {
+        //   setData(payload.data);
+        // });
       }
+    }else{
+      let data = {
+        limit: 3,
+        count: 1,
+        userId: props.props.userId,
+      };
+      // console.log(data);
+      dispatch(getUserData(data)).then(({ payload }) => {
+        setData(payload.data.blogs);
+        setPageCount(payload.data.totalpage);
+      });
     }
   };
+
 
 
   const sort = (event) => {
@@ -91,8 +96,8 @@ const Myblog = (props) => {
     setSorted({ sorted: "name", reversed: !sorted.reversed });
   };
   const UserClick = (e) => {
-    console.log(props.props.userId);
-    console.log(e);
+    // console.log(props.props.userId);
+    // console.log(e);
     const count = e;
     let data = {
       limit: limit,

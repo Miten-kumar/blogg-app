@@ -79,7 +79,7 @@ function App() {
         axios
           .post("http://localhost:5000/refreshToken", { Refresh: refreshToken })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             axios.defaults.headers.common["authorization"] =
               "Bearer " + refreshToken;
             localStorage.removeItem("login-auth");

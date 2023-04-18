@@ -28,6 +28,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
 const DisplayData = (props) => {
   const [ref, setRef] = useState(true);
   const [dense, setDense] = useState(false);
@@ -65,21 +66,28 @@ const DisplayData = (props) => {
   const searchHandle = async (e) => {
     let key = e.target.value;
     if (key) {
-      let result = await fetch(`http://localhost:5000/searchall/${key}`, {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      });
-      result = await result.json();
+      let result = await axios.get(`http://localhost:5000/searchall/${key}`);
+
       if (result) {
-        setData(result);
+        setData(result.data);
       } else {
-        dispatch(getData()).then(({ payload }) => {
-          setData(payload.data);
-        });
+        // console.log("ssd");
+        <h2>No record Found</h2>
+        // dispatch(getData()).then(({ payload }) => {
+        //   console.log(payload);
+        //   setData(payload.data);
+        // });
       }
+    } else {
+      let data = {
+        limit: 3,
+        count: 1,
+      };
+      // console.log(data);
+      dispatch(getData(data)).then(({ payload }) => {
+        setData(payload.data.blogs);
+        setPageCount(payload.data.totalpage);
+      });
     }
   };
   function Click(e) {
@@ -248,7 +256,7 @@ const DisplayData = (props) => {
                       to={`/viewmore/${item._id}`}
                       className="text-decoration-none m-0 p-0 mx-2"
                     >
-                      <td >{item.name}</td>
+                      <td>{item.name}</td>
                     </NavLink>
                     <td className="m-0 p-0">
                       {item.email}
@@ -260,28 +268,27 @@ const DisplayData = (props) => {
                       </span>
                     </td>
                     <td>
-                    <div className="d-flex justify-content-center">
-                      <Edit 
-                        props={item}
-                      
-                        data={update}
-                        Myid={props.props.userId}
-                      />
-                      <RiDeleteBinLine
-                        onClick={() => {
-                          dispatch(deleteUserData(item._id));
-                          setDelete(!Delete);
-                        }}
-                        cursor={"pointer"}
-                        fontSize={"25px"}
-                        color="#EC4A4A"
-                        className="mx-2"
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Delete !!"
-                        data-tooltip-variant="error"
-                      />
-                      <Tooltip id="my-tooltip" />
-                    </div>
+                      <div className="d-flex justify-content-center">
+                        <Edit
+                          props={item}
+                          data={update}
+                          Myid={props.props.userId}
+                        />
+                        <RiDeleteBinLine
+                          onClick={() => {
+                            dispatch(deleteUserData(item._id));
+                            setDelete(!Delete);
+                          }}
+                          cursor={"pointer"}
+                          fontSize={"25px"}
+                          color="#EC4A4A"
+                          className="mx-2"
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content="Delete !!"
+                          data-tooltip-variant="error"
+                        />
+                        <Tooltip id="my-tooltip" />
+                      </div>
                     </td>
                   </tr>
                 ))}

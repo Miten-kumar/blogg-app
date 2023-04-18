@@ -6,13 +6,7 @@ const Users = (props) => {
   const [reloade, setrelode] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/get", {
-      headers: {
-        authorization: `bearer ${JSON.parse(localStorage.getItem("login-auth"))}` 
-            }
-    }).then((response) => {
-      //   console.log(response['data']);
-
+    axios.get("http://localhost:5000/get").then((response) => {
       setState([...response["data"]]);
     });
   }, [reloade]);
