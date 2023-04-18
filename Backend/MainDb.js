@@ -185,6 +185,8 @@ app.delete("/delete/:_id", verifyToken, async (req, res) => {
   let data = await blog.deleteOne(req.params);
   res.send(data);
 });
+
+
 app.get("/search/:userId/:key", verifyToken, async (req, res) => {
   let data = await blog.find({
     userId: req.params.userId,
@@ -221,7 +223,7 @@ function verifyToken(req, resp, next) {
       }
     });
   } else {
-    resp.status(403).send({ result: "Please Add token with headers" });
+    resp.status(401).send({ result: "Please Add token with headers" });
   }
 }
 

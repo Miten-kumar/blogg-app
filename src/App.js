@@ -72,7 +72,7 @@ function App() {
     function (error) {
       const originalRequest = error.config;
 
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if ((error.response.status === 401) && !originalRequest._retry) {
         originalRequest._retry = true;
         // console.log(JSON.parse(localStorage.getItem("refreshToken")));
         const refreshToken = localStorage.getItem("refreshToken");
@@ -83,7 +83,7 @@ function App() {
               localStorage.removeItem("login-auth");
               localStorage.setItem("login-auth", res.data);
               axios.defaults.headers.common["Authorization"] =
-                "Bearer " + localStorage.getItem("login-auth");
+                "Bearer " + refreshToken;
               return axios(originalRequest);
             }
           });
