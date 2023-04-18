@@ -38,7 +38,7 @@ function App() {
 
   const status = (data, user, password) => {
     setisLogged(data);
-    console.log(isLogged);
+    // console.log(isLogged);
     setUsername(user);
     setpassword(password);
   };
@@ -53,8 +53,7 @@ function App() {
 
   axios.interceptors.request.use(
     (config) => {
-      const token =localStorage.getItem("login-auth") ;
-      // console.log(token);
+      const token = localStorage.getItem("login-auth");
       if (token) {
         config.headers["authorization"] = `Bearer ${token}`;
       }
@@ -72,20 +71,20 @@ function App() {
     function (error) {
       const originalRequest = error.config;
 
-      if ((error.response.status === 401) && !originalRequest._retry) {
+      if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         // console.log(JSON.parse(localStorage.getItem("refreshToken")));
         const refreshToken = localStorage.getItem("refreshToken");
-        return axios
-          .post("http://localhost:5000/token")
+        console.log(refreshToken);
+        axios
+          .post("http://localhost:5000/refreshToken", { Refresh: refreshToken })
           .then((res) => {
-            if (res.status === 201) {
-              localStorage.removeItem("login-auth");
-              localStorage.setItem("login-auth", res.data);
-              axios.defaults.headers.common["Authorization"] =
-                "Bearer " + refreshToken;
-              return axios(originalRequest);
-            }
+            console.log(res);
+            axios.defaults.headers.common["authorization"] =
+              "Bearer " + refreshToken;
+            localStorage.removeItem("login-auth");
+            localStorage.setItem("login-auth", res.data);
+            return axios(originalRequest);
           });
       }
       return Promise.reject(error);

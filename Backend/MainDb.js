@@ -13,17 +13,6 @@ var fs = require("fs");
 var bcrypt = require("bcryptjs");
 var nodemailer = require("nodemailer");
 
-app.post("/token", async (req, res) => {
-  console.log(req.headers.authorization);
-  await jwt.verify(req.headers.authorization.split(" ")[1], "refreshToken", (err, auth) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      let token = jwt.sign({ _id: auth._id }, jwtkey, { expiresIn: "2h" });
-      res.status(201).send(token);
-    }
-  });
-});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -332,5 +321,21 @@ app.post("/resetPassword/:id/:token", async (req, res) => {
   }
   res.send(oldUser);
 });
+
+app.post("/refreshToken", async (req, res) => {
+  console.log(req.body.Refresh);
+
+ await jwt.verify(req.body.Refresh, "refreshToken", (err, auth) => {
+   if (err) {
+     res.status(404).send(err);
+   } else {
+     let token = jwt.sign({ _id: auth._id }, jwtkey, { expiresIn: "2h" });
+     res.status(201).send(token);
+     console.log(token);
+   }
+ });
+ res.status(200).send(req.body)
+});
+
 
 app.listen(port, () => console.log(`Database listening on port ${port}!`));

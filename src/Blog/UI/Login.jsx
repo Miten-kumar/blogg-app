@@ -17,11 +17,8 @@ export default function Login(props) {
     let result = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        authorization: `bearer ${JSON.parse(
-          localStorage.getItem("login-auth")
-        )}`,
-      },
+        "content-type": "application/json"},
+       
       body: JSON.stringify(empdata),
     });
     // console.log(result.status);
@@ -48,7 +45,8 @@ export default function Login(props) {
       props.props(isLoggedIn, result.user.username, result.user.password);
       props.statusMethod(result.user.role, result.user._id);
       localStorage.setItem("Token", JSON.stringify(result.user));
-      localStorage.setItem("login-auth", JSON.stringify(result.auth));
+      localStorage.setItem("login-auth", result.auth);
+      localStorage.setItem("refreshToken", result.refreshToken);
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("username", JSON.stringify(result.user.username));
       toast.success(result.user.username + " Loged in");
