@@ -35,7 +35,7 @@ export default function Login(props) {
       props.statusMethod(result.user.role, result.user._id);
       props.props(isLoggedIn, result.user.username, result.user.password);
       localStorage.setItem("Token", JSON.stringify(result.user));
-      localStorage.setItem("login-auth", JSON.stringify(result.auth));
+      localStorage.setItem("login-auth", result.auth);
       localStorage.setItem("refreshToken", result.refreshToken);
       localStorage.setItem("username", JSON.stringify(result.user.username));
       localStorage.setItem("isLoggedIn", true);

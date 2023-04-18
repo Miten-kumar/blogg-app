@@ -53,10 +53,10 @@ function App() {
 
   axios.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("login-auth");
+      const token =localStorage.getItem("login-auth") ;
       // console.log(token);
       if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
+        config.headers["authorization"] = `Bearer ${token}`;
       }
       return config;
     },
@@ -77,7 +77,7 @@ function App() {
         // console.log(JSON.parse(localStorage.getItem("refreshToken")));
         const refreshToken = localStorage.getItem("refreshToken");
         return axios
-          .post("/token", { refreshToken: refreshToken })
+          .post("http://localhost:5000/token")
           .then((res) => {
             if (res.status === 201) {
               localStorage.removeItem("login-auth");

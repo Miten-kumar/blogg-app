@@ -34,13 +34,7 @@ export const getUserData = createAsyncThunk("getblog", async (data) => {
   try {
     const res = await axios.get(
       `http://localhost:5000/getblog/${userId}?page=${count}&limit=${limit}`,
-      {
-        headers: {
-          authorization: `bearer ${JSON.parse(
-            localStorage.getItem("login-auth")
-          )}`,
-        },
-      }
+    
     );
     return res;
   } catch (err) {
@@ -73,9 +67,7 @@ export const updateData = createAsyncThunk("updateblogs", async (item) => {
         },
         {
           headers: {
-            authorization: `bearer ${JSON.parse(
-              localStorage.getItem("login-auth")
-            )}`,
+            
             "content-type": "multipart/form-data",
           },
         }
